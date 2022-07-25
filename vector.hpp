@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/07/25 14:16:22 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/07/25 15:32:39 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ namespace ft
 		typedef typename _allocator::pointer		pointer;
 		typedef pointer								iterator;
 
-		pointer	_start;
-		pointer	_end;
+		pointer		_start;
+		pointer		_end;
+		size_type	cap;
 
 	public:
 		explicit vector(const allocator_type& alloc = allocator_type()): _start(nullptr), _end(nullptr){
@@ -74,6 +75,7 @@ namespace ft
 			{
 				this->_start = alloc;
 				this->_end = alloc;
+				this->cap = this->size();
 			}
 		}
 
@@ -82,25 +84,33 @@ namespace ft
 				(void)alloc;
 				_allocator a;
 				this->_start = a.allocate(n);
-				if (val){
-					for (size_type i = 0; i < n; i++)
-						a.construct(this->_start + i, val);
-					this->_end = this->_start + (n);
-				}
+				for (size_type i = 0; i < n; i++)
+					a.construct(this->_start + i, val);
+				this->_end = this->_start + n;
+				this->cap = this->size();
 			}
 		}
 
 		reference operator[](size_type n){
-			if (n > this->size())
-				std::cout << RED1 << "oooi what the fuck!" << std::endl;
-			return(*(this->_start + n));
+			// if (n < this->size())
+				return(*(this->_start + n));
+			// else
+			// 	return(...);
 		}
 
 		// vector& operator=(const vector& v);
 
-		// void	push_back(const T& val){
-			
-		// }
+		void	push_back(const value_type& val){
+			if (this->cap == this->size())
+			{
+				pointer temp = this->_start; // <-- working here
+			}
+			else if (this->cap > this->size())
+			{
+				this->_start[this->size()] = val;
+				this->_end = this->_start + this->size();
+			}
+		}
 
 		size_type		size() const{
 			return(static_cast<size_type>(this->_end - this->_start));

@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 12:39:19 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/07/25 14:15:39 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/07/25 15:21:09 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,28 @@ using namespace ft;
 
 int main()
 {
-	vector<int> i(3, 5);
-	std::vector<int> ii(3, 5);
+	vector<int> i(5);
+	std::vector<int> ii(5);
 
+	i[0] = 0;
+	i[1] = 1;
+	i[2] = 2;
+	ii[0] = 0;
+	ii[1] = 1;
+	ii[2] = 2;
+	// ii.push_back(9);
 	std::cout << YELLOW << "ii = " << YELLOW1 << ii.size() << RESET << std::endl;
-	std::cout << YELLOW << "ii[0] = " << YELLOW1 << &ii[0] << RESET << std::endl;
-	std::cout << YELLOW << "ii[1] = " << YELLOW1 << &ii[1] << RESET << std::endl;
-	std::cout << YELLOW << "ii[2] = " << YELLOW1 << &ii[2] << RESET << std::endl;
+	std::cout << YELLOW << "capacity ii = " << YELLOW1 << ii.capacity() << RESET << std::endl;
+	std::cout << YELLOW << "ii[0] = " << YELLOW1 << ii[0] << RESET << std::endl;
+	std::cout << YELLOW << "ii[1] = " << YELLOW1 << ii[1] << RESET << std::endl;
+	std::cout << YELLOW << "ii[2] = " << YELLOW1 << ii[2] << RESET << std::endl;
+	std::cout << YELLOW << "ii[5] = " << YELLOW1 << ii[5] << RESET << std::endl;
 	std::cout << "----------------------" << std::endl;
 	std::cout << BLUE << "i = " << BLUE1 << i.size() << RESET << std::endl;
-	std::cout << BLUE << "i[0] = " << BLUE1 << &i[0] << RESET << std::endl;
-	std::cout << BLUE << "i[1] = " << BLUE1 << &i[1] << RESET << std::endl;
-	std::cout << BLUE << "i[2] = " << BLUE1 << &i[2] << RESET << std::endl;
+	std::cout << BLUE << "i[0] = " << BLUE1 << i[0] << RESET << std::endl;
+	std::cout << BLUE << "i[1] = " << BLUE1 << i[1] << RESET << std::endl;
+	std::cout << BLUE << "i[2] = " << BLUE1 << i[2] << RESET << std::endl;
+	std::cout << BLUE << "i[5] = " << BLUE1 << i[5] << RESET << std::endl;
 
 
 	// vector<int> i;
