@@ -1,0 +1,161 @@
+
+Vector
+
+-------------------- vector::vector --------------------
+✅ default (1)		explicit vector (const allocator_type& alloc = allocator_type());
+
+✅ fill (2)		explicit vector (size_type n, const value_type& val = value_type(),
+                 const allocator_type& alloc = allocator_type());
+
+range (3)		template <class InputIterator>
+        		 vector (InputIterator first, InputIterator last,
+                 const allocator_type& alloc = allocator_type());
+
+copy (4)		vector (const vector& x);
+--------------------------------------------------------
+
+-------------------- vector::~vector -------------------
+~vector();
+--------------------------------------------------------
+
+-------------------- vector::assign --------------------
+range (1)		template <class InputIterator>
+  				void assign (InputIterator first, InputIterator last);
+
+fill (2)		void assign (size_type n, const value_type& val);
+--------------------------------------------------------
+
+---------------------- vector::at ----------------------
+reference at (size_type n);
+const_reference at (size_type n) const;
+--------------------------------------------------------
+
+--------------------- vector::back ---------------------
+reference back();
+const_reference back() const;
+--------------------------------------------------------
+
+--------------------- vector::begin --------------------
+iterator begin();
+const_iterator begin() const;
+--------------------------------------------------------
+
+------------------- vector::capacity -------------------
+✅ size_type capacity() const;
+--------------------------------------------------------
+
+!!! C11 !!!  vector::cbegin
+!!! C11 !!!  vector::cend
+
+--------------------- vector::clear --------------------
+void clear();
+--------------------------------------------------------
+
+!!! C11 !!!  vector::crbegin
+!!! C11 !!!  vector::crend
+!!! C11 !!!  vector::data
+!!! C11 !!!  vector::emplace
+!!! C11 !!!  vector::emplace_back
+
+--------------------- vector::empty ---------------------
+bool empty() const;
+--------------------------------------------------------
+
+--------------------- vector::end ----------------------
+iterator end();
+const_iterator end() const;
+--------------------------------------------------------
+
+--------------------- vector::erase --------------------
+iterator erase (iterator position);
+iterator erase (iterator first, iterator last);
+--------------------------------------------------------
+
+--------------------- vector::front --------------------
+reference front();
+const_reference front() const;
+--------------------------------------------------------
+
+----------------- vector::get_allocator ----------------
+allocator_type get_allocator() const;
+--------------------------------------------------------
+
+-------------------- vector::insert --------------------
+
+single element (1)		iterator insert (iterator position, const value_type& val);
+
+fill (2)				void insert (iterator position, size_type n, const value_type& val);
+
+range (3)				template <class InputIterator>
+    					void insert (iterator position, InputIterator first, InputIterator last);
+--------------------------------------------------------
+
+------------------- vector::max_size -------------------
+size_type max_size() const;
+--------------------------------------------------------
+
+------------------- vector::operator= ------------------
+copy (1)			vector& operator= (const vector& x);
+--------------------------------------------------------
+
+------------------ vector::operator[] ------------------
+✅ reference operator[] (size_type n);
+const_reference operator[] (size_type n) const;
+--------------------------------------------------------
+
+------------------- vector::pop_back -------------------
+void pop_back();
+--------------------------------------------------------
+
+------------------- vector::push_back ------------------
+✅ void push_back (const value_type& val);
+--------------------------------------------------------
+
+-------------------- vector::rbegin --------------------
+reverse_iterator rbegin();
+const_reverse_iterator rbegin() const;
+--------------------------------------------------------
+
+--------------------- vector::rend ---------------------
+reverse_iterator rend();
+const_reverse_iterator rend() const;
+--------------------------------------------------------
+
+------------------- vector::reserve --------------------
+void reserve (size_type n);
+--------------------------------------------------------
+
+-------------------- vector::resize --------------------
+void resize (size_type n, value_type val = value_type());
+--------------------------------------------------------
+
+!!! C11 !!!  vector::shrink_to_fit
+
+--------------------- vector::size ---------------------
+✅ size_type size() const;
+--------------------------------------------------------
+
+--------------------- vector::swap ---------------------
+void swap (vector& x);
+--------------------------------------------------------
+
+
+------------ relational operators (vector) -------------
+(1)	template <class T, class Alloc>
+  bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+(2)	template <class T, class Alloc>
+  bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+(3)	template <class T, class Alloc>
+  bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+(4)	template <class T, class Alloc>
+  bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+(5)	template <class T, class Alloc>
+  bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+(6)	template <class T, class Alloc>
+  bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+--------------------------------------------------------
+
+--------------------- swap (vector) --------------------
+template <class T, class Alloc>
+void swap (vector<T,Alloc>& x, vector<T,Alloc>& y);
+--------------------------------------------------------

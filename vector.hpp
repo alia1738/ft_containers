@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/07/25 15:32:39 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/07/26 14:50:23 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,9 @@ namespace ft
 
 	public:
 		explicit vector(const allocator_type& alloc = allocator_type()): _start(nullptr), _end(nullptr){
-			if (alloc != allocator_type())
-			{
-				this->_start = alloc;
-				this->_end = alloc;
-				this->cap = this->size();
-			}
+			this->_start = static_cast<allocator_type>(alloc).allocate(0);
+			this->_end = this->_start;
+			this->cap = this->size();
 		}
 
 		explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()): _start(nullptr), _end(nullptr){
@@ -103,17 +100,36 @@ namespace ft
 		void	push_back(const value_type& val){
 			if (this->cap == this->size())
 			{
-				pointer temp = this->_start; // <-- working here
+				size_type i;
+				_allocator alloc;
+		
+				if (!this->cap)
+					this->cap = 1;
+				else
+					this->cap *= 2;
+
+				pointer temp = alloc.allocate(this->cap);
+				for (i = 0; i < this->size(); i++)
+					temp[i] = this->_start[i];
+				temp[i++] = val;
+				alloc.deallocate(this->_start, this->size());
+				this->_start = temp;
+				this->_end = temp + i;
 			}
+
 			else if (this->cap > this->size())
 			{
 				this->_start[this->size()] = val;
-				this->_end = this->_start + this->size();
+				this->_end = this->_start + (this->size() + 1);
 			}
 		}
 
 		size_type		size() const{
 			return(static_cast<size_type>(this->_end - this->_start));
+		}
+
+		size_type capacity() const{
+			return(this->cap);
 		}
 
 		~vector(){
