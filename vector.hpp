@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/07/26 14:50:23 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/07/28 17:55:28 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,62 +65,128 @@ namespace ft
 		typedef typename _allocator::pointer		pointer;
 		typedef pointer								iterator;
 
+		_allocator	alloc;
 		pointer		_start;
 		pointer		_end;
 		size_type	cap;
 
 	public:
-		explicit vector(const allocator_type& alloc = allocator_type()): _start(nullptr), _end(nullptr){
-			this->_start = static_cast<allocator_type>(alloc).allocate(0);
-			this->_end = this->_start;
-			this->cap = this->size();
+		explicit vector(const allocator_type& alloc = allocator_type()): _start(0), _end(0), cap(0){
+			this->alloc = alloc;
 		}
 
-		explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()): _start(nullptr), _end(nullptr){
+		explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()): _start(0), _end(0), cap(0){
 			if (n){
-				(void)alloc;
-				_allocator a;
-				this->_start = a.allocate(n);
+				this->alloc = alloc;
+				this->_start = this->alloc.allocate(n);
 				for (size_type i = 0; i < n; i++)
-					a.construct(this->_start + i, val);
+					this->alloc.construct(this->_start + i, val);
 				this->_end = this->_start + n;
 				this->cap = this->size();
 			}
 		}
 
-		reference operator[](size_type n){
-			// if (n < this->size())
-				return(*(this->_start + n));
-			// else
-			// 	return(...);
+		vector (const vector& v): _start(0), _end(0), cap(0){
+			this->alloc = v.alloc;
+			this->cap = v.cap;
+			this->_start = this->alloc.allocate(v.size());
+
+			size_type	i = 0;
+			for (i = 0; i < v.size(); i++)
+				this->alloc.construct((this->_start + i), *(v._start + i));
+			this->_end = this->_start + i;
 		}
 
-		// vector& operator=(const vector& v);
+		vector& operator=(const vector& v){
+			this->_start = 0; this->_end = 0; this->cap = 0;
+			if (this != &v){
+				this(v);
+			}
+			return(*this);
+		}
+
+		reference operator[](size_type n){
+			return(*(this->_start + n));
+		}
+
+		reference at (size_type n){
+			if (n >= this->size())
+				throw std::out_of_range("\nft::vector: out of range");
+			return(*(this->_start + n));
+		}
+		
+		void	assign (size_type n, const value_type& val){
+			if (n >= this->cap){
+				pointer	temp = alloc.allocate(n);
+				
+				size_type i = 0, max = this->size();
+				for (; i < n; i++){
+					this->alloc.construct((temp + i), val);
+					if (n < max)
+						this->alloc.destroy(this->_start + i);
+				}
+
+				this->alloc.deallocate(this->_start, i);
+				this->_start = temp;
+				this->_end = this->_start + ++i;
+				this->cap = n;
+			}
+			else {
+				for (size_type i; i < n; i++){
+					alloc.destroy(this->_start + i);
+					alloc.construct(this->_start + i, val);
+				}
+			}
+		}
+
+		reference back(){
+			return (*(this->_end - 1));
+		}
+		
+		void clear(){
+			size_type i = 0, max = this->size();
+			
+			for (; i < max; i++)
+				this->alloc.destroy(this->_start + i);
+			this->_end = this->_start;
+		}
+
+		bool empty() const{
+			return (this->_start == this->_end);
+		}
+
+		reference front(){
+			return (*(this->_start))
+		}
+
+		allocator_type get_allocator() const{
+			return (this->alloc);
+		}
 
 		void	push_back(const value_type& val){
 			if (this->cap == this->size())
 			{
-				size_type i;
-				_allocator alloc;
-		
-				if (!this->cap)
-					this->cap = 1;
-				else
-					this->cap *= 2;
+				size_type i = 0;
 
-				pointer temp = alloc.allocate(this->cap);
-				for (i = 0; i < this->size(); i++)
-					temp[i] = this->_start[i];
-				temp[i++] = val;
-				alloc.deallocate(this->_start, this->size());
+				this->cap = (!this->cap) ? 1 : (this->cap * 2);
+
+				pointer temp = this->alloc.allocate(this->cap);
+
+				for (i = 0; i < this->size(); i++){
+					this->alloc.construct((temp + i), *(this->_start + i));
+					this->alloc.destroy(this->_start + i);
+				}
+				this->alloc.construct((temp + i), val);
+
+				this->alloc.deallocate(this->_start, i);
 				this->_start = temp;
-				this->_end = temp + i;
+				this->_end = (!i) ? (this->_start + 1) : (this->_start + ++i);
 			}
 
 			else if (this->cap > this->size())
 			{
 				this->_start[this->size()] = val;
-				this->_end = this->_start + (this->size() + 1);
+				this->_end++;
 			}
 		}
 
@@ -133,7 +199,11 @@ namespace ft
 		}
 
 		~vector(){
-			;
+			size_type	i = 0, max = this->size();
+			
+			for (i = 0; i < max; i++)
+				this->alloc.destroy(this->_start + i);
+			this->alloc.deallocate(this->_start, i);
 		}
 
 	};

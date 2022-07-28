@@ -2,7 +2,7 @@
 Vector
 
 -------------------- vector::vector --------------------
-✅ default (1)		explicit vector (const allocator_type& alloc = allocator_type());
+✅ default (1)	explicit vector (const allocator_type& alloc = allocator_type());
 
 ✅ fill (2)		explicit vector (size_type n, const value_type& val = value_type(),
                  const allocator_type& alloc = allocator_type());
@@ -11,27 +11,27 @@ range (3)		template <class InputIterator>
         		 vector (InputIterator first, InputIterator last,
                  const allocator_type& alloc = allocator_type());
 
-copy (4)		vector (const vector& x);
+✅ copy (4)		vector (const vector& x);
 --------------------------------------------------------
 
 -------------------- vector::~vector -------------------
-~vector();
+✅ ~vector();
 --------------------------------------------------------
 
 -------------------- vector::assign --------------------
 range (1)		template <class InputIterator>
   				void assign (InputIterator first, InputIterator last);
 
-fill (2)		void assign (size_type n, const value_type& val);
+<< not tested >> ✅ fill (2)		void assign (size_type n, const value_type& val);
 --------------------------------------------------------
 
 ---------------------- vector::at ----------------------
-reference at (size_type n);
+✅ reference at (size_type n);
 const_reference at (size_type n) const;
 --------------------------------------------------------
 
 --------------------- vector::back ---------------------
-reference back();
+<< not tested >> ✅ reference back();
 const_reference back() const;
 --------------------------------------------------------
 
@@ -48,7 +48,7 @@ const_iterator begin() const;
 !!! C11 !!!  vector::cend
 
 --------------------- vector::clear --------------------
-void clear();
+<< not tested >> ✅ void clear();
 --------------------------------------------------------
 
 !!! C11 !!!  vector::crbegin
@@ -58,7 +58,7 @@ void clear();
 !!! C11 !!!  vector::emplace_back
 
 --------------------- vector::empty ---------------------
-bool empty() const;
+<< not tested >> ✅ bool empty() const;
 --------------------------------------------------------
 
 --------------------- vector::end ----------------------
@@ -72,12 +72,12 @@ iterator erase (iterator first, iterator last);
 --------------------------------------------------------
 
 --------------------- vector::front --------------------
-reference front();
+<< not tested >> ✅ reference front();
 const_reference front() const;
 --------------------------------------------------------
 
 ----------------- vector::get_allocator ----------------
-allocator_type get_allocator() const;
+<< not tested >> ✅ allocator_type get_allocator() const;
 --------------------------------------------------------
 
 -------------------- vector::insert --------------------
@@ -95,7 +95,7 @@ size_type max_size() const;
 --------------------------------------------------------
 
 ------------------- vector::operator= ------------------
-copy (1)			vector& operator= (const vector& x);
+✅ copy (1)			vector& operator= (const vector& x);
 --------------------------------------------------------
 
 ------------------ vector::operator[] ------------------
