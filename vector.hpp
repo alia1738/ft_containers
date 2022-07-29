@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/07/28 17:55:28 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/07/29 16:14:42 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ namespace ft
 	private:
 		typedef T									value_type;
 		typedef value_type&							reference;
+		typedef const value_type&					const_reference;
 		typedef typename _allocator::pointer		pointer;
 		typedef pointer								iterator;
 
@@ -109,7 +110,17 @@ namespace ft
 			return(*(this->_start + n));
 		}
 
+		const_reference operator[] (size_type n) const{
+			return(*(this->_start + n));
+		}
+
 		reference at (size_type n){
+			if (n >= this->size())
+				throw std::out_of_range("\nft::vector: out of range");
+			return(*(this->_start + n));
+		}
+
+		const_reference at (size_type n) const{
 			if (n >= this->size())
 				throw std::out_of_range("\nft::vector: out of range");
 			return(*(this->_start + n));
@@ -142,6 +153,10 @@ namespace ft
 		reference back(){
 			return (*(this->_end - 1));
 		}
+
+		const_reference back() const{
+			return (*(this->_end - 1));
+		}
 		
 		void clear(){
 			size_type i = 0, max = this->size();
@@ -156,11 +171,24 @@ namespace ft
 		}
 
 		reference front(){
-			return (*(this->_start))
+			return (*(this->_start));
+		}
+
+		const_reference front() const{
+			return (*(this->_start));
 		}
 
 		allocator_type get_allocator() const{
 			return (this->alloc);
+		}
+
+		size_type max_size() const{
+			return(this->alloc.max_size());
+		}
+
+		void pop_back(){
+			this->_end -= 1;
+			this->alloc.destroy(this->_end + 1);
 		}
 
 		void	push_back(const value_type& val){
@@ -187,6 +215,52 @@ namespace ft
 			{
 				this->_start[this->size()] = val;
 				this->_end++;
+			}
+		}
+
+		void reserve (size_type n){
+			if (n > this->cap){
+				pointer	temp = this->alloc.allocate(n);
+				
+				size_type i = 0, max = this->size();
+				for (; i < max; i++){
+					this->alloc.construct(temp + i, *(this->_start + i));
+					this->alloc.destroy(this->_start + i);
+				}
+				this->alloc.deallocate(this->_start, max);
+				this->_start = temp;
+				this->_end = temp + max;
+				this->cap = n;
+			}
+		}
+		
+		void resize (size_type n, value_type val = value_type()){
+			if (n < this->size){
+				this->_end -= (this->size() - n);
+				for (size_type i = this->size(); i > n; i--)
+					this->alloc.destroy(this->_start + i);
+			}
+			else if (n > this->capasity){
+				size_type max = this->size();
+				pointer temp = this->alloc.allocate(n);
+
+				for (size_type i = 0; i < n; i++){
+					if (i < max){
+						this->alloc.construct((temp + i), *(this->_start + i));
+						this->alloc.destroy(this->_start + i);
+					}
+					else
+						this->alloc.construct((temp + i), val);
+				}
+				this->alloc.deallocate(this->_start, max);
+				this->_start = temp;
+				this->_end = temp + n;
+				this->cap = n;
+			}
+			else {
+				for (size_type i = this->size(); i < n; i++)
+					this->alloc.construct(this->start + i, val);
+				this->_end += (n - this->size());
 			}
 		}
 

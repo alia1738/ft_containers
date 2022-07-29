@@ -27,12 +27,12 @@ range (1)		template <class InputIterator>
 
 ---------------------- vector::at ----------------------
 ✅ reference at (size_type n);
-const_reference at (size_type n) const;
+<< not tested >> ✅ const_reference at (size_type n) const;
 --------------------------------------------------------
 
 --------------------- vector::back ---------------------
 << not tested >> ✅ reference back();
-const_reference back() const;
+<< not tested >> ✅ const_reference back() const;
 --------------------------------------------------------
 
 --------------------- vector::begin --------------------
@@ -73,7 +73,7 @@ iterator erase (iterator first, iterator last);
 
 --------------------- vector::front --------------------
 << not tested >> ✅ reference front();
-const_reference front() const;
+<< not tested >> ✅ const_reference front() const;
 --------------------------------------------------------
 
 ----------------- vector::get_allocator ----------------
@@ -91,7 +91,7 @@ range (3)				template <class InputIterator>
 --------------------------------------------------------
 
 ------------------- vector::max_size -------------------
-size_type max_size() const;
+<< not tested >> ✅ size_type max_size() const;
 --------------------------------------------------------
 
 ------------------- vector::operator= ------------------
@@ -100,11 +100,11 @@ size_type max_size() const;
 
 ------------------ vector::operator[] ------------------
 ✅ reference operator[] (size_type n);
-const_reference operator[] (size_type n) const;
+<< not tested >> ✅ const_reference operator[] (size_type n) const;
 --------------------------------------------------------
 
 ------------------- vector::pop_back -------------------
-void pop_back();
+✅ void pop_back();
 --------------------------------------------------------
 
 ------------------- vector::push_back ------------------
@@ -122,11 +122,11 @@ const_reverse_iterator rend() const;
 --------------------------------------------------------
 
 ------------------- vector::reserve --------------------
-void reserve (size_type n);
+<< not tested >> ✅ void reserve (size_type n);
 --------------------------------------------------------
 
 -------------------- vector::resize --------------------
-void resize (size_type n, value_type val = value_type());
+<< not tested >> ✅ void resize (size_type n, value_type val = value_type());
 --------------------------------------------------------
 
 !!! C11 !!!  vector::shrink_to_fit

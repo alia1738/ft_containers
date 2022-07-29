@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 12:39:19 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/07/28 16:48:26 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/07/29 16:49:37 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int main()
 	try{
 		vector<int> i;
 		std::vector<int> ii;
+		std::iterator *it = ii.begin();
 
 		// // i[0] = 0;
 		// // i[1] = 1;
@@ -31,10 +32,13 @@ int main()
 		// vector<int> copy(i);
 		ii.push_back(9);
 		std::cout << "my vector: " << i.at(0) << " .. OG vector: " << ii.at(0) << std::endl;
-		std::cout << "testing out of range for my vector: " << i.at(1) << std::endl;
-		std::cout << "testing out of range for my vector: " << i.at(2) << std::endl;
+		i.pop_back();
+		ii.pop_back();
+		std::cout << "my vector: " << i.at(0) << " .. OG vector: " << ii.at(0) << std::endl;
+		// std::cout << "testing out of range for my vector: " << i.at(1) << std::endl;
+		// std::cout << "testing out of range for my vector: " << i.at(2) << std::endl;
 		
-		// std::cout << PURPLE1 << "i afetr pushing 9: " << i.size() << " .. " << i.capacity() << GREEN1 << " ii after pushing 9: " << ii.size() << " .. " << ii.capacity() << RESET << std::endl;
+		std::cout << PURPLE1 << "i afetr pushing 9: " << i.size() << " .. " << i.capacity() << GREEN1 << " ii after pushing 9: " << ii.size() << " .. " << ii.capacity() << RESET << std::endl;
 		// i.push_back(8);
 		// ii.push_back(8);
 		// std::cout << PURPLE1 << "i afetr pushing 8: " << i.size() << " .. " << i.capacity() << GREEN1 << " ii after pushing 8: " << ii.size() << " .. " << ii.capacity() << RESET << std::endl;
