@@ -20,7 +20,9 @@ int main()
 		vector<int> my_vector(5);
 		std::vector<int> og_vector(5);
 		vector<int>::iterator my_it = my_vector.begin();
+		// vector<int>::iterator my_it_end = my_vector.end();
 		std::vector<int>::iterator og_it = og_vector.begin();
+		// std::vector<int>::iterator og_it_end = og_vector.end();
 
 		my_vector[0] = 0;
 		my_vector[1] = 1;
@@ -28,9 +30,17 @@ int main()
 		og_vector[0] = 0;
 		og_vector[1] = 1;
 		og_vector[2] = 2;
-		std::cout << YELLOW1 << "my it++: " << *my_it++ << " .. my it: " << *my_it << RESET << std::endl;
-		std::cout << BLUE1 << "og it++: " << *og_it++ << " .. og it: " << *og_it << RESET << std::endl;
-		// std::iterator *it = og_vector.begin();
+
+		my_it += 1;
+		og_it += 1;
+
+		std::cout << YELLOW1 << "my it: " << *(1 + my_it) << RESET << std::endl;
+		std::cout << BLUE1 << "og it: " << *(1 + og_it) << std::endl;
+
+		// for (; my_it != my_it_end; my_it++)
+		// std::cout << YELLOW1 << "my it: " << *my_it << RESET << std::endl;
+		// for (; og_it != og_it_end; og_it++)
+		// std::cout << BLUE1 << "og it++: " << *og_it << std::endl;
 
 		// std::cout << PURPLE1 << "my_vector before pushing: " << my_vector.size() << " .. " << my_vector.capacity() << GREEN1 << " og_vector before pushing: " << og_vector.size() << " .. " << og_vector.capacity() << RESET << std::endl;
 		// my_vector.push_back(9);

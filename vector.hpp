@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/08/02 16:34:36 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/08/03 14:32:16 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 namespace ft
 {
 
-	template < typename T, class _alloc = std::allocator<T> > class vector
+	template < typename T, class _alloc> class vector
 	{
 
 	public:
@@ -63,10 +63,9 @@ namespace ft
 		typedef value_type&							reference;
 		typedef const value_type&					const_reference;
 		typedef typename _allocator::pointer		pointer;
-		typedef v_iterator<pointer>					iterator;
+		typedef v_iterator<value_type>				iterator;
 	
 	private:
-
 		_allocator	alloc;
 		pointer		_start;
 		pointer		_end;
@@ -117,6 +116,11 @@ namespace ft
 
 		iterator begin(){
 			iterator	it(this->_start);
+			return (it);
+		}
+
+		iterator end(){
+			iterator	it(this->_end);
 			return (it);
 		}
 

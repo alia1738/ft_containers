@@ -36,7 +36,7 @@ range (1)		template <class InputIterator>
 --------------------------------------------------------
 
 --------------------- vector::begin --------------------
-<< not tested >> ✅ iterator begin();
+✅ iterator begin();
 const_iterator begin() const;
 --------------------------------------------------------
 
@@ -62,7 +62,7 @@ const_iterator begin() const;
 --------------------------------------------------------
 
 --------------------- vector::end ----------------------
-iterator end();
+✅ iterator end();
 const_iterator end() const;
 --------------------------------------------------------
 

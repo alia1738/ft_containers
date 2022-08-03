@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 16:54:46 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/08/03 14:01:11 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/08/03 15:37:55 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,21 @@ namespace ft {
 
 		v_iterator& operator=(const v_iterator& it){
 			if (this != &it)
-				this->_content = it->_content;
+				this->_content = it._content;
 			return (*this);
 		}
 
 		bool	operator==(const v_iterator& it1){
-			return (this->_content == it1->_content);
+			return (this->_content == it1._content);
 		}
 
 		bool	operator!=(const v_iterator& it1){
-			return (this->_content != it1->_content);
+			return (this->_content != it1._content);
 		}
+
+		// bool	operator>(const v_iterator& it1){ // compare based on size or content or adfress
+		// 	return (this->_content > it1._content);
+		// }
 
 		v_iterator& operator++(){
 			++this->_content;
@@ -100,9 +104,42 @@ namespace ft {
 			return (this->_content[0]);
 		}
 
+		v_iterator& operator+=(int n){
+			this->_content += n;
+			return (*this);
+		}
+
+		v_iterator& operator-=(int n){
+			this->_content -= n;
+			return (*this);
+		}
+
+		v_iterator operator+(int n){
+			v_iterator temp = *this;
+			temp += n;
+			return (temp);
+		}
+
+		// v_iterator operator+(v_iterator& it){
+		// 	v_iterator temp = it;
+		// 	temp += this;
+		// 	return (temp);
+		// }
+
+		// v_iterator operator+(int n, const v_iterator) const{
+		// 	// (void)it;
+		// 	v_iterator temp = *this;
+		// 	temp += n;
+		// 	return (temp);
+		// }
+
+		v_iterator operator-(int n){
+			v_iterator temp = *this;
+			temp -= n;
+			return (temp);
+		}
 
 		~v_iterator(){}
-
 
 	};
 }
