@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   viterator.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 16:54:46 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/08/03 07:41:36 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/08/03 14:01:11 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 # define VITERATOR_HPP
 
 #include <iostream>
+// #include "vector.hpp"
 
 namespace ft {
 	
+	template < typename T, class _alloc = std::allocator<T> > class vector;
+
 	template <class it> class iterator_trailts {
 	public:
 		typedef typename it::difference_type   difference_type;
@@ -26,10 +29,12 @@ namespace ft {
 		typedef typename it::iterator_category iterator_category;
 	};
 
-	template <typename T, class vec> class v_iterator { // <--- I am here 
+	template < typename T> class v_iterator {
 	public:
-		typedef T		iterator_type;
-		typedef T&		reference;
+		typedef T									type_name;
+		typedef typename vector<T>::pointer			pointer;
+		typedef typename vector<T>::value_type		value_type;
+		typedef typename vector<T>::reference		reference;
 		// typedef typename iterator_traits<iterator_type>::iterator_category iterator_category;
 		// typedef typename iterator_traits<iterator_type>::value_type        value_type;
 		// typedef typename iterator_traits<iterator_type>::difference_type   difference_type;
@@ -37,61 +42,62 @@ namespace ft {
 		// typedef typename iterator_traits<iterator_type>::reference         reference;
 	
 	private:
-		iterator_type _it;
+		pointer _content;
 
 	public:
 		v_iterator(){}
 
 		v_iterator(const v_iterator& it){
-			this->_it = it._it;
+			this->_content = it._content;
 		}
 
-		v_iterator(const iterator_type& it){
-			this->_it = it;
+		v_iterator(pointer con){
+			std::cout << con[0] << std::endl;
+			this->_content = con;
 		}
 
 		v_iterator& operator=(const v_iterator& it){
 			if (this != &it)
-				this->_it = it;
+				this->_content = it->_content;
 			return (*this);
 		}
 
 		bool	operator==(const v_iterator& it1){
-			return (this->_it == it1->_it);
+			return (this->_content == it1->_content);
 		}
 
 		bool	operator!=(const v_iterator& it1){
-			return (this->_it != it1->_it);
+			return (this->_content != it1->_content);
 		}
 
 		v_iterator& operator++(){
-			++this->_it;
+			++this->_content;
 			return (*this);
 		}
 
 		v_iterator operator++(int){
 			v_iterator temp = *this;
-			this->_it++;
+			this->_content++;
 			return (temp);
 		}
 
 		v_iterator& operator--(){
-			--this->_it;
+			--this->_content;
 			return (*this);
 		}
 
 		v_iterator operator--(int){
 			v_iterator temp = *this;
-			this->_it--;
+			this->_content--;
 			return (temp);
 		}
 
 		// iterator_type& operator[](unsigned int n){
-		// 	return (this->_it[n]);
+		// 	return (this->_content[n]);
 		// }
 
-		iterator_type operator*() const{
-			return (_it);
+		value_type operator*() const{
+			return (this->_content[0]);
 		}
 
 
