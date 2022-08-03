@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/07/29 16:14:42 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/08/02 16:34:36 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <vector> // remove
 #include <memory>
 #include <iostream>
+#include "viterator.hpp"
 
 /* ----------------------- > >> Colors << < ----------------------- */
 
@@ -58,13 +59,13 @@ namespace ft
 		typedef _alloc								allocator_type;
 		typedef std::allocator<T>					_allocator;
 		typedef typename _allocator::size_type		size_type;
-	
-	private:
 		typedef T									value_type;
 		typedef value_type&							reference;
 		typedef const value_type&					const_reference;
 		typedef typename _allocator::pointer		pointer;
-		typedef pointer								iterator;
+		typedef v_iterator<pointer>					iterator;
+	
+	private:
 
 		_allocator	alloc;
 		pointer		_start;
@@ -112,6 +113,11 @@ namespace ft
 
 		const_reference operator[] (size_type n) const{
 			return(*(this->_start + n));
+		}
+
+		iterator begin(){
+			iterator	it(this->_start);
+			return (it);
 		}
 
 		reference at (size_type n){
