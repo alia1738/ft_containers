@@ -20,22 +20,49 @@ int main()
 		vector<int> my_vector(5);
 		std::vector<int> og_vector(5);
 		vector<int>::iterator my_it = my_vector.begin();
-		// vector<int>::iterator my_it_end = my_vector.end();
+		vector<int>::iterator my_it_end = my_vector.end();
 		std::vector<int>::iterator og_it = og_vector.begin();
-		// std::vector<int>::iterator og_it_end = og_vector.end();
+		std::vector<int>::iterator og_it_end = og_vector.end();
 
-		my_vector[0] = 0;
+		my_vector[0] = 9;
 		my_vector[1] = 1;
 		my_vector[2] = 2;
-		og_vector[0] = 0;
+		og_vector[0] = 9;
 		og_vector[1] = 1;
 		og_vector[2] = 2;
 
-		my_it += 1;
-		og_it += 1;
+		*my_it++ = 5;
+		*og_it++ = 5;
+		my_it -= 1;
+		og_it -= 1;
 
-		std::cout << YELLOW1 << "my it: " << *(1 + my_it) << RESET << std::endl;
-		std::cout << BLUE1 << "og it: " << *(1 + og_it) << std::endl;
+		for (int i = 0; my_it[i] != *my_it_end; i++)
+			std::cout << YELLOW1 << my_it[i] << RESET << std::endl;
+		for (int i = 0; og_it[i] != *og_it_end; i++)
+			std::cout << BLUE1 << og_it[i] << RESET << std::endl;
+
+		// vector<int>::iterator		my_itcopy = my_it;
+		std::vector<int>::iterator	*og_itcopy;
+
+		// *my_itcopy = 0;
+		// *og_itcopy = 0;
+
+		// if (my_it <= my_itcopy)
+		// 	std::cout << YELLOW1 << "mine works!" << RESET << std::endl;
+		// else 
+		// 	std::cout << YELLOW1 << "YEEEE!" << RESET << std::endl;
+		// if (og_it <= og_itcopy)
+		// 	std::cout << BLUE1 << "og works..." << RESET << std::endl;
+		// else
+		// 	std::cout << BLUE1 << "YOOO!" << RESET << std::endl;
+		
+		// std::cout << YELLOW1 << (my_it - my_itcopy) << RESET << std::endl;
+		// std::cout << BLUE1 << (og_it - og_itcopy) << RESET << std::endl;
+		
+		
+
+		// std::cout << YELLOW1 << "my it: " << *my_it << RESET << std::endl;
+		// std::cout << BLUE1 << "og it: " << *og_it << std::endl;
 
 		// for (; my_it != my_it_end; my_it++)
 		// std::cout << YELLOW1 << "my it: " << *my_it << RESET << std::endl;

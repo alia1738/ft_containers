@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/08/03 14:32:16 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/08/04 12:20:12 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,15 @@ namespace ft
 	{
 
 	public:
-		typedef _alloc								allocator_type;
-		typedef std::allocator<T>					_allocator;
-		typedef typename _allocator::size_type		size_type;
-		typedef T									value_type;
-		typedef value_type&							reference;
-		typedef const value_type&					const_reference;
-		typedef typename _allocator::pointer		pointer;
-		typedef v_iterator<value_type>				iterator;
+		typedef _alloc									allocator_type;
+		typedef std::allocator<T>						_allocator;
+		typedef typename _allocator::size_type			size_type;
+		typedef typename _allocator::difference_type	difference_type;
+		typedef T										value_type;
+		typedef value_type&								reference;
+		typedef const value_type&						const_reference;
+		typedef typename _allocator::pointer			pointer;
+		typedef v_iterator<value_type>					iterator;
 	
 	private:
 		_allocator	alloc;

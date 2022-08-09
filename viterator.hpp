@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   viterator.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 16:54:46 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/08/03 15:37:55 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/08/04 14:21:14 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,10 @@ namespace ft {
 
 	template < typename T> class v_iterator {
 	public:
-		typedef T									type_name;
 		typedef typename vector<T>::pointer			pointer;
 		typedef typename vector<T>::value_type		value_type;
 		typedef typename vector<T>::reference		reference;
-		// typedef typename iterator_traits<iterator_type>::iterator_category iterator_category;
-		// typedef typename iterator_traits<iterator_type>::value_type        value_type;
-		// typedef typename iterator_traits<iterator_type>::difference_type   difference_type;
-		// typedef typename iterator_traits<iterator_type>::pointer           pointer;
-		// typedef typename iterator_traits<iterator_type>::reference         reference;
+		typedef typename vector<T>::difference_type	difference_type;
 	
 	private:
 		pointer _content;
@@ -52,7 +47,6 @@ namespace ft {
 		}
 
 		v_iterator(pointer con){
-			std::cout << con[0] << std::endl;
 			this->_content = con;
 		}
 
@@ -70,9 +64,21 @@ namespace ft {
 			return (this->_content != it1._content);
 		}
 
-		// bool	operator>(const v_iterator& it1){ // compare based on size or content or adfress
-		// 	return (this->_content > it1._content);
-		// }
+		bool	operator>(const v_iterator& it1){
+			return (this->_content > it1._content);
+		}
+
+		bool	operator<(const v_iterator& it1){
+			return (this->_content < it1._content);
+		}
+
+		bool	operator>=(const v_iterator& it1){
+			return (this->_content >= it1._content);
+		}
+
+		bool	operator<=(const v_iterator& it1){
+			return (this->_content <= it1._content);
+		}
 
 		v_iterator& operator++(){
 			++this->_content;
@@ -96,12 +102,12 @@ namespace ft {
 			return (temp);
 		}
 
-		// iterator_type& operator[](unsigned int n){
-		// 	return (this->_content[n]);
-		// }
-
-		value_type operator*() const{
+		value_type& operator*(){
 			return (this->_content[0]);
+		}
+
+		value_type& operator[](int n){
+			return (this->_content[n]);
 		}
 
 		v_iterator& operator+=(int n){
@@ -120,28 +126,25 @@ namespace ft {
 			return (temp);
 		}
 
-		// v_iterator operator+(v_iterator& it){
-		// 	v_iterator temp = it;
-		// 	temp += this;
-		// 	return (temp);
-		// }
-
-		// v_iterator operator+(int n, const v_iterator) const{
-		// 	// (void)it;
-		// 	v_iterator temp = *this;
-		// 	temp += n;
-		// 	return (temp);
-		// }
-
 		v_iterator operator-(int n){
 			v_iterator temp = *this;
 			temp -= n;
 			return (temp);
 		}
 
+		difference_type operator-(const v_iterator& it){
+			return (this->_content - it._content);
+		}
+
 		~v_iterator(){}
 
 	};
+	
+}
+template < class itr > ft::v_iterator<itr> operator+(typename ft::v_iterator<itr>::difference_type n, ft::v_iterator<itr> &vec){
+	ft::v_iterator<itr> temp = vec;
+	temp += n;
+	return (temp);
 }
 
 
