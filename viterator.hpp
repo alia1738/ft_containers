@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   viterator.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 16:54:46 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/08/04 14:21:14 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/08/12 12:05:29 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,10 @@ namespace ft {
 			return (this->_content <= it1._content);
 		}
 
+		operator v_iterator<const T>() const{
+			return (v_iterator<const T>(_content));
+		}
+
 		v_iterator& operator++(){
 			++this->_content;
 			return (*this);
@@ -102,11 +106,11 @@ namespace ft {
 			return (temp);
 		}
 
-		value_type& operator*(){
+		value_type& operator*() const{
 			return (this->_content[0]);
 		}
 
-		value_type& operator[](int n){
+		value_type& operator[](int n) const{
 			return (this->_content[n]);
 		}
 
@@ -120,19 +124,19 @@ namespace ft {
 			return (*this);
 		}
 
-		v_iterator operator+(int n){
+		v_iterator operator+(int n) const{
 			v_iterator temp = *this;
 			temp += n;
 			return (temp);
 		}
 
-		v_iterator operator-(int n){
+		v_iterator operator-(int n) const{
 			v_iterator temp = *this;
 			temp -= n;
 			return (temp);
 		}
 
-		difference_type operator-(const v_iterator& it){
+		difference_type operator-(const v_iterator& it) const{
 			return (this->_content - it._content);
 		}
 

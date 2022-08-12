@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/08/04 12:20:12 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/08/11 12:34:49 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ namespace ft
 		typedef value_type&								reference;
 		typedef const value_type&						const_reference;
 		typedef typename _allocator::pointer			pointer;
+		typedef typename _allocator::const_pointer		const_pointer;
 		typedef v_iterator<value_type>					iterator;
+		typedef v_iterator<const value_type>		const_iterator;
 	
 	private:
 		_allocator	alloc;
@@ -120,9 +122,19 @@ namespace ft
 			return (it);
 		}
 
+		const_iterator begin() const{
+			const_iterator	cit(static_cast<const_pointer>(this->_start));
+			return (cit);
+		}
+
 		iterator end(){
 			iterator	it(this->_end);
 			return (it);
+		}
+
+		const_iterator end() const{
+			const_iterator	cit(this->_end);
+			return (cit);
 		}
 
 		reference at (size_type n){
