@@ -7,7 +7,7 @@ Vector
 ✅ fill (2)		explicit vector (size_type n, const value_type& val = value_type(),
                  const allocator_type& alloc = allocator_type());
 
-range (3)		template <class InputIterator>
+✅ range (3)		template <class InputIterator>
         		 vector (InputIterator first, InputIterator last,
                  const allocator_type& alloc = allocator_type());
 

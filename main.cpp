@@ -16,51 +16,41 @@ using namespace ft;
 
 int main()
 {
+
 	try{
-		const vector<int> my_vector(5, 8);
-		const std::vector<int> og_vector(5, 8);
+	
+		// vector<int> my_vector(3);
+		std::vector<int> og_vector(3);
 
 		// my_vector[0] = 9;
 		// my_vector[1] = 1;
 		// my_vector[2] = 2;
-		// og_vector[0] = 9;
-		// og_vector[1] = 1;
-		// og_vector[2] = 2;
+		// my_vector.push_back(5);
+		// my_vector.push_back(8);
+		// my_vector.push_back(10);
+		// my_vector.push_back(11);
+		og_vector[0] = 9;
+		og_vector[1] = 1;
+		og_vector[2] = 2;
+		// og_vector.push_back(5);
+		// og_vector.push_back(8);
+		// og_vector.push_back(10);
+		// og_vector.push_back(11);
 
-		vector<int>::const_iterator my_it = my_vector.begin();
-		vector<int>::const_iterator my_it_end = my_vector.end();
-		std::vector<int>::const_iterator og_it = og_vector.begin();
-		std::vector<int>::const_iterator og_it_end = og_vector.end();
 
-
-		// vector<int> my_vector(5);
-		// std::vector<int> og_vector(5);
 		// vector<int>::iterator my_it = my_vector.begin();
 		// vector<int>::iterator my_it_end = my_vector.end();
-		// std::vector<int>::iterator og_it = og_vector.begin();
-		// std::vector<int>::iterator og_it_end = og_vector.end();
+		std::vector<int>::iterator og_it = og_vector.begin();
+		std::vector<int>::iterator og_it_end = og_vector.end();
 
-		// my_vector[0] = 9;
-		// my_vector[1] = 1;
-		// my_vector[2] = 2;
-		// og_vector[0] = 9;
-		// og_vector[1] = 1;
-		// og_vector[2] = 2;
+		// vector<int> my_vec_range(og_it, og_it_end);
+		std::vector<int> og_vec_range(og_it, og_it_end);
 
-		// *my_it++ = 5;
-		// *og_it++ = 5;
-		// my_it -= 1;
-		// og_it -= 1;
+		// std::cout << YELLOW1 << "size: " << my_vector.size() << " .. cap: " << my_vector.capacity() << RESET << std::endl;
+		// std::cout << YELLOW1 << "size: " <<  my_vec_range.size() << " .. cap: " << my_vec_range.capacity() << RESET << std::endl;
 
-		// my_it++;
-		// og_it++;
-		// my_it -= 1;
-		// og_it -= 1;
-
-		for (; *my_it != *my_it_end; *my_it++)
-			std::cout << YELLOW1 << *my_it << RESET << std::endl;
-		for (; *og_it != *og_it_end; *og_it++)
-			std::cout << BLUE1 << *og_it << RESET << std::endl;
+		std::cout << BLUE1 << "size: " << og_vector.size() << " .. cap: " << og_vector.capacity() << RESET << std::endl;
+		std::cout << BLUE1 << "size: " <<  og_vec_range.size() << " .. cap: " << og_vec_range.capacity() << RESET << std::endl;
 
 		// vector<int>::iterator		my_itcopy = my_it;
 		// std::vector<int>::iterator	*og_itcopy;
@@ -76,11 +66,10 @@ int main()
 		// 	std::cout << BLUE1 << "og works..." << RESET << std::endl;
 		// else
 		// 	std::cout << BLUE1 << "YOOO!" << RESET << std::endl;
-		
+
 		// std::cout << YELLOW1 << (my_it - my_itcopy) << RESET << std::endl;
 		// std::cout << BLUE1 << (og_it - og_itcopy) << RESET << std::endl;
-		
-		
+
 
 		// std::cout << YELLOW1 << "my it: " << *my_it << RESET << std::endl;
 		// std::cout << BLUE1 << "og it: " << *og_it << std::endl;
@@ -146,6 +135,94 @@ int main()
 		std::cerr << RED1 << e.what()<< RESET << std::endl;
 	}
 
+	/* -------------------------------------------------------------------------- */
+
+	// { // range constructor test
+	// 	vector<int> my_vector(3);
+	// 	std::vector<int> og_vector(3);
+
+	// 	my_vector[0] = 9;
+	// 	my_vector[1] = 1;
+	// 	my_vector[2] = 2;
+	// 	my_vector.push_back(5);
+	// 	my_vector.push_back(8);
+	// 	my_vector.push_back(10);
+	// 	my_vector.push_back(11);
+	// 	og_vector[0] = 9;
+	// 	og_vector[1] = 1;
+	// 	og_vector[2] = 2;
+	// 	og_vector.push_back(5);
+	// 	og_vector.push_back(8);
+	// 	og_vector.push_back(10);
+	// 	og_vector.push_back(11);
+
+
+	// 	vector<int>::iterator my_it = my_vector.begin();
+	// 	vector<int>::iterator my_it_end = my_vector.end();
+	// 	std::vector<int>::iterator og_it = og_vector.begin();
+	// 	std::vector<int>::iterator og_it_end = og_vector.end();
+
+	// 	vector<int> my_vec_range(og_it, og_it_end);
+	// 	std::vector<int> og_vec_range(og_it, og_it_end);
+
+	// 	std::cout << YELLOW1 << "size: " << my_vector.size() << " .. cap: " << my_vector.capacity() << RESET << std::endl;
+	// 	std::cout << YELLOW1 << "size: " <<  my_vec_range.size() << " .. cap: " << my_vec_range.capacity() << RESET << std::endl;
+
+	// 	std::cout << BLUE1 << "size: " << og_vector.size() << " .. cap: " << og_vector.capacity() << RESET << std::endl;
+	// 	std::cout << BLUE1 << "size: " <<  og_vec_range.size() << " .. cap: " << og_vec_range.capacity() << RESET << std::endl;
+	// }
+
+	/* -------------------------------------------------------------------------- */
+
+	// { // simple const iterator test
+	// 	const vector<int> my_vector(5, 8);
+	// 	const std::vector<int> og_vector(5, 8);
+	// 	vector<int>::const_iterator my_it = my_vector.begin();
+	// 	vector<int>::const_iterator my_it_end = my_vector.end();
+	// 	std::vector<int>::const_iterator og_it = og_vector.begin();
+	// 	std::vector<int>::const_iterator og_it_end = og_vector.end();
+	// 	for (; *my_it != *my_it_end; *my_it++)
+	// 		std::cout << YELLOW1 << *my_it << RESET << std::endl;
+	// 	for (; *og_it != *og_it_end; *og_it++)
+	// 		std::cout << BLUE1 << *og_it << RESET << std::endl;
+	// }
+
+	/* -------------------------------------------------------------------------- */
+
+	// { // iterator test
+	// 	vector<int> my_vector(3);
+	// 	std::vector<int> og_vector(3);
+
+	// 	my_vector[0] = 9;
+	// 	my_vector[1] = 1;
+	// 	my_vector[2] = 2;
+	// 	og_vector[0] = 9;
+	// 	og_vector[1] = 1;
+	// 	og_vector[2] = 2;
+
+
+	// 	vector<int>::iterator my_it = my_vector.begin();
+	// 	vector<int>::iterator my_it_end = my_vector.end();
+	// 	std::vector<int>::iterator og_it = og_vector.begin();
+	// 	std::vector<int>::iterator og_it_end = og_vector.end();
+
+	// 	*my_it++ = 5;
+	// 	*og_it++ = 5;
+	// 	my_it -= 1;
+	// 	og_it -= 1;
+
+	// 	my_it++;
+	// 	og_it++;
+	// 	my_it -= 1;
+	// 	og_it -= 1;
+
+	// 	for (; *my_it != *my_it_end; *my_it++)
+	// 		std::cout << YELLOW1 << *my_it << RESET << std::endl;
+	// 	for (; *og_it != *og_it_end; *og_it++)
+	// 		std::cout << BLUE1 << *og_it << RESET << std::endl;
+	// }
+
+	/* -------------------------------------------------------------------------- */
 
 	// vector<int> i;
 	// my_vector.push_back(1);
@@ -156,7 +233,7 @@ int main()
 	// my_vector.getC();
 	// std::cout << my_vector.size() << std::endl;
 	// std::cout << "---------------------------" << std::endl;
-	
+
 	// std::vector<int> v;
 	// std::cout << "size before push_back: " << v.size() << std::endl;
 	// v.push_back(1);
@@ -168,7 +245,7 @@ int main()
 	// v.push_back(5);
 	// v.push_back(6);
 	// std::cout << "size after six push_back: " << v.size() << std::endl;
-		
+
 	// std::vector<int>::iterator it = v.begin();
 	// std::cout << *it++ << " - ";
 	// std::cout << *it++ << " - ";

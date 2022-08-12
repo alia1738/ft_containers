@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/08/11 12:34:49 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/08/12 16:22:43 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,19 @@ namespace ft
 			}
 		}
 
-		vector (const vector& v): _start(0), _end(0), cap(0){
+		template < class InputIterator > vector(InputIterator first, InputIterator end, const allocator_type& alloc = allocator_type()){
+			this->alloc = alloc;
+			int count = 0;
+			for (; first[count] != *end; count++)
+				;
+			this->_start = this->alloc.allocate(count);
+			for (int i = 0; i < count; i++)
+				this->alloc.construct((this->_start + i), first[i]);
+			this->_end = this->_start + count;
+			this->cap = this->size();
+		}
+
+		vector(const vector& v): _start(0), _end(0), cap(0){
 			this->alloc = v.alloc;
 			this->cap = v.cap;
 			this->_start = this->alloc.allocate(v.size());
@@ -148,6 +160,10 @@ namespace ft
 				throw std::out_of_range("\nft::vector: out of range");
 			return(*(this->_start + n));
 		}
+
+		// template < class InputIterator > void assign(InputIterator first, InputIterator last){
+		// 	;
+		// }
 		
 		void	assign (size_type n, const value_type& val){
 			if (n >= this->cap){
