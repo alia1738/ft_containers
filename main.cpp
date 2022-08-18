@@ -18,39 +18,71 @@ int main()
 {
 
 	try{
-	
-		// vector<int> my_vector(3);
+		vector<int> my_vector(3);
 		std::vector<int> og_vector(3);
 
-		// my_vector[0] = 9;
-		// my_vector[1] = 1;
-		// my_vector[2] = 2;
-		// my_vector.push_back(5);
-		// my_vector.push_back(8);
-		// my_vector.push_back(10);
-		// my_vector.push_back(11);
+		my_vector[0] = 9;
+		my_vector[1] = 1;
+		my_vector[2] = 2;
+		my_vector.push_back(5);
+		my_vector.push_back(8);
+		my_vector.push_back(10);
+		my_vector.push_back(11);
 		og_vector[0] = 9;
 		og_vector[1] = 1;
 		og_vector[2] = 2;
-		// og_vector.push_back(5);
-		// og_vector.push_back(8);
-		// og_vector.push_back(10);
-		// og_vector.push_back(11);
+		// std::cout << RED1 << "HI" << RESET << std::endl;
+		og_vector.push_back(5);
+		og_vector.push_back(8);
+		og_vector.push_back(10);
+		og_vector.push_back(11);
 
 
-		// vector<int>::iterator my_it = my_vector.begin();
-		// vector<int>::iterator my_it_end = my_vector.end();
+		vector<int>::iterator my_it = my_vector.begin();
+		vector<int>::iterator my_it_end = my_vector.end();
 		std::vector<int>::iterator og_it = og_vector.begin();
 		std::vector<int>::iterator og_it_end = og_vector.end();
 
 		// vector<int> my_vec_range(og_it, og_it_end);
-		std::vector<int> og_vec_range(og_it, og_it_end);
+		vector<int> my_vec_ass;
+		std::vector<int> og_vec_ass;
+
+		// my_vec_ass.push_back(12);
+		// my_vec_ass.push_back(12);
+		// my_vec_ass.push_back(12);
+		// my_vec_ass.push_back(12);
+
+		// og_vec_ass.push_back(12);
+		// og_vec_ass.push_back(12);
+		// og_vec_ass.push_back(12);
+		// og_vec_ass.push_back(12);
+		std::cout << GREEN1 << "------ My vec ------" << RESET << std::endl;
+		for (int i = 0; i < static_cast<int>(my_vec_ass.size()); i++)
+			std::cout << PURPLE1 << my_vec_ass[i] << RESET << std::endl;
+		std::cout << PURPLE1 << "size = " << my_vec_ass.size() << RESET << std::endl;
+
+		std::cout << GREEN1 << "------ Og vec ------" << RESET << std::endl;
+		for (int i = 0; i < static_cast<int>(og_vec_ass.size()); i++)
+			std::cout << PURPLE1 << og_vec_ass[i] << RESET << std::endl;
+		std::cout << PURPLE1 << "size = " << og_vec_ass.size() << RESET << std::endl;
+
+		std::cout << GREEN1 << "------ My vec ------" << RESET << std::endl;
+		my_vec_ass.assign(my_it, my_it_end);
+		for (int i = 0; i < static_cast<int>(my_vec_ass.size()); i++)
+			std::cout << YELLOW1 << my_vec_ass[i] << RESET << std::endl;
+		std::cout << YELLOW1 << "size = " << my_vec_ass.size() << RESET << std::endl;
+
+		std::cout << GREEN1 << "------ Og vec ------" << RESET << std::endl;
+		og_vec_ass.assign(og_it, og_it_end);
+		for (int i = 0; i < static_cast<int>(og_vec_ass.size()); i++)
+			std::cout << YELLOW1 << og_vec_ass[i] << RESET << std::endl;
+		std::cout << YELLOW1 << "size = " << og_vec_ass.size() << RESET << std::endl;
 
 		// std::cout << YELLOW1 << "size: " << my_vector.size() << " .. cap: " << my_vector.capacity() << RESET << std::endl;
 		// std::cout << YELLOW1 << "size: " <<  my_vec_range.size() << " .. cap: " << my_vec_range.capacity() << RESET << std::endl;
 
-		std::cout << BLUE1 << "size: " << og_vector.size() << " .. cap: " << og_vector.capacity() << RESET << std::endl;
-		std::cout << BLUE1 << "size: " <<  og_vec_range.size() << " .. cap: " << og_vec_range.capacity() << RESET << std::endl;
+		// std::cout << BLUE1 << "size: " << og_vector.size() << " .. cap: " << og_vector.capacity() << RESET << std::endl;
+		// std::cout << BLUE1 << "size: " <<  og_vec_range.size() << " .. cap: " << og_vec_range.capacity() << RESET << std::endl;
 
 		// vector<int>::iterator		my_itcopy = my_it;
 		// std::vector<int>::iterator	*og_itcopy;
@@ -134,6 +166,68 @@ int main()
 	catch (std::exception& e){
 		std::cerr << RED1 << e.what()<< RESET << std::endl;
 	}
+
+	/* -------------------------------------------------------------------------- */
+
+	// { // range assign  
+	// 	vector<int> my_vector(3);
+	// 	std::vector<int> og_vector(3);
+
+	// 	my_vector[0] = 9;
+	// 	my_vector[1] = 1;
+	// 	my_vector[2] = 2;
+	// 	my_vector.push_back(5);
+	// 	my_vector.push_back(8);
+	// 	my_vector.push_back(10);
+	// 	my_vector.push_back(11);
+	// 	og_vector[0] = 9;
+	// 	og_vector[1] = 1;
+	// 	og_vector[2] = 2;
+	// 	og_vector.push_back(5);
+	// 	og_vector.push_back(8);
+	// 	og_vector.push_back(10);
+	// 	og_vector.push_back(11);
+
+
+	// 	vector<int>::iterator my_it = my_vector.begin();
+	// 	vector<int>::iterator my_it_end = my_vector.end();
+	// 	std::vector<int>::iterator og_it = og_vector.begin();
+	// 	std::vector<int>::iterator og_it_end = og_vector.end();
+
+	// 	vector<int> my_vec_ass;
+	// 	std::vector<int> og_vec_ass;
+
+	// 	// my_vec_ass.push_back(12);
+	// 	// my_vec_ass.push_back(12);
+	// 	// my_vec_ass.push_back(12);
+	// 	// my_vec_ass.push_back(12);
+
+	// 	// og_vec_ass.push_back(12);
+	// 	// og_vec_ass.push_back(12);
+	// 	// og_vec_ass.push_back(12);
+	// 	// og_vec_ass.push_back(12);
+	// 	std::cout << GREEN1 << "------ My vec ------" << RESET << std::endl;
+	// 	for (int i = 0; i < static_cast<int>(my_vec_ass.size()); i++)
+	// 		std::cout << PURPLE1 << my_vec_ass[i] << RESET << std::endl;
+	// 	std::cout << PURPLE1 << "size = " << my_vec_ass.size() << RESET << std::endl;
+
+	// 	std::cout << GREEN1 << "------ Og vec ------" << RESET << std::endl;
+	// 	for (int i = 0; i < static_cast<int>(og_vec_ass.size()); i++)
+	// 		std::cout << PURPLE1 << og_vec_ass[i] << RESET << std::endl;
+	// 	std::cout << PURPLE1 << "size = " << og_vec_ass.size() << RESET << std::endl;
+
+	// 	std::cout << GREEN1 << "------ My vec ------" << RESET << std::endl;
+	// 	my_vec_ass.assign(my_it, my_it_end);
+	// 	for (int i = 0; i < static_cast<int>(my_vec_ass.size()); i++)
+	// 		std::cout << YELLOW1 << my_vec_ass[i] << RESET << std::endl;
+	// 	std::cout << YELLOW1 << "size = " << my_vec_ass.size() << RESET << std::endl;
+
+	// 	std::cout << GREEN1 << "------ Og vec ------" << RESET << std::endl;
+	// 	og_vec_ass.assign(og_it, og_it_end);
+	// 	for (int i = 0; i < static_cast<int>(og_vec_ass.size()); i++)
+	// 		std::cout << YELLOW1 << og_vec_ass[i] << RESET << std::endl;
+	// 	std::cout << YELLOW1 << "size = " << og_vec_ass.size() << RESET << std::endl;
+	// }
 
 	/* -------------------------------------------------------------------------- */
 

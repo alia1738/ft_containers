@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/08/12 16:22:43 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/08/17 18:08:45 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,9 +161,32 @@ namespace ft
 			return(*(this->_start + n));
 		}
 
-		// template < class InputIterator > void assign(InputIterator first, InputIterator last){
-		// 	;
-		// }
+		template < class InputIterator > void assign(InputIterator first, InputIterator last){
+			size_type	new_size = static_cast<size_type>(last - first);
+
+			if (new_size >= this->cap){
+				pointer	temp = alloc.allocate(new_size);
+				
+				size_type i = 0, max = this->size();
+				for (; i < new_size; i++){
+					this->alloc.construct((temp + i), *first++);
+					if (i < max)
+						this->alloc.destroy(this->_start + i);
+				}
+
+				this->alloc.deallocate(this->_start, max);
+				this->_start = temp;
+				this->_end = this->_start + i;
+				this->cap = new_size;
+			}
+			else {
+				for (size_type i = 0; i < new_size; i++){
+					alloc.destroy(this->_start + i);
+					alloc.construct(this->_start + i, *first++);
+				}
+				this->_end = this->_start + new_size;
+			}
+		}
 		
 		void	assign (size_type n, const value_type& val){
 			if (n >= this->cap){
@@ -178,7 +201,7 @@ namespace ft
 
 				this->alloc.deallocate(this->_start, i);
 				this->_start = temp;
-				this->_end = this->_start + ++i;
+				this->_end = this->_start + i;
 				this->cap = n;
 			}
 			else {
