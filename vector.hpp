@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/08/17 18:08:45 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/08/19 16:08:16 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,6 +220,10 @@ namespace ft
 			return (*(this->_end - 1));
 		}
 		
+		iterator	erase(iterator first, iterator last) {
+			// funny shit
+		}
+
 		void clear(){
 			size_type i = 0, max = this->size();
 			
