@@ -67,8 +67,8 @@ Vector
 --------------------------------------------------------
 
 --------------------- vector::erase --------------------
-iterator erase (iterator position);
-iterator erase (iterator first, iterator last);
+<< not tested >> ✅ iterator erase (iterator position);
+<< more testing >> ✅ iterator erase (iterator first, iterator last);
 --------------------------------------------------------
 
 --------------------- vector::front --------------------

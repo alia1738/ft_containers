@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/08/19 16:08:16 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/08/24 13:16:37 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,13 +220,50 @@ namespace ft
 			return (*(this->_end - 1));
 		}
 		
+		iterator	erase(iterator position){
+			if (&(*position) < &this->_start[0]){
+				return (this->begin()); // maybe throw error instead
+			}
+			size_type	new_size = this->size() - 1;
+			pointer		temp = alloc.allocate(new_size);
+
+			size_type i = 0, max = this->size();
+			for (; i < max; i++){
+				if (&(*position) != &this->_start[i])
+					alloc.construct((temp + i), *(this->_start + i));
+				alloc.destroy(this->_start + i);
+			}
+			alloc.deallocate(this->_start, max);
+			this->_start = temp;
+			this->_end = temp + new_size;
+			return (this->begin());
+		}
+
 		iterator	erase(iterator first, iterator last) {
-			// funny shit
+			if (&(*first) < &this->_start[0] || &(*last) > &this->_end[0]){
+				std::cout << YELLOW1 << "YEEEEEEE!" << RESET << std::endl;
+				return (this->begin()); // maybe throw error instead
+			}
+			size_type	new_size = static_cast<size_type>(*last - *first);
+			pointer		temp = alloc.allocate(new_size);
+
+			size_type i = 0, max = this->size();
+			for (; i < max; i++){
+				if (*first != *last && &(*first) != &this->_start[i]){
+					alloc.construct((temp + i), *(this->_start + i));
+					*first++;
+				}
+				alloc.destroy(this->_start + i);
+			}
+			alloc.deallocate(this->_start, max);
+			this->_start = temp;
+			this->_end = temp + new_size;
+			return (this->begin());
 		}
 
 		void clear(){
 			size_type i = 0, max = this->size();
-			
+
 			for (; i < max; i++)
 				this->alloc.destroy(this->_start + i);
 			this->_end = this->_start;

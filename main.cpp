@@ -28,27 +28,30 @@ void	empty_test() {
 	og_vector.push_back(10);
 	og_vector.push_back(11);
 
-	vector<int>::iterator my_it = my_vector.begin();
+	vector<int>::iterator my_it_end = my_vector.end();
+	vector<int>::iterator my_it = my_vector.erase(my_vector.begin(), ++my_it_end);
+	// my_vector.erase(my_vector.begin(), my_vector.end());
+	// vector<int>::iterator my_it = my_vector.begin();
 	// vector<int>::iterator my_it_end = my_vector.end();
 
-	// std::cout << GREEN1 << "------ My vec ------" << RESET << std::endl;
-	// for (; my_it != my_it_end; my_it++)
-	// 	std::cout << PURPLE1 << *my_it << RESET << std::endl;
+	std::cout << GREEN1 << "------ My vec ------" << RESET << std::endl;
+	// std::cout << RED1 << my_vector.size() << std::endl;
+	for (int i = 0; i < static_cast<int>(my_vector.size()); i++)
+		std::cout << PURPLE1 << my_vector[i] << RESET << std::endl;
+	std::cout << PURPLE1 << "my_it: " << *my_it << RESET << std::endl;
+	std::cout << PURPLE1 << &(*my_it) << " .. " << &my_vector[0] << RESET << std::endl;
 
+	std::vector<int>::iterator og_it_end = og_vector.end();
+	std::vector<int>::iterator og_it = og_vector.erase(og_vector.begin(), ++og_it_end);
 	// og_vector.erase(og_vector.begin(), og_vector.end());
-	std::vector<int>::iterator og_it = og_vector.begin();
+	// std::vector<int>::iterator og_it = og_vector.begin();
 	// std::vector<int>::iterator og_it_end = og_vector.end();
 
-	// std::cout << GREEN1 << "------ Og vec ------" << RESET << std::endl;
-	// for (; og_it != og_it_end; og_it++)
-	// 	std::cout << PURPLE1 << *og_it << RESET << std::endl;
-	
-	// std::cout << BLUE1 << og_vector.size() << " .. " << og_vector.capacity() << RESET << std::endl;
-
-	// for (int i = 0; i < static_cast<int>(og_vector.size()); i++)
-	// 	std::cout << BLUE1 << og_vector[i] << RESET << std::endl;
-
-	std::cout << PURPLE1 << &(*my_it) << " .. " << &my_vector[0] << RESET << std::endl;
+	std::cout << GREEN1 << "------ Og vec ------" << RESET << std::endl;
+	// std::cout << RED1 << og_vector.size() << std::endl;
+	for (int i = 0; i < static_cast<int>(og_vector.size()); i++)
+		std::cout << BLUE1 << og_vector[i] << RESET << std::endl;
+	std::cout << BLUE1 << "og_it: " << *og_it << RESET << std::endl;
 	std::cout << BLUE1 << &(*og_it) << " .. " << &og_vector[0] << RESET << std::endl;
 }
 
