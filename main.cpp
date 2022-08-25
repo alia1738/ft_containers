@@ -14,53 +14,78 @@
 
 using namespace ft;
 
-void	empty_test() {
-	vector<int> my_vector;
-	std::vector<int> og_vector;
+void	insert_test() {
+	vector<int>	my_vec;
+	std::vector<int>	og_vec;
 
-	my_vector.push_back(5);
-	my_vector.push_back(8);
-	my_vector.push_back(10);
-	my_vector.push_back(11);
+	my_vec.push_back(22);
+	my_vec.push_back(44);
+	my_vec.push_back(66);
+	my_vec.push_back(88);
+	my_vec.push_back(1010);
 
-	og_vector.push_back(5);
-	og_vector.push_back(8);
-	og_vector.push_back(10);
-	og_vector.push_back(11);
+	og_vec.push_back(22);
+	og_vec.push_back(44);
+	og_vec.push_back(66);
+	og_vec.push_back(88);
+	og_vec.push_back(1010);
 
-	vector<int>::iterator my_it_end = my_vector.end();
-	vector<int>::iterator my_it = my_vector.erase(my_vector.begin(), ++my_it_end);
-	// my_vector.erase(my_vector.begin(), my_vector.end());
-	// vector<int>::iterator my_it = my_vector.begin();
-	// vector<int>::iterator my_it_end = my_vector.end();
+	std::cout << "************** my vec **************" << std::endl;
+	for (vector<int>::size_type i = 0; i < my_vec.size(); i++)
+		std::cout << YELLOW1 << my_vec[i] << RESET << std::endl;
+	std::cout << YELLOW1 << "size: " << my_vec.size() << " .. cap: " << my_vec.capacity() << RESET << std::endl;
 
-	std::cout << GREEN1 << "------ My vec ------" << RESET << std::endl;
-	// std::cout << RED1 << my_vector.size() << std::endl;
-	for (int i = 0; i < static_cast<int>(my_vector.size()); i++)
-		std::cout << PURPLE1 << my_vector[i] << RESET << std::endl;
-	std::cout << PURPLE1 << "my_it: " << *my_it << RESET << std::endl;
-	std::cout << PURPLE1 << &(*my_it) << " .. " << &my_vector[0] << RESET << std::endl;
+	std::cout << "************** og vec **************" << std::endl;
+	for (std::vector<int>::size_type i = 0; i < og_vec.size(); i++)
+		std::cout << YELLOW1 << og_vec[i] << RESET << std::endl;
+	std::cout << YELLOW1 << "size: " << og_vec.size() << " .. cap: " << og_vec.capacity() << RESET << std::endl;
 
-	std::vector<int>::iterator og_it_end = og_vector.end();
-	std::vector<int>::iterator og_it = og_vector.erase(og_vector.begin(), ++og_it_end);
-	// og_vector.erase(og_vector.begin(), og_vector.end());
-	// std::vector<int>::iterator og_it = og_vector.begin();
-	// std::vector<int>::iterator og_it_end = og_vector.end();
+	my_vec.insert(my_vec.begin(), 11);
+	og_vec.insert(og_vec.begin(), 11);
 
-	std::cout << GREEN1 << "------ Og vec ------" << RESET << std::endl;
-	// std::cout << RED1 << og_vector.size() << std::endl;
-	for (int i = 0; i < static_cast<int>(og_vector.size()); i++)
-		std::cout << BLUE1 << og_vector[i] << RESET << std::endl;
-	std::cout << BLUE1 << "og_it: " << *og_it << RESET << std::endl;
-	std::cout << BLUE1 << &(*og_it) << " .. " << &og_vector[0] << RESET << std::endl;
+	std::cout << "************** my vec **************" << std::endl;
+	for (vector<int>::size_type i = 0; i < my_vec.size(); i++)
+		std::cout << BLUE1 << my_vec[i] << RESET << std::endl;
+	std::cout << BLUE1 << "size: " << my_vec.size() << " .. cap: " << my_vec.capacity() << RESET << std::endl;
+
+	std::cout << "************** og vec **************" << std::endl;
+	for (std::vector<int>::size_type i = 0; i < og_vec.size(); i++)
+		std::cout << BLUE1 << og_vec[i] << RESET << std::endl;
+	std::cout << BLUE1 << "size: " << og_vec.size() << " .. cap: " << og_vec.capacity() << RESET << std::endl;
+
+	my_vec.insert(my_vec.begin(), 5, 33);
+	og_vec.insert(og_vec.begin(), 5, 33);
+
+	std::cout << "************** my vec **************" << std::endl;
+	for (vector<int>::size_type i = 0; i < my_vec.size(); i++)
+		std::cout << GREEN1 << my_vec[i] << RESET << std::endl;
+	std::cout << GREEN1 << "size: " << my_vec.size() << " .. cap: " << my_vec.capacity() << RESET << std::endl;
+
+	std::cout << "************** og vec **************" << std::endl;
+	for (std::vector<int>::size_type i = 0; i < og_vec.size(); i++)
+		std::cout << GREEN1 << og_vec[i] << RESET << std::endl;
+	std::cout << GREEN1 << "size: " << og_vec.size() << " .. cap: " << og_vec.capacity() << RESET << std::endl;
+
+	my_vec.insert(my_vec.begin(), my_vec.begin(), my_vec.end());
+	og_vec.insert(og_vec.begin(), og_vec.begin(), og_vec.end());
+
+	std::cout << "************** my vec **************" << std::endl;
+	for (vector<int>::size_type i = 0; i < my_vec.size(); i++)
+		std::cout << PURPLE1 << my_vec[i] << RESET << std::endl;
+	std::cout << PURPLE1 << "size: " << my_vec.size() << " .. cap: " << my_vec.capacity() << RESET << std::endl;
+
+	std::cout << "************** og vec **************" << std::endl;
+	for (std::vector<int>::size_type i = 0; i < og_vec.size(); i++)
+		std::cout << PURPLE1 << og_vec[i] << RESET << std::endl;
+	std::cout << PURPLE1 << "size: " << og_vec.size() << " .. cap: " << og_vec.capacity() << RESET << std::endl;
 }
+
 
 int main()
 {
 
 	try{
-
-		empty_test();
+		insert_test();
 
 		// std::cout << YELLOW1 << "size: " << my_vector.size() << " .. cap: " << my_vector.capacity() << RESET << std::endl;
 		// std::cout << YELLOW1 << "size: " <<  my_vec_range.size() << " .. cap: " << my_vec_range.capacity() << RESET << std::endl;
@@ -328,4 +353,45 @@ int main()
 // 		std::cout << YELLOW1 << *my_it << RESET << std::endl;
 // 	for (; *og_it != *og_it_end; *og_it++)
 // 		std::cout << BLUE1 << *og_it << RESET << std::endl;
+// }
+
+// void	empty_test() {
+// 	vector<int> my_vector;
+// 	std::vector<int> og_vector;
+
+// 	my_vector.push_back(5);
+// 	my_vector.push_back(8);
+// 	my_vector.push_back(10);
+// 	my_vector.push_back(11);
+
+// 	og_vector.push_back(5);
+// 	og_vector.push_back(8);
+// 	og_vector.push_back(10);
+// 	og_vector.push_back(11);
+
+// 	vector<int>::iterator my_it_end = my_vector.end();
+// 	vector<int>::iterator my_it = my_vector.erase(my_vector.begin(), ++my_it_end);
+// 	// my_vector.erase(my_vector.begin(), my_vector.end());
+// 	// vector<int>::iterator my_it = my_vector.begin();
+// 	// vector<int>::iterator my_it_end = my_vector.end();
+
+// 	std::cout << GREEN1 << "------ My vec ------" << RESET << std::endl;
+// 	// std::cout << RED1 << my_vector.size() << std::endl;
+// 	for (int i = 0; i < static_cast<int>(my_vector.size()); i++)
+// 		std::cout << PURPLE1 << my_vector[i] << RESET << std::endl;
+// 	std::cout << PURPLE1 << "my_it: " << *my_it << RESET << std::endl;
+// 	std::cout << PURPLE1 << &(*my_it) << " .. " << &my_vector[0] << RESET << std::endl;
+
+// 	std::vector<int>::iterator og_it_end = og_vector.end();
+// 	std::vector<int>::iterator og_it = og_vector.erase(og_vector.begin(), ++og_it_end);
+// 	// og_vector.erase(og_vector.begin(), og_vector.end());
+// 	// std::vector<int>::iterator og_it = og_vector.begin();
+// 	// std::vector<int>::iterator og_it_end = og_vector.end();
+
+// 	std::cout << GREEN1 << "------ Og vec ------" << RESET << std::endl;
+// 	// std::cout << RED1 << og_vector.size() << std::endl;
+// 	for (int i = 0; i < static_cast<int>(og_vector.size()); i++)
+// 		std::cout << BLUE1 << og_vector[i] << RESET << std::endl;
+// 	std::cout << BLUE1 << "og_it: " << *og_it << RESET << std::endl;
+// 	std::cout << BLUE1 << &(*og_it) << " .. " << &og_vector[0] << RESET << std::endl;
 // }

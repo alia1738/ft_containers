@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/08/24 13:16:37 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/08/25 15:45:17 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,6 +284,70 @@ namespace ft
 		allocator_type get_allocator() const{
 			return (this->alloc);
 		}
+
+		iterator	insert(iterator position, const value_type& val) {
+			size_type	new_size = this->size() + 1, start_i = 0, temp_i = 0;
+			if (new_size > this->cap)
+				this->cap *= 2;
+			pointer	temp = alloc.allocate(new_size);
+			for (bool added = false; temp_i < new_size; temp_i++){
+				if (!added && &(*position) == &this->_start[start_i]) {
+					added = true;
+					this->alloc.construct((temp + temp_i), val);
+				}
+				else {
+					this->alloc.construct((temp + temp_i), *(this->_start + start_i));
+					this->alloc.destroy(this->_start + start_i++);
+				}
+			}
+			this->alloc.deallocate(this->_start, start_i);
+			this->_start = temp;
+			this->_end = temp + temp_i;
+			return (this->begin());
+		}
+	
+		void	insert(iterator position, size_type n, const value_type& val) {
+			size_type	new_size = this->size() + n, start_i = 0, temp_i = 0;
+			while (new_size > this->cap)
+				this->cap *= 2;
+			pointer	temp = alloc.allocate(new_size);
+			for (bool added = false; temp_i < new_size;){
+				if (!added && &(*position) == &this->_start[start_i]) {
+					added = true;
+					for (size_type i = 0; i < n; i++)
+						this->alloc.construct((temp + temp_i++), val);
+				}
+				else {
+					this->alloc.construct((temp + temp_i++), *(this->_start + start_i));
+					this->alloc.destroy(this->_start + start_i++);
+				}
+			}
+			this->alloc.deallocate(this->_start, start_i);
+			this->_start = temp;
+			this->_end = temp + temp_i;
+		}
+
+		template <class InputIterator> void	insert(iterator position, InputIterator first, InputIterator last) {
+			size_type	to_add = static_cast<size_type>(last - first);
+			size_type	new_size = this->size() + to_add, start_i = 0, temp_i = 0;
+			while (new_size > this->cap)
+				this->cap *= 2;
+			pointer	temp = alloc.allocate(new_size);
+			for (bool added = false; temp_i < new_size;){
+				if (!added && &(*position) == &this->_start[start_i]) {
+					added = true;
+					for (; first != last; first++)
+						this->alloc.construct((temp + temp_i++), *first);
+				}
+				else {
+					this->alloc.construct((temp + temp_i++), *(this->_start + start_i));
+					this->alloc.destroy(this->_start + start_i++);
+				}
+			}
+			this->alloc.deallocate(this->_start, start_i);
+			this->_start = temp;
+			this->_end = temp + temp_i;
+		} // this is still not working 
 
 		size_type max_size() const{
 			return(this->alloc.max_size());

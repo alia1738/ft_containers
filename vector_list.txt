@@ -44,18 +44,9 @@ Vector
 ✅ size_type capacity() const;
 --------------------------------------------------------
 
-!!! C11 !!!  vector::cbegin
-!!! C11 !!!  vector::cend
-
 --------------------- vector::clear --------------------
 << not tested >> ✅ void clear();
 --------------------------------------------------------
-
-!!! C11 !!!  vector::crbegin
-!!! C11 !!!  vector::crend
-!!! C11 !!!  vector::data
-!!! C11 !!!  vector::emplace
-!!! C11 !!!  vector::emplace_back
 
 --------------------- vector::empty ---------------------
 << not tested >> ✅ bool empty() const;
@@ -81,10 +72,9 @@ Vector
 --------------------------------------------------------
 
 -------------------- vector::insert --------------------
+✅ single element (1)		iterator insert (iterator position, const value_type& val);
 
-single element (1)		iterator insert (iterator position, const value_type& val);
-
-fill (2)				void insert (iterator position, size_type n, const value_type& val);
+✅ fill (2)				void insert (iterator position, size_type n, const value_type& val);
 
 range (3)				template <class InputIterator>
     					void insert (iterator position, InputIterator first, InputIterator last);
@@ -129,8 +119,6 @@ const_reverse_iterator rend() const;
 << not tested >> ✅ void resize (size_type n, value_type val = value_type());
 --------------------------------------------------------
 
-!!! C11 !!!  vector::shrink_to_fit
-
 --------------------- vector::size ---------------------
 ✅ size_type size() const;
 --------------------------------------------------------
@@ -138,7 +126,6 @@ const_reverse_iterator rend() const;
 --------------------- vector::swap ---------------------
 void swap (vector& x);
 --------------------------------------------------------
-
 
 ------------ relational operators (vector) -------------
 (1)	template <class T, class Alloc>
