@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/08/25 15:45:17 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/08/29 12:55:04 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,32 @@
 namespace ft
 {
 
+	template<typename T, T val> struct is_integral_base{
+		static const T	value = val;
+	};
+
+	typedef is_integral_base<bool, true> true_type;
+	typedef is_integral_base<bool, false> false_type;
+
+	template<typename T> struct is_integral: false_type{};
+	template<> struct is_integral<bool>: true_type{};
+	template<> struct is_integral<int>: true_type{};
+	template<> struct is_integral<short>: true_type{};
+	template<> struct is_integral<long>: true_type{};
+	template<> struct is_integral<long long>: true_type{};
+	template<> struct is_integral<unsigned int>: true_type{};
+	template<> struct is_integral<unsigned long>: true_type{};
+	template<> struct is_integral<unsigned long long>: true_type{};
+	template<> struct is_integral<char>: true_type{};
+	template<> struct is_integral<signed char>: true_type{};
+	template<> struct is_integral<unsigned char>: true_type{};
+	template<> struct is_integral<wchar_t>: true_type{};
+
+	template <bool, typename T = void> struct enable_if {};
+	template <typename T> struct enable_if<false, T> {
+		typedef T type;
+	};
+
 	template < typename T, class _alloc> class vector
 	{
 
@@ -67,7 +93,7 @@ namespace ft
 		typedef typename _allocator::const_pointer		const_pointer;
 		typedef v_iterator<value_type>					iterator;
 		typedef v_iterator<const value_type>		const_iterator;
-	
+
 	private:
 		_allocator	alloc;
 		pointer		_start;
@@ -327,7 +353,7 @@ namespace ft
 			this->_end = temp + temp_i;
 		}
 
-		template <class InputIterator> void	insert(iterator position, InputIterator first, InputIterator last) {
+		template <class InputIterator> void	insert(iterator position, InputIterator first, InputIterator last, typename enable_if<is_integral<InputIterator>::value, InputIterator>::type=0) {
 			size_type	to_add = static_cast<size_type>(last - first);
 			size_type	new_size = this->size() + to_add, start_i = 0, temp_i = 0;
 			while (new_size > this->cap)
@@ -347,7 +373,7 @@ namespace ft
 			this->alloc.deallocate(this->_start, start_i);
 			this->_start = temp;
 			this->_end = temp + temp_i;
-		} // this is still not working 
+		}
 
 		size_type max_size() const{
 			return(this->alloc.max_size());
