@@ -102,13 +102,13 @@ Vector
 --------------------------------------------------------
 
 -------------------- vector::rbegin --------------------
-reverse_iterator rbegin();
-const_reverse_iterator rbegin() const;
+<< not tested >> ✅ reverse_iterator rbegin();
+<< not tested >> ✅ const_reverse_iterator rbegin() const;
 --------------------------------------------------------
 
 --------------------- vector::rend ---------------------
-reverse_iterator rend();
-const_reverse_iterator rend() const;
+<< not tested >> ✅ reverse_iterator rend();
+<< not tested >> ✅ const_reverse_iterator rend() const;
 --------------------------------------------------------
 
 ------------------- vector::reserve --------------------
@@ -124,7 +124,7 @@ const_reverse_iterator rend() const;
 --------------------------------------------------------
 
 --------------------- vector::swap ---------------------
-void swap (vector& x);
+<< not tested >> ✅ void swap (vector& x);
 --------------------------------------------------------
 
 ------------ relational operators (vector) -------------

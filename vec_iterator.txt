@@ -30,3 +30,60 @@
 ✅ -=		[ a -= n ]
 -------------------
 ✅ []	[ a[n] ]
+
+/**************** reverse ****************\
+
+member functions:
+
+✅ reverse_iterator::base
+
+✅ reverse_iterator::operator-
+
+✅ reverse_iterator::operator--
+
+✅ reverse_iterator::operator-=
+
+reverse_iterator::operator->
+
+✅ reverse_iterator::operator[]
+
+✅ reverse_iterator::operator*
+
+✅ reverse_iterator::operator+
+
+✅ reverse_iterator::operator++
+
+✅ reverse_iterator::operator+=
+
+!!!! C11 !!!! reverse_iterator::operator=
+
+non-member overloads:
+
+✅ operator- (reverse_iterator)
+
+✅ operator+ (reverse_iterator)
+
+relational operators (reverse_iterator)
+
+✅ bool operator== (const reverse_iterator<Iterator>& lhs,
+                   const reverse_iterator<Iterator>& rhs);
+
+template <class Iterator>
+✅ bool operator!= (const reverse_iterator<Iterator>& lhs,
+                   const reverse_iterator<Iterator>& rhs);
+
+template <class Iterator>
+✅ bool operator<  (const reverse_iterator<Iterator>& lhs,
+                   const reverse_iterator<Iterator>& rhs);
+
+template <class Iterator>
+✅ bool operator<= (const reverse_iterator<Iterator>& lhs,
+                   const reverse_iterator<Iterator>& rhs);
+
+template <class Iterator>
+✅ bool operator>  (const reverse_iterator<Iterator>& lhs,
+                   const reverse_iterator<Iterator>& rhs);
+
+template <class Iterator>
+✅ bool operator>= (const reverse_iterator<Iterator>& lhs,
+                   const reverse_iterator<Iterator>& rhs);

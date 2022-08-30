@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/08/29 12:55:04 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/08/30 16:11:47 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ namespace ft
 		typedef T type;
 	};
 
-	template < typename T, class _alloc> class vector
+	template < typename T, class _alloc > class vector
 	{
 
 	public:
@@ -92,7 +92,9 @@ namespace ft
 		typedef typename _allocator::pointer			pointer;
 		typedef typename _allocator::const_pointer		const_pointer;
 		typedef v_iterator<value_type>					iterator;
-		typedef v_iterator<const value_type>		const_iterator;
+		typedef v_iterator<const value_type>			const_iterator;
+		typedef reverse_iterator<iterator>				reverse_iterator;
+		typedef reverse_iterator<const iterator>		const_reverse_iterator;
 
 	private:
 		_allocator	alloc;
@@ -165,6 +167,16 @@ namespace ft
 			return (cit);
 		}
 
+		reverse_iterator rbegin(){
+			reverse_iterator	it(this->_end);
+			return (it);
+		}
+
+		const_reverse_iterator rbegin() const{
+			const_reverse_iterator	cit(static_cast<const_pointer>(this->_end));
+			return (cit);
+		}
+
 		iterator end(){
 			iterator	it(this->_end);
 			return (it);
@@ -172,6 +184,16 @@ namespace ft
 
 		const_iterator end() const{
 			const_iterator	cit(this->_end);
+			return (cit);
+		}
+
+		reverse_iterator rend(){
+			reverse_iterator	it(this->_start);
+			return (it);
+		}
+
+		const_reverse_iterator rend() const{
+			const_reverse_iterator	cit(static_cast<const_pointer>(this->_start));
 			return (cit);
 		}
 
@@ -465,6 +487,23 @@ namespace ft
 			return(this->cap);
 		}
 
+		void swap (vector& v){			
+			_allocator	temp_alloc = v.alloc;
+			pointer 	temp_start = v._start;
+			pointer		temp_end = v._end;
+			size_type	temp_cap = v.cap;
+
+			v.alloc = this->alloc;
+			v._start = this->_start;
+			v._end = this->_end;
+			v.cap = this->cap;
+
+			this->alloc = temp_alloc;
+			this->_start = temp_start;
+			this->_end = temp_end;
+			this->cap = temp_cap;
+		}
+
 		~vector(){
 			size_type	i = 0, max = this->size();
 			
@@ -474,6 +513,14 @@ namespace ft
 		}
 
 	};
+
+	template < typename T, class _alloc > void swap(ft::vector<T, _alloc>& l, ft::vector<T, _alloc>& r){
+		l.swap(r);
+	}
+
+	template < typename T, class _alloc > bool operator==(ft::vector<T, _alloc>& l, ft::vector<T, _alloc>& r){
+		;
+	}
 
 }
 
