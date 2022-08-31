@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 16:54:46 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/08/30 15:35:51 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/08/31 13:17:15 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 // #include "vector.hpp"
 
 namespace ft {
-	
+
 	template < typename T, class _alloc = std::allocator<T> > class vector;
 
 	template <class it> class iterator_traits {
@@ -28,7 +28,7 @@ namespace ft {
 		typedef typename it::reference         reference;
 		typedef typename it::iterator_category iterator_category;
 	};
-	
+
 	/* ------------------ -- - Reverse Iterator - -- ------------------ */
 
 	template < class It> class reverse_iterator {
@@ -45,7 +45,7 @@ namespace ft {
 		reverse_iterator(): _content(){}
 
 		explicit reverse_iterator(It con): _content(con){}
-		
+
 		template<class r_it> reverse_iterator(const reverse_iterator<r_it>& rit): _content(r_it.base()){}
 
 		It base() const {
@@ -107,7 +107,7 @@ namespace ft {
 		typedef typename vector<T>::value_type		value_type;
 		typedef typename vector<T>::reference		reference;
 		typedef typename vector<T>::difference_type	difference_type;
-	
+
 	private:
 		pointer _content;
 

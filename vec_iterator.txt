@@ -7,7 +7,7 @@
 ✅ !=		[ a != b ]
 -------------------
 ✅ *		[ *a ]
-->		[ a->m ]
+❌ ->		[ a->m ]
 -------------------
 ✅ 		[ *a = t ]
 ✅ 		[ *a++ = t ]
@@ -43,7 +43,7 @@ member functions:
 
 ✅ reverse_iterator::operator-=
 
-reverse_iterator::operator->
+❌ reverse_iterator::operator->
 
 ✅ reverse_iterator::operator[]
 

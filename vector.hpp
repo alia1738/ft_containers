@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/08/30 16:11:47 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/08/31 15:53:07 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,50 @@
 
 namespace ft
 {
+	
+	template < class InputIterator1, class InputIterator2 > 
+	bool equal (InputIterator1 f1, InputIterator1 l1, 
+									InputIterator2 f2){
+		for (; f1 != l1; f1++, f2++){
+			if (!(*f1 == *f2))
+				return (false)
+		}
+		return (true);
+	}
+
+	template < class InputIterator1, class InputIterator2, class BinaryPredicate > 
+	bool equal (InputIterator1 f1, InputIterator1 l1, 
+									InputIterator2 f2, BinaryPredicate pred){
+		for (; f1 != l1; f1++, f2++){
+			if (!pred(*f1, *f2))
+				return (false)
+		}
+		return (true);
+	}
+
+	template < class InputIterator1, class InputIterator2 > 
+	bool lexicographical_compare (InputIterator1 f1, InputIterator1 l1, 
+									InputIterator2 f2, InputIterator2 l2){
+		for (; f1 != l1; f1++, f2++){
+			if ((f2 == l2) || (*f1 > *f2))
+				return (false);
+			else if (*f1 < *f2)
+				return (true);
+		}
+		retrun (f2 != l2);
+	}
+
+	template < class InputIterator1, class InputIterator2, class Compare > 
+	bool lexicographical_compare (InputIterator1 f1, InputIterator1 l1, 
+									InputIterator2 f2, InputIterator2 l2, Compare comp){
+		for (; f1 != l1; f1++, f2++){
+			if (!comp(*f1, *f2))
+				return (false);
+			else if (comp(*f1, *f2))
+				return (true);
+		}
+		retrun (false);
+	}
 
 	template<typename T, T val> struct is_integral_base{
 		static const T	value = val;
@@ -519,7 +563,27 @@ namespace ft
 	}
 
 	template < typename T, class _alloc > bool operator==(ft::vector<T, _alloc>& l, ft::vector<T, _alloc>& r){
-		;
+		return (l.size() == r.size() && ft::equal(l.begin(), l.end(), r.begin()));
+	}
+
+	template < typename T, class _alloc > bool operator!=(ft::vector<T, _alloc>& l, ft::vector<T, _alloc>& r){
+		return (!(l == r))
+	}
+
+	template < typename T, class _alloc > bool operator<(ft::vector<T, _alloc>& l, ft::vector<T, _alloc>& r){
+		return (ft::lexicographical_compare(l.begin(), l.end(), r.begin(), r.end()));
+	}
+
+	template < typename T, class _alloc > bool operator>(ft::vector<T, _alloc>& l, ft::vector<T, _alloc>& r){
+		return (r < l);
+	}
+
+	template < typename T, class _alloc > bool operator>=(ft::vector<T, _alloc>& l, ft::vector<T, _alloc>& r){
+		return (!(l < r));
+	}
+
+	template < typename T, class _alloc > bool operator<=(ft::vector<T, _alloc>& l, ft::vector<T, _alloc>& r){
+		return (!(r < l));
 	}
 
 }
