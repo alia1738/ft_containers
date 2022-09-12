@@ -6,16 +6,27 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:37:57 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/09/05 16:27:55 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/09/12 17:39:54 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.hpp"
 #include <string>
 #include "fstream"
 
-using namespace ft;
-std::string	type = "ft_";
+#ifndef FT
+	#include <vector>
+	#include <map>
+	#include <stack>
+	namespace ft = std;
+	std::string	type = "std_";
+
+#else
+	#include "vector.hpp"
+	// #include "map.hpp"
+	// #include "stack.hpp"
+	std::string	type = "ft_";
+
+#endif
 
 /* **************************** Member Functions **************************** */
 /* --------------------- Constructors --------------------- */
@@ -47,7 +58,9 @@ void	constructors_test() {
 		vec.push_back(1);
 		vec.push_back(2);
 		vec.push_back(3);
-		ft::vector<int> vec2(vec.begin(), vec.end());
+		ft::vector<int>::iterator	it = vec.begin();
+		ft::vector<int>::iterator	it_end = vec.end();
+		ft::vector<int> vec2(it, it_end);
 		file << "size = " << vec2.size() << "\n";
 		file << "capasity = " << vec2.capacity() << "\n";
 		for (ft::vector<int>::size_type i = 0; i < vec2.size(); i++)
@@ -77,6 +90,8 @@ void	constructors_test() {
 		vec.push_back(3);
 		vec.push_back(4);
 		vec.push_back(5);
+		file << "size = " << vec.size() << "\n";
+		file << "capasity = " << vec.capacity() << "\n";
 		ft::vector<int> vec2(10, 11);
 		file << "size = " << vec2.size() << "\n";
 		file << "capasity = " << vec2.capacity() << "\n";
@@ -130,7 +145,7 @@ void	element_access_test() {
 
 /* ---------------------- Iterators ----------------------- */
 void	iterator_test() {
-	std::string		fileName = type + "iterator_test.txt";
+	std::string		fileName = type + "iterator.txt";
 
 	std::ofstream	file(fileName);
 	file << "/* ---------------------- Iterators ----------------------- */\n";
@@ -163,7 +178,7 @@ void	iterator_test() {
 
 /* ----------------------- Capacity ----------------------- */
 void	capasity_test() {
-	std::string		fileName = type + "capasity_test.txt";
+	std::string		fileName = type + "capasity.txt";
 
 	std::ofstream	file(fileName);
 	file << "/* ----------------------- Capacity ----------------------- */\n";
@@ -208,20 +223,54 @@ void	capasity_test() {
 
 /* ----------------------- Modifiers ---------------------- */
 void	modifiers_test() {
-	std::string		fileName = type + "modifiers_test.txt";
+	std::string		fileName = type + "modifiers.txt";
 
 	std::ofstream	file(fileName);
 	file << "/* ----------------------- Modifiers ---------------------- */\n";
 	
 	{ // assign
+		file << "Assign:\n";
+		ft::vector<int> vec;
+		ft::vector<int> vec1(10, 55);
+		ft::vector<int> vec2;
+		for (int i = 0; i < 10; i++)
+			vec2.push_back(i * 10);
+
+		file << "vec size = " << vec.size() << " ";
+		file << "vec capasity = " << vec.capacity() << "\n";
+		file << "vec1 size = " << vec.size() << " ";
+		file << "vec1 capasity = " << vec.capacity() << "\n";
+		file << "vec2 size = " << vec.size() << " ";
+		file << "vec2 capasity = " << vec.capacity() << "\n";
 		
+		vec1.assign(vec.begin(), vec.end());
+		vec.assign(5, 11);
+		vec2.assign(vec2.begin(), vec2.end());
+		
+		file << "vec size = " << vec.size() << " ";
+		file << "vec capasity = " << vec.capacity() << "\n";
+		for (ft::vector<int>::size_type i = 0; i < vec.size(); i++)
+			file << vec[i] << " ";
+		file << "\n";
+		
+		file << "vec1 size = " << vec.size() << " ";
+		file << "vec1 capasity = " << vec.capacity() << "\n";
+		for (ft::vector<int>::size_type i = 0; i < vec1.size(); i++)
+			file << vec1[i] << " ";
+		file << "\n";
+		
+		file << "vec2 size = " << vec.size() << " ";
+		file << "vec2 capasity = " << vec.capacity() << "\n";
+		for (ft::vector<int>::size_type i = 0; i < vec2.size(); i++)
+			file << vec2[i] << " ";
+		file << "\n-------------------------\n";
 	}
 	{ // clear
 		file << "Clear:\n";
 		ft::vector<int> vec;
 		for (int i = 0; i < 10; i++)
 			vec.push_back(i * 10);
-		file << "size = " << vec.size() << "\n";
+		file << "size = " << vec.size() << " ";
 		file << "capasity = " << vec.capacity() << "\n";
 		vec.clear();
 		file << "size = " << vec.size() << " ";
@@ -267,15 +316,19 @@ void	modifiers_test() {
 			vec.push_back(i * 10);
 		file << "size = " << vec.size() << " ";
 		file << "capasity = " << vec.capacity() << "\n";
-		ft::vector<int>::iterator it = vec.erase(vec.begin());
+		// vec.erase(vec.begin() + 1);
+		ft::vector<int>::iterator it = vec.erase(vec.begin() + 1);
+		for (ft::vector<int>::size_type i = 0; i < vec.size(); i++)
+			file << vec[i] << " ";
+		file << "\n";
 		for (ft::vector<int>::iterator it_end = vec.end(); it != it_end; it++)
 			file << *it << " ";
 		file << "\n";
 		file << "size = " << vec.size() << " ";
 		file << "capasity = " << vec.capacity() << "\n";
-		ft::vector<int>::iterator it = vec.erase(vec.begin() + 2, vec.end());
-		for (ft::vector<int>::iterator it_end = vec.end(); it != it_end; it++)
-			file << *it << " ";
+		ft::vector<int>::iterator it2 = vec.erase(vec.begin() + 2, vec.end() - 5);
+		for (ft::vector<int>::iterator it_end = vec.end(); it2 != it_end; it2++)
+			file << *it2 << " ";
 		file << "\n";
 		file << "size = " << vec.size() << " ";
 		file << "capasity = " << vec.capacity() << "\n";
@@ -354,7 +407,7 @@ void	modifiers_test() {
 		file << "\n-------------------------\n";
 	}
 	{ // swap
-		file << "Pop_back:\n";
+		file << "Swap(member):\n";
 		ft::vector<int> vec;
 		ft::vector<int> vec2;
 		for (int i = 0; i < 10; i++) {
@@ -382,65 +435,124 @@ void	modifiers_test() {
 }
 
 /* ----------------- Non-member Functions ----------------- */
+void	non_member_functions_test() {
+	std::string		fileName = type + "non_member_functions.txt";
 
-void	range_assign_test() { // range assign  
-	vector<int> my_vector(3);
-	std::vector<int> og_vector(3);
-
-	my_vector[0] = 9;
-	my_vector[1] = 1;
-	my_vector[2] = 2;
-	my_vector.push_back(5);
-	my_vector.push_back(8);
-	my_vector.push_back(10);
-	my_vector.push_back(11);
-	og_vector[0] = 9;
-	og_vector[1] = 1;
-	og_vector[2] = 2;
-	og_vector.push_back(5);
-	og_vector.push_back(8);
-	og_vector.push_back(10);
-	og_vector.push_back(11);
-
-	vector<int>::iterator my_it = my_vector.begin();
-	vector<int>::iterator my_it_end = my_vector.end();
-	std::vector<int>::iterator og_it = og_vector.begin();
-	std::vector<int>::iterator og_it_end = og_vector.end();
-
-	vector<int> my_vec_ass;
-	std::vector<int> og_vec_ass;
-
-	// my_vec_ass.push_back(12);
-	// my_vec_ass.push_back(12);
-	// my_vec_ass.push_back(12);
-	// my_vec_ass.push_back(12);
-
-	// og_vec_ass.push_back(12);
-	// og_vec_ass.push_back(12);
-	// og_vec_ass.push_back(12);
-	// og_vec_ass.push_back(12);
-	std::cout << GREEN1 << "------ My vec ------" << RESET << std::endl;
-	for (int i = 0; i < static_cast<int>(my_vec_ass.size()); i++)
-		std::cout << PURPLE1 << my_vec_ass[i] << RESET << std::endl;
-	std::cout << PURPLE1 << "size = " << my_vec_ass.size() << RESET << std::endl;
-
-	std::cout << GREEN1 << "------ Og vec ------" << RESET << std::endl;
-	for (int i = 0; i < static_cast<int>(og_vec_ass.size()); i++)
-		std::cout << PURPLE1 << og_vec_ass[i] << RESET << std::endl;
-	std::cout << PURPLE1 << "size = " << og_vec_ass.size() << RESET << std::endl;
-
-	std::cout << GREEN1 << "------ My vec ------" << RESET << std::endl;
-	my_vec_ass.assign(my_it, my_it_end);
-	for (int i = 0; i < static_cast<int>(my_vec_ass.size()); i++)
-		std::cout << YELLOW1 << my_vec_ass[i] << RESET << std::endl;
-	std::cout << YELLOW1 << "size = " << my_vec_ass.size() << RESET << std::endl;
-
-	std::cout << GREEN1 << "------ Og vec ------" << RESET << std::endl;
-	og_vec_ass.assign(og_it, og_it_end);
-	for (int i = 0; i < static_cast<int>(og_vec_ass.size()); i++)
-		std::cout << YELLOW1 << og_vec_ass[i] << RESET << std::endl;
-	std::cout << YELLOW1 << "size = " << og_vec_ass.size() << RESET << std::endl;
+	std::ofstream	file(fileName);
+	file << "/* ----------------- Non-member Functions ----------------- */\n";
+	
+	{ // swap
+		file << "Swap(non-member):\n";
+		ft::vector<int> vec;
+		ft::vector<int> vec2;
+		for (int i = 0; i < 6; i++) {
+			vec.push_back(i * 6);
+			vec2.push_back(i);
+		}
+		for (int i = 0; i < 6; i++) {
+			file << vec[i] << " ";
+		}
+		file << "\n";
+		for (int i = 0; i < 6; i++) {
+			file << vec2[i] << " ";
+		}
+		swap(vec, vec2);
+		for (int i = 0; i < 6; i++) {
+			file << vec[i] << " ";
+		}
+		file << "\n";
+		for (int i = 0; i < 6; i++) {
+			file << vec2[i] << " ";
+		}
+		file << "\n-------------------------\n";
+	}
+	{ // relational operators
+		file << "Relational Operators:\n";
+		ft::vector<int> vec;
+		ft::vector<int> vec1(5, 55);
+		ft::vector<int> vec2;
+		ft::vector<int> vec3(vec);
+		for (int i = 0; i < 10; i++)
+			vec2.push_back(i * 10);
+		file << (vec == vec3) << " ";
+		file << (vec1 != vec2) << " ";
+		file << (vec > vec2) << " ";
+		file << (vec2 >= vec1) << " ";
+		file << (vec1 < vec3) << " ";
+		file << (vec3 <= vec2);
+		file << "\n-------------------------\n";
+	}
+	
+	file.close();
 }
+
+int main() {
+	constructors_test();
+	element_access_test();
+	iterator_test();
+	capasity_test();
+	modifiers_test();
+	non_member_functions_test();
+}
+
+// void	range_assign_test() { // range assign  
+// 	vector<int> my_vector(3);
+// 	std::vector<int> og_vector(3);
+
+// 	my_vector[0] = 9;
+// 	my_vector[1] = 1;
+// 	my_vector[2] = 2;
+// 	my_vector.push_back(5);
+// 	my_vector.push_back(8);
+// 	my_vector.push_back(10);
+// 	my_vector.push_back(11);
+// 	og_vector[0] = 9;
+// 	og_vector[1] = 1;
+// 	og_vector[2] = 2;
+// 	og_vector.push_back(5);
+// 	og_vector.push_back(8);
+// 	og_vector.push_back(10);
+// 	og_vector.push_back(11);
+
+// 	vector<int>::iterator my_it = my_vector.begin();
+// 	vector<int>::iterator my_it_end = my_vector.end();
+// 	std::vector<int>::iterator og_it = og_vector.begin();
+// 	std::vector<int>::iterator og_it_end = og_vector.end();
+
+// 	vector<int> my_vec_ass;
+// 	std::vector<int> og_vec_ass;
+
+// 	// my_vec_ass.push_back(12);
+// 	// my_vec_ass.push_back(12);
+// 	// my_vec_ass.push_back(12);
+// 	// my_vec_ass.push_back(12);
+
+// 	// og_vec_ass.push_back(12);
+// 	// og_vec_ass.push_back(12);
+// 	// og_vec_ass.push_back(12);
+// 	// og_vec_ass.push_back(12);
+// 	std::cout << GREEN1 << "------ My vec ------" << RESET << std::endl;
+// 	for (int i = 0; i < static_cast<int>(my_vec_ass.size()); i++)
+// 		std::cout << PURPLE1 << my_vec_ass[i] << RESET << std::endl;
+// 	std::cout << PURPLE1 << "size = " << my_vec_ass.size() << RESET << std::endl;
+
+// 	std::cout << GREEN1 << "------ Og vec ------" << RESET << std::endl;
+// 	for (int i = 0; i < static_cast<int>(og_vec_ass.size()); i++)
+// 		std::cout << PURPLE1 << og_vec_ass[i] << RESET << std::endl;
+// 	std::cout << PURPLE1 << "size = " << og_vec_ass.size() << RESET << std::endl;
+
+// 	std::cout << GREEN1 << "------ My vec ------" << RESET << std::endl;
+// 	my_vec_ass.assign(my_it, my_it_end);
+// 	for (int i = 0; i < static_cast<int>(my_vec_ass.size()); i++)
+// 		std::cout << YELLOW1 << my_vec_ass[i] << RESET << std::endl;
+// 	std::cout << YELLOW1 << "size = " << my_vec_ass.size() << RESET << std::endl;
+
+// 	std::cout << GREEN1 << "------ Og vec ------" << RESET << std::endl;
+// 	og_vec_ass.assign(og_it, og_it_end);
+// 	for (int i = 0; i < static_cast<int>(og_vec_ass.size()); i++)
+// 		std::cout << YELLOW1 << og_vec_ass[i] << RESET << std::endl;
+// 	std::cout << YELLOW1 << "size = " << og_vec_ass.size() << RESET << std::endl;
+// }
 
 // void	basic_const_it_test(){
 // 	const vector<int> my_vector(5, 8);

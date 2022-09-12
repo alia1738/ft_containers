@@ -29,8 +29,9 @@ int main()
 {
 
 	try{
-			ft::vector<int> vector;
-			// random tests
+		std::vector<int> i;
+		ft::vector<int> vector;
+		// random tests
 	}
 
 	catch (std::exception& e){

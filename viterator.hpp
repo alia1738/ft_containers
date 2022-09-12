@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 16:54:46 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/08/31 13:17:15 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/09/07 11:12:57 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ namespace ft {
 		typedef typename it::value_type        value_type;
 		typedef typename it::pointer           pointer;
 		typedef typename it::reference         reference;
-		typedef typename it::iterator_category iterator_category;
+		// typedef typename it::iterator_category iterator_category;
 	};
 
 	/* ------------------ -- - Reverse Iterator - -- ------------------ */
@@ -35,7 +35,7 @@ namespace ft {
 	public:
 		typedef It												iterator_type;
 		typedef typename iterator_traits<It>::difference_type	difference_type;
-		typedef typename iterator_traits<It>::refrence			refrence;
+		typedef typename iterator_traits<It>::reference			reference;
 		typedef typename iterator_traits<It>::pointer			pointer;
 
 	private:
@@ -44,15 +44,15 @@ namespace ft {
 	public:
 		reverse_iterator(): _content(){}
 
-		explicit reverse_iterator(It con): _content(con){}
+		explicit reverse_iterator(const It con): _content(con){}
 
-		template<class r_it> reverse_iterator(const reverse_iterator<r_it>& rit): _content(r_it.base()){}
+		template<class r_it> reverse_iterator(const reverse_iterator<r_it>& rit): _content(rit.base()){}
 
 		It base() const {
 			return (this->_content);}
 
-		refrence operator*() const {
-			It temp = current;
+		reference operator*() const {
+			It temp = this->_content;
 			temp--;
 			return (*temp);
 		}
@@ -62,7 +62,7 @@ namespace ft {
 			return (*this);
 		}
 
-		reverse_iterator& operator++(int){
+		reverse_iterator operator++(int){
 			reverse_iterator temp(*this);
 			this->_content--;
 			return (temp);
@@ -73,29 +73,32 @@ namespace ft {
 			return (*this);
 		}
 
-		reverse_iterator& operator--(int){
+		reverse_iterator operator--(int){
 			reverse_iterator temp(*this);
 			this->_content++;
 			return (temp);
 		}
 
-		reverse_iterator operator+(different_type n) const{
+		reverse_iterator operator+(difference_type n) const{
 			return (reverse_iterator(this->_content - n));}
 		
-		reverse_iterator& operator+=(different_type n){
+		reverse_iterator& operator+=(difference_type n){
 			this->_content -= n;
 			return (*this);
 		}
 
-		reverse_iterator operator-(different_type n) const{
+		reverse_iterator operator-(difference_type n) const{
 			return (reverse_iterator(this->_content + n));}
 
-		reverse_iterator& operator-=(different_type n){
+		reverse_iterator& operator-=(difference_type n){
 			this->_content += n;
 			return (*this);
 		}
 
-		reverse_iterator operator[](different_type n) const{
+		operator reverse_iterator<const It>() const {
+			return (reverse_iterator<const It>());}
+
+		reverse_iterator operator[](difference_type n) const{
 			return (*(*this + n));}
 	
 	};
@@ -126,25 +129,25 @@ namespace ft {
 			return (*this);
 		}
 
-		bool	operator==(const v_iterator& it1){
+		bool	operator==(const v_iterator& it1) const {
 			return (this->_content == it1._content);}
 
-		bool	operator!=(const v_iterator& it1){
+		bool	operator!=(const v_iterator& it1) const {
 			return (this->_content != it1._content);}
 
-		bool	operator>(const v_iterator& it1){
+		bool	operator>(const v_iterator& it1) const {
 			return (this->_content > it1._content);}
 
-		bool	operator<(const v_iterator& it1){
+		bool	operator<(const v_iterator& it1) const {
 			return (this->_content < it1._content);}
 
-		bool	operator>=(const v_iterator& it1){
+		bool	operator>=(const v_iterator& it1) const {
 			return (this->_content >= it1._content);}
 
-		bool	operator<=(const v_iterator& it1){
+		bool	operator<=(const v_iterator& it1) const {
 			return (this->_content <= it1._content);}
 
-		operator v_iterator<const T>() const{
+		operator v_iterator<const T>() const {
 			return (v_iterator<const T>(_content));}
 
 		v_iterator& operator++(){
@@ -170,7 +173,7 @@ namespace ft {
 		}
 
 		value_type& operator*() const{
-			return (this->_content[0]);}
+			return (*this->_content);}
 
 		value_type& operator[](int n) const{
 			return (this->_content[n]);}
