@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:37:57 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/09/12 17:39:54 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/09/13 11:48:13 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	constructors_test() {
 		vec.push_back(1);
 		vec.push_back(2);
 		vec.push_back(3);
+		file << "size = " << vec.size() << "\n";
+		file << "capasity = " << vec.capacity() << "\n";
 		ft::vector<int>::iterator	it = vec.begin();
 		ft::vector<int>::iterator	it_end = vec.end();
 		ft::vector<int> vec2(it, it_end);
@@ -76,6 +78,8 @@ void	constructors_test() {
 		vec.push_back(4);
 		vec.push_back(5);
 		ft::vector<int> vec2(vec);
+		file << "size = " << vec.size() << "\n";
+		file << "capasity = " << vec.capacity() << "\n";
 		file << "size = " << vec2.size() << "\n";
 		file << "capasity = " << vec2.capacity() << "\n";
 		for (ft::vector<int>::size_type i = 0; i < vec2.size(); i++)

@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/09/12 17:38:41 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/09/13 11:56:26 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ namespace ft
 
 		vector(const vector& v): _start(0), _end(0), cap(0){
 			this->alloc = v.alloc;
-			this->cap = v.cap;
+			this->cap = v.size();
 			this->_start = this->alloc.allocate(v.size());
 
 			size_type	i = 0;
@@ -187,12 +187,13 @@ namespace ft
 		}
 
 		vector& operator=(const vector& v){
-			this->_start = 0; this->_end = 0; this->cap = 0;
 			if (this != &v){
-				// this(v);
+					std::cout << this->cap << std::endl;
 				this->alloc = v.alloc;
-				if (this->cap < v.cap)
+				if (this->cap < v.cap){
+					std::cout << this->cap << std::endl;
 					this->cap = v.cap;
+				}
 				this->_start = this->alloc.allocate(v.size());
 
 				size_type	i = 0;

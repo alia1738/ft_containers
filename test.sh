@@ -29,6 +29,13 @@ greenToOrange4=`tput setaf 136`
 greenToOrange5=`tput setaf 172`
 greenToOrange6=`tput setaf 208`
 
+GtoO1=`tput setaf 28`
+GtoO2=`tput setaf 64`
+GtoO3=`tput setaf 100`
+GtoO4=`tput setaf 136`
+GtoO5=`tput setaf 172`
+GtoO6=`tput setaf 208`
+
 blueToPink1=`tput setaf 33`
 blueToPink2=`tput setaf 69`
 blueToPink3=`tput setaf 105`
@@ -60,6 +67,41 @@ echo "${jeans}              |||        ${table}     || ||      || ||${reset}"
 echo "${jeans}              |||        ${table}     || ||      || ||${reset}"
 echo "--------------${jeans}|||${reset}-------------${table}||${reset}-${table}||${reset}------${table}||${reset}-${table}||${reset}-------"
 echo "              ${shirt}|__>            ${table}|| ||      || ||${reset}"
+}
+
+vectorAfterTestingArt() {
+	# greenToOrange1
+	# GtoO1
+	echo ""
+	echo "${GtoO1}    |\ | |  ||\ \ /(_~     |~)|_~|\/||_~|\/||~)|_~|~)${reset}"
+	echo "${GtoO1}    |~\|_|/\||~\ | ,_)     |~\|__|  ||__|  ||_)|__|~\\"
+	echo ""
+	echo "${GtoO1}       \ //~\| |    |\ |~)|_~    | ||\ ||/~\| ||_~"
+	echo "${GtoO1}        | \_/\_/    |~\|~\|__    \_/| \||\_X\_/|__${reset}"
+	echo ""
+	echo -e "\033[2m" "     (${GtoO6}J U S T   L I K E   E V E R Y O N E   E L S E${reset}\033[2m)${reset}"
+	echo "${GtoO1}      _____         _____         _____         _____    ${reset}"
+	echo "${GtoO1}    .'     '.     .'     '.     .'     '.     .'     '.  ${reset}"
+	echo "${GtoO1}   /  o   o  \   /  o   o  \   /  o   o  \   /  o   o  \ ${reset}"
+	echo "${GtoO1}  |           | |           | |           | |           |${reset}"
+	echo "${GtoO2}  |  \     /  | |  \     /  | |  \     /  | |  \     /  |${reset}"
+	echo "${GtoO2}   \  '---'  /   \  '---'  /   \  '---'  /   \  '---'  / ${reset}"
+	echo "${GtoO2}    '._____.'     '._____.'     '._____.'     '._____.'  ${reset}"
+	echo "${GtoO3}      _____         _____         _____         _____    ${reset}"
+	echo "${GtoO3}    .'     '.     .'     '.     .'     '.     .'     '.  ${reset}"
+	echo "${GtoO3}   /  o   o  \   /  o   o  \   /  o   o  \   /  o   o  \ ${reset}"
+	echo "${GtoO3}  |           | |           | |           | |           |${reset}"
+	echo "${GtoO4}  |  \     /  | |  \     /  | |  \     /  | |  \     /  |${reset}"
+	echo "${GtoO4}   \  '---'  /   \  '---'  /   \  '---'  /   \  '---'  / ${reset}"
+	echo "${GtoO4}    '._____.'     '._____.'     '._____.'     '._____.'  ${reset}"
+	echo "${GtoO5}      _____         _____         _____         _____    ${reset}"
+	echo "${GtoO5}    .'     '.     .'     '.     .'     '.     .'     '.  ${reset}"
+	echo "${GtoO5}   /  o   o  \   /  o   o  \   /  o   o  \   /  o   o  \ ${reset}"
+	echo "${GtoO6}  |           | |           | |           | |           |${reset}"
+	echo "${GtoO6}  |  \     /  | |  \     /  | |  \     /  | |  \     /  |${reset}"
+	echo "${GtoO6}   \  '---'  /   \  '---'  /   \  '---'  /   \  '---'  / ${reset}"
+	echo "${GtoO6}    '._____.'     '._____.'     '._____.'     '._____.'  ${reset}"
+
 }
 
 CheckDiff() {
@@ -186,7 +228,8 @@ if [ $test_type == 1 ]; then
 	sleep 0.5
 	VectorTest
 	sleep 0.5
-	testingArt
+	vectorAfterTestingArt
+	# testingArt
 
 	# echo "howowowo VECTOR"
 
@@ -299,27 +342,7 @@ fi
 #                         |__>            || ||      || ||
 
 
-#  |\ | |  ||\ \ /(_~     |~)|_~|\/||_~|\/||~)|_~|~)
-#      |~\|_|/\||~\ | ,_)     |~\|__|  ||__|  ||_)|__|~\
 
-#         \ //~\| |    |\ |~)|_~    | ||\ ||/~\| ||_~
-#          | \_/\_/    |~\|~\|__    \_/| \||\_X\_/|__
-
-#       (J U S T   L I K E   E V E R Y O N E   E L S E)
-#       _____         _____         _____         _____
-#     .'     '.     .'     '.     .'     '.     .'     '.
-#    /  o   o  \   /  o   o  \   /  o   o  \   /  o   o  \
-#   |           | |           | |           | |           |
-#   |  \     /  | |  \     /  | |  \     /  | |  \     /  |
-#    \  '---'  /   \  '---'  /   \  '---'  /   \  '---'  /
-#     '._____.'     '._____.'     '._____.'     '._____.'
-#       _____         _____         _____         _____
-#     .'     '.     .'     '.     .'     '.     .'     '.
-#    /  o   o  \   /  o   o  \   /  o   o  \   /  o   o  \
-#   |           | |           | |           | |           |
-#   |  \     /  | |  \     /  | |  \     /  | |  \     /  |
-#    \  '---'  /   \  '---'  /   \  '---'  /   \  '---'  /
-#     '._____.'     '._____.'     '._____.'     '._____.'
 #       _____         _____         _____         _____
 #     .'     '.     .'     '.     .'     '.     .'     '.
 #    /  o   o  \   /  o   o  \   /  o   o  \   /  o   o  \
