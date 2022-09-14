@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/09/13 11:56:26 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/09/14 14:28:44 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,12 +188,9 @@ namespace ft
 
 		vector& operator=(const vector& v){
 			if (this != &v){
-					std::cout << this->cap << std::endl;
 				this->alloc = v.alloc;
-				if (this->cap < v.cap){
-					std::cout << this->cap << std::endl;
+				if (this->cap < v.cap)
 					this->cap = v.cap;
-				}
 				this->_start = this->alloc.allocate(v.size());
 
 				size_type	i = 0;
