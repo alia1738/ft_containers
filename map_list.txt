@@ -1,0 +1,165 @@
+Map
+
+----------------------- map::map -----------------------
+empty (1)	explicit map (const key_compare& comp = key_compare(),
+              const allocator_type& alloc = allocator_type());
+
+range (2)	template <class InputIterator>
+  			  map (InputIterator first, InputIterator last,
+    		    const key_compare& comp = key_compare(),
+     		    const allocator_type& alloc = allocator_type());
+
+copy (3)	map (const map& x);
+--------------------------------------------------------
+
+----------------------- map::~map ----------------------
+~map();
+--------------------------------------------------------
+
+member functions:
+
+----------------------- map::at ------------------------
+mapped_type& at (const key_type& k);
+
+const mapped_type& at (const key_type& k) const;
+--------------------------------------------------------
+
+---------------------- map::begin ----------------------
+iterator begin();
+
+const_iterator begin() const;
+--------------------------------------------------------
+
+---------------------- map::clear ----------------------
+void clear();
+--------------------------------------------------------
+
+---------------------- map::count ----------------------
+size_type count (const key_type& k) const;
+--------------------------------------------------------
+
+---------------------- map::empty ----------------------
+bool empty() const;
+--------------------------------------------------------
+
+----------------------- map::end -----------------------
+iterator end();
+
+const_iterator end() const;
+--------------------------------------------------------
+
+------------------- map::equal_range -------------------
+pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
+
+pair<iterator,iterator>             equal_range (const key_type& k);
+--------------------------------------------------------
+
+---------------------- map::erase ----------------------
+(1)		     void erase (iterator position);
+
+(2)		size_type erase (const key_type& k);
+
+(3)		     void erase (iterator first, iterator last);
+--------------------------------------------------------
+
+---------------------- map::find -----------------------
+iterator find (const key_type& k);
+
+const_iterator find (const key_type& k) const;
+--------------------------------------------------------
+
+------------------ map::get_allocator ------------------
+allocator_type get_allocator() const;
+--------------------------------------------------------
+
+---------------------- map::insert ---------------------
+single element (1)	pair<iterator,bool> insert (const value_type& val);
+
+with hint (2)		iterator insert (iterator position, const value_type& val);
+
+range (3)			template <class InputIterator>
+					  void insert (InputIterator first, InputIterator last);
+--------------------------------------------------------
+
+--------------------- map::key_comp --------------------
+key_compare key_comp() const;
+--------------------------------------------------------
+
+------------------- map::lower_bound -------------------
+iterator lower_bound (const key_type& k);
+
+const_iterator lower_bound (const key_type& k) const;
+--------------------------------------------------------
+
+--------------------- map::max_size --------------------
+size_type max_size() const;
+--------------------------------------------------------
+
+-------------------- map::operator[] -------------------
+mapped_type& operator[] (const key_type& k);
+--------------------------------------------------------
+
+-------------------- map::operator= --------------------
+copy (1)	 map& operator= (const map& x);
+--------------------------------------------------------
+
+---------------------- map::rbegin ---------------------
+reverse_iterator rbegin();
+
+const_reverse_iterator rbegin() const;
+--------------------------------------------------------
+
+---------------------- map::rend -----------------------
+reverse_iterator rend();
+
+const_reverse_iterator rend() const;
+--------------------------------------------------------
+
+---------------------- map::size -----------------------
+size_type size() const;
+--------------------------------------------------------
+
+---------------------- map::swap -----------------------
+void swap (map& x);
+--------------------------------------------------------
+
+------------------- map::upper_bound -------------------
+iterator upper_bound (const key_type& k);
+
+const_iterator upper_bound (const key_type& k) const;
+--------------------------------------------------------
+
+-------------------- map::value_comp -------------------
+value_compare value_comp() const;
+--------------------------------------------------------
+
+-------------- relational operators (map) --------------
+(1)	template <class Key, class T, class Compare, class Alloc>
+	  bool operator== ( const map<Key,T,Compare,Alloc>& lhs,
+                    const map<Key,T,Compare,Alloc>& rhs );
+
+(2)	template <class Key, class T, class Compare, class Alloc>
+	  bool operator!= ( const map<Key,T,Compare,Alloc>& lhs,
+                    const map<Key,T,Compare,Alloc>& rhs );
+
+(3)	template <class Key, class T, class Compare, class Alloc>
+	  bool operator<  ( const map<Key,T,Compare,Alloc>& lhs,
+                    const map<Key,T,Compare,Alloc>& rhs );
+
+(4)	template <class Key, class T, class Compare, class Alloc>
+	  bool operator<= ( const map<Key,T,Compare,Alloc>& lhs,
+                    const map<Key,T,Compare,Alloc>& rhs );
+
+(5)	template <class Key, class T, class Compare, class Alloc>
+	  bool operator>  ( const map<Key,T,Compare,Alloc>& lhs,
+                    const map<Key,T,Compare,Alloc>& rhs );
+
+(6)	template <class Key, class T, class Compare, class Alloc>
+	  bool operator>= ( const map<Key,T,Compare,Alloc>& lhs,
+                    const map<Key,T,Compare,Alloc>& rhs );
+--------------------------------------------------------
+
+---------------------- swap (map) ----------------------
+template <class Key, class T, class Compare, class Alloc>
+  void swap (map<Key,T,Compare,Alloc>& x, map<Key,T,Compare,Alloc>& y);
+--------------------------------------------------------

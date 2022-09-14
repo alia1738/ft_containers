@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:37:57 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/09/13 11:48:13 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/09/14 15:00:03 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,11 @@
 
 #ifndef FT
 	#include <vector>
-	#include <map>
-	#include <stack>
 	namespace ft = std;
 	std::string	type = "std_";
 
 #else
 	#include "vector.hpp"
-	// #include "map.hpp"
-	// #include "stack.hpp"
 	std::string	type = "ft_";
 
 #endif
