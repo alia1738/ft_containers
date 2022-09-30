@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:37:57 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/09/14 15:00:03 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/09/26 12:35:20 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 	std::string	type = "std_";
 
 #else
-	#include "vector.hpp"
+	#include "../src/vector.hpp"
 	std::string	type = "ft_";
 
 #endif

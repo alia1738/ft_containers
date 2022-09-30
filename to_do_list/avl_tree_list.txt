@@ -1,0 +1,21 @@
+create node struct
+
+create a tree class that holds all nodes 
+
+function for adding a new node
+
+function for checking tree balance
+
+function for rotating the tree to the left once
+
+function for rotating the tree to the left then left
+
+function for rotating the tree to the left then right
+
+function for rotating the tree to the right once
+
+function for rotating the tree to the right then left
+
+function for rotating the tree to the right then right
+
+function for deleting a node

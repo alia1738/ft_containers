@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/09/14 14:28:44 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/09/26 12:32:34 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ namespace ft
 	template < class InputIterator1, class InputIterator2, class Compare > 
 	bool lexicographical_compare (InputIterator1 f1, InputIterator1 l1, 
 									InputIterator2 f2, InputIterator2 l2, Compare comp){
-		for (; f1 != l1; f1++, f2++){
+		for (; (f1 != l1) && (f2 != l2); f1++, f2++){
 			if (!comp(*f1, *f2))
 				return (false);
 			else if (comp(*f1, *f2))

@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AVL_tree.hpp                                       :+:      :+:    :+:   */
+/*   compare.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/19 09:48:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/09/19 09:48:56 by aalsuwai         ###   ########.fr       */
+/*   Created: 2022/09/29 14:21:02 by aalsuwai          #+#    #+#             */
+/*   Updated: 2022/09/30 13:08:41 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AVL_TREE_HPP
-# define AVL_TREE_HPP
+#ifndef COMPARE_HPP
+# define COMPARE_HPP
 
+template <typename T> struct isNodeSmaller: binary_function <T, T, bool> {
+	return (node1 < node2);
+}
 
+template <typename T> struct isNodeBigger: binary_function <T, T, bool> {
+	return (node1 > node2);
+}
 
 #endif

@@ -7,7 +7,7 @@
 	std::string	type = "std_";
 
 // #else
-// 	// #include "map.hpp"
+// 	// #include "../src/map.hpp"
 // 	std::string	type = "ft_";
 
 // #endif
