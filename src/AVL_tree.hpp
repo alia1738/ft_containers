@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:48:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/10/05 10:55:27 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/10/24 14:21:32 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define AVL_TREE_HPP
 
 #include "Node.hpp"
-#include "Compare.hpp"
+// #include "Compare.hpp"
 #include <functional>
 
 namespace ft {
@@ -22,28 +22,35 @@ namespace ft {
 	class AVL_tree {
 
 	public:
-		typedef typename std::allocator<Node>	_allocator;
-		typedef typename pair<key, val>			value_type;
+		typedef	Node<key, val>								_node;
+		typedef pair<key, val>								value_type;
+		typedef typename std::allocator<_node>	_allocator;
 
 	private:
-		Node _root;
+		_node *_root;
 		_allocator	alloc;
 
 	public:
 
-		AVL_tree(): _root(NULL){}
+		AVL_tree(){
+			// this->_root = this->alloc.allocate(1);
+			this->_root = NULL;
+		}
 
-		void	add_new_node(const Node::value_type& val){
-			if (!this->_root)
-				this->root = Node(val);
+		void	add_new_node(const val v){
+			if (!this->_root){
+				this->_root = alloc.allocate(1);
+				alloc.construct(_root, _node(v));
+			}
+				//  = _node(v);
 			else{
-				placeNewNode(val);
+				placeNewNode(v);
 			}
 		}
 
-		void	rotateLeft(Node *n) {
-			Node *x = n->left;
-			Node *y = x->right;
+		void	rotateLeft(_node *n) {
+			_node *x = n->left;
+			_node *y = x->right;
 
 			x->right = n;
 			n->left = y;
@@ -52,9 +59,9 @@ namespace ft {
 			n->height = 1 + maxHight(n->right, n->left);
 		}
 
-		void	rotateRight(Node *n) {
-			Node *x = n->right;
-			Node *y = x->left;
+		void	rotateRight(_node *n) {
+			_node *x = n->right;
+			_node *y = x->left;
 
 			x->left = n;
 			n->right = y;
@@ -63,19 +70,19 @@ namespace ft {
 			n->height = 1 + maxHight(n->right, n->left);
 		}
 
-		int	maxHight(Node *right, Node *left){
+		int	maxHight(_node *right, _node *left){
 			int r = (right)? right->height : 0;
 			int l = (left)? left->height : 0;
 			return ((r > l) ? r : l);
 		}
 
-		int	getBalanceFactor(Node *n){
+		int	getBalanceFactor(_node *n){
 			if (!n)
 				return (0);
 			return (n->right->height - n->left->height);
 		}
 
-		void	adjustTreeBalance(Node *n, const value_type& newNodeInfo) {
+		void	adjustTreeBalance(_node *n, const value_type& newNodeInfo) {
 			n->height = 1 + maxHight(n->right, n->left);
 
 			// balance factor
@@ -99,18 +106,18 @@ namespace ft {
 			adjustTreeBalance(n->parent);
 		}
 
-		void	AllocConstruct(Node *parent, Node *child, const value_type& newNodeInfo) {
+		void	AllocConstruct(_node *parent, _node *child, const value_type& newNodeInfo) {
 			child = alloc.allocate(1);
-			child.construct(child, Node(parent, newNodeInfo));
+			child->construct(child, _node(parent, newNodeInfo));
 		}
 
 		void	placeNewNode(const value_type& newNode) {
-			static	Node *temp = this->root;
+			static	_node *temp = this->root;
 
-			if (compare(newNode.first, temp->_info.first)){
+			if (compare(newNode->first, temp->_info->first)){
 				if (!temp->right) {
 					AllocConstruct(temp, temp->right, newNode);
-					adjustTreeBalance(temp, newNodeInfo);
+					adjustTreeBalance(temp, newNode);
 					return ;
 				}
 				else {
@@ -119,10 +126,10 @@ namespace ft {
 				}
 			}
 
-			else if (!compare(newNode.first, temp._info.first)) {
+			else if (!compare(newNode->first, temp->_info->first)) {
 				if (!temp->left) {
 					AllocConstruct(temp, temp->left, newNode);
-					adjustTreeBalance(temp, newNodeInfo);
+					adjustTreeBalance(temp, newNode);
 					return ;
 				}
 				else {
@@ -131,6 +138,30 @@ namespace ft {
 				}
 			}
 		}
+
+		_node *get_root(){
+			return (this->_root);
+		}
+
+		void printTree(_node *r, std::string indent = "", bool last = "") {
+			if (r) {
+				std::cout << indent;
+				if (last) {
+				std::cout << "R----";
+				indent += "   ";
+				} else {
+				std::cout << "L----";
+				indent += "|  ";
+				}
+				std::cout << r->_info->first << std::endl;
+				printTree(r->left, indent, false);
+				printTree(r->right, indent, true);
+			}
+		}
+
+		// void	deleteNode(){
+		// 	;
+		// }
 
 	};
 }

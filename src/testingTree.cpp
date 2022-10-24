@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Compare.hpp                                        :+:      :+:    :+:   */
+/*   testingTree.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/29 14:21:02 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/10/17 09:33:47 by aalsuwai         ###   ########.fr       */
+/*   Created: 2022/10/17 09:08:49 by aalsuwai          #+#    #+#             */
+/*   Updated: 2022/10/24 14:21:50 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMPARE_HPP
-# define COMPARE_HPP
+#include "AVL_tree.hpp"
 
-// template <typename T> struct isNodeSmaller: std::binary_function <T, T, bool> {
-// 	return (node1 < node2);
-// };
+int  main(){
+	ft::AVL_tree<int, int> t;
 
-// template <typename T> struct isNodeBigger: std::binary_function <T, T, bool> {
-// 	return (node1 > node2);
-// };
+	t.add_new_node(5);	
+	t.add_new_node(3);	
+	t.add_new_node(7);	
+	t.add_new_node(1);	
+	t.add_new_node(4);	
+	t.add_new_node(0);
 
-#endif
+	t.printTree(t.get_root());
+}
