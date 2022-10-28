@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:58:06 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/10/17 10:45:20 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/10/28 10:35:39 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,14 @@ namespace ft {
 
 		pair&	operator=(const pair& p){
 			if (this != &p) {
-				this->first = p->first;
-				this->second = p->second;
+				this->first = p.first;
+				this->second = p.second;
 			}
+			return (*this);
+		}
+
+		bool operator==(const pair& p){
+			return ((this->first == p.first) && (this->second == p.second));
 		}
 
 		~pair(){}

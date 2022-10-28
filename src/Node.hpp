@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 09:32:13 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/10/17 11:12:37 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/10/28 12:56:56 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ namespace ft{
 		typedef pair<key, val>		value_type;
 		typedef Node*				pointer;
 
-		value_type	*_info;
+		value_type	_info;
 
 		pointer		left;
 		pointer		right;
@@ -39,18 +39,40 @@ namespace ft{
 		}
 
 		Node(const value_type& v): _info(v) {
+			// _info->first = v.first;
+			// _info->second = v.second;
 			this->parent = NULL;
 			this->left = NULL;
 			this->right = NULL;
 			this->height = 1;
 		}
-		Node(const pointer& p, const value_type& v): parent(p), _info(v) {
+		Node(const pointer& p, const value_type& v) {
+			_info = v;
+			this->parent = p;
 			this->left = NULL;
 			this->right = NULL;
 			this->height = 1;
 		}
 
-		~Node();
+		// pointer	operator=(const pointer n){
+		// 	// std::cout << "Hi" << std::endl;
+		// 	_info = n->_info;
+		// 	this->parent = n->parent;
+		// 	this->left = n->left;
+		// 	this->right = n->right;
+		// 	return (this);
+		// 	// this->height = 1;
+		// }
+
+		void introduceChildToParent(const pointer c, bool r){
+			if (r)
+				this->right = c;
+			else
+				this->left = c;
+			this->height++;
+		}
+
+		~Node() {};
 	};
 }
 
