@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:08:49 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/10/28 11:15:54 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/03 15:02:58 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ int  main(){
 	std::cout << "--------------------" << std::endl << std::endl;
 
 	t.add_new_node(ft::pair<int, int>(0,3));
+	std::cout << "--------------------" << std::endl;
+	t.printTree(t.get_root());
+	std::cout << "--------------------" << std::endl << std::endl;
+
+	t.deleteNode(1);
 	std::cout << "--------------------" << std::endl;
 	t.printTree(t.get_root());
 	std::cout << "--------------------" << std::endl << std::endl;

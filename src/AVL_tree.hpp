@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:48:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/10/28 14:33:57 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/03 15:06:12 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,23 +92,76 @@ namespace ft {
 			}
 		}
 
-		_node& findNode(const value_type& nodeInfo){
+		_node& findNode(const key& nodeKey){
 			static _node* temp = this->_root;
 	
-			if (comp(nodeInfo.first, temp->_info.first)){
-				temp->right;
-				findNode(nodeInfo);
+			if (comp(nodeKey, temp->_info.first)){
+				temp = temp->right;
+				findNode(nodeKey);
 			}
-			else if (!comp(nodeInfo.first, temp->_info.first)){
-				temp->left;
-				findNode(nodeInfo);
+			else if (!comp(nodeKey, temp->_info.first)){
+				temp = temp->left;
+				findNode(nodeKey);
 			}
-			else if((nodeInfo.first == temp->_info.first) && (nodeInfo.second == temp->_info.second))
+			else if (nodeKey == temp->_info.first)
 				return (temp);
 		}
+
+		void replaceNodes(_node *toBeDeleted, _node *placeTaker) {
+			_node *parent = toBeDeleted->parent;
+			
+			placeTaker->right = toBeDeleted->right;
+			placeTaker->left = toBeDeleted->left;
+			toBeDeleted->right = NULL;
+			toBeDeleted->left = NULL;
+
+			parent->introduceChildToParent(placeTaker, (placeTaker->_info.first < parent->_info.first)? true: false);
+			placeTaker->parent = parent;
+
+			this->alloc.destroy(toBeDeleted);
+			this->alloc.deallocate(toBeDeleted, 1);
+		}
+
+		void	deleteNodeOneChild(_node *toBeDeleted) {
+			_node *child = (toBeDeleted->right)? toBeDeleted->right: toBeDeleted->left;
+			_node *parent = toBeDeleted->parent;
+			
+			parent->introduceChildToParent(child, (child->_info.first < parent->_info.first)? true: false);
+			child->parent = parent;
+
+			this->alloc.destroy(toBeDeleted);
+			this->alloc.deallocate(toBeDeleted, 1);
+		}
+
+		_node&	inorderSuccessorFinder(_node *toBeDeleted) {
+			static _node *nextNode = toBeDeleted->left;
+			
+			if (!nextNode->right)
+				return (nextNode);
+			
+			nextNode->right;
+			inorderSuccessorFinder(toBeDeleted);
+		}
+
+		void	findAndReplace(_node *toBeDeleted) {
+			_node *replacer = inorderSuccessorFinder(toBeDeleted);
+
+			replaceNodes(toBeDeleted, replacer);			
+		}
 		
-		void	deleteNode(){
-			;
+		void	deleteNode(const key nodeKey){
+			_node *temp = findNode(nodeKey);
+
+			if (!temp->right && !temp->left) {
+				this->alloc.destroy(temp);
+				this->alloc.deallocate(temp, 1);
+			}
+			
+			else if (!temp->right || !temp->left)
+				deleteNodeOneChild(temp);
+
+			else
+				findAndReplace(temp);
 		}
 
 		void	placeNewNode(const value_type& newNode) {
