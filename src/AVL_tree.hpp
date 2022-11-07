@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:48:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/03 15:06:12 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/07 13:29:21 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,14 @@ namespace ft {
 			}
 		}
 
-		_node& findNode(const key& nodeKey){
+		_node* findNode(const key& nodeKey){
 			static _node* temp = this->_root;
-	
-			if (comp(nodeKey, temp->_info.first)){
+
+			// std::cout << "temp key: " << temp->_info.first << 
+			// " .. temp val: " << temp->_info.second << std::endl;
+			if (temp->_info.first == nodeKey)
+				return (temp);
+			else if (comp(nodeKey, temp->_info.first)){
 				temp = temp->right;
 				findNode(nodeKey);
 			}
@@ -103,8 +107,7 @@ namespace ft {
 				temp = temp->left;
 				findNode(nodeKey);
 			}
-			else if (nodeKey == temp->_info.first)
-				return (temp);
+			return (temp);
 		}
 
 		void replaceNodes(_node *toBeDeleted, _node *placeTaker) {
@@ -115,8 +118,14 @@ namespace ft {
 			toBeDeleted->right = NULL;
 			toBeDeleted->left = NULL;
 
-			parent->introduceChildToParent(placeTaker, (placeTaker->_info.first < parent->_info.first)? true: false);
+			
+			std::cout << "Hi!" << std::endl;
+
+			if (parent)
+				parent->introduceChildToParent(placeTaker, (placeTaker->_info.first < parent->_info.first)? true: false);
 			placeTaker->parent = parent;
+			std::cout << "toBeDeleted key: " << toBeDeleted->_info.first << std::endl;
+			std::cout << "placeTaker key: " << placeTaker->_info.first << std::endl;
 
 			this->alloc.destroy(toBeDeleted);
 			this->alloc.deallocate(toBeDeleted, 1);
@@ -126,21 +135,24 @@ namespace ft {
 			_node *child = (toBeDeleted->right)? toBeDeleted->right: toBeDeleted->left;
 			_node *parent = toBeDeleted->parent;
 			
-			parent->introduceChildToParent(child, (child->_info.first < parent->_info.first)? true: false);
+			if (parent)
+				parent->introduceChildToParent(child, (child->_info.first < parent->_info.first)? true: false);
 			child->parent = parent;
 
 			this->alloc.destroy(toBeDeleted);
 			this->alloc.deallocate(toBeDeleted, 1);
+			// std::cout << "I'm Here!" << std::endl;
 		}
 
-		_node&	inorderSuccessorFinder(_node *toBeDeleted) {
+		_node*	inorderSuccessorFinder(_node *toBeDeleted) {
 			static _node *nextNode = toBeDeleted->left;
 			
 			if (!nextNode->right)
 				return (nextNode);
-			
-			nextNode->right;
+
 			inorderSuccessorFinder(toBeDeleted);
+
+			return (nextNode);
 		}
 
 		void	findAndReplace(_node *toBeDeleted) {
@@ -152,13 +164,17 @@ namespace ft {
 		void	deleteNode(const key nodeKey){
 			_node *temp = findNode(nodeKey);
 
+			// std::cout << "temp key: " << temp->_info.first << 
+			// " .. temp val: " << temp->_info.second << std::endl;
 			if (!temp->right && !temp->left) {
+				std::cout << "hi\n";
 				this->alloc.destroy(temp);
 				this->alloc.deallocate(temp, 1);
 			}
 			
-			else if (!temp->right || !temp->left)
+			else if (!temp->right || !temp->left){
 				deleteNodeOneChild(temp);
+			}
 
 			else
 				findAndReplace(temp);
