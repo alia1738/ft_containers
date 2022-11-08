@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 09:32:13 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/10/28 12:56:56 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/08 14:51:29 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ namespace ft{
 				this->right = c;
 			else
 				this->left = c;
-			this->height++;
+			// this->height++;
 		}
 
 		~Node() {};
