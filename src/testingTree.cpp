@@ -6,13 +6,12 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:08:49 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/09 15:07:14 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/09 15:47:11 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "AVL_tree.hpp"
 
-// When deleting make sure the ree is still valid!!!!!!!
 
 int  main(){
 	ft::AVL_tree<int, int> t;
@@ -21,12 +20,12 @@ int  main(){
 	std::cout << "     ADD 0 - 20     " << std::endl;
 	std::cout << "--------------------" << std::endl;
 	for (int i = 0; i <= 20; i++) {
-		std::cout << i << std::endl;
+		// std::cout << i << std::endl;
 		t.add_new_node(ft::make_pair<int, int>(i, (i + 1)));
-	// t.printTree(t.get_root());
+		// t.printTree(t.get_root());
 	}
 	// std::cout << "hi" << std::endl;
-	// t.deleteNode(9);
+	t.deleteNode(3);
 
 	std::cout << "--------------------" << std::endl;
 	std::cout << "      PRINTING      " << std::endl;

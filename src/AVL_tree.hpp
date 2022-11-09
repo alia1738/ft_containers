@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:48:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/09 14:56:19 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/09 15:40:31 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,27 +151,22 @@ namespace ft {
 
 		void replaceNodes(_node *toBeDeleted, _node *placeTaker) {
 			_node *parent = toBeDeleted->parent;
-			placeTaker->right = (placeTaker != toBeDeleted->right)? toBeDeleted->right: placeTaker->right;
-			placeTaker->left = (placeTaker != toBeDeleted->left)? toBeDeleted->left: placeTaker->left;
-			toBeDeleted->right = NULL;
-			toBeDeleted->left = NULL;
+			_node *placeTakerParent = placeTaker->parent;
 
-			if (parent) {
-				parent->introduceChildToParent(placeTaker, (placeTaker->_info.first < parent->_info.first)? true: false);
-				parent->height--;
-			}
-			
-			placeTaker->parent = parent;
-			
-			placeTaker->height = 1 + maxHight(placeTaker->right, placeTaker->left);
+			if (placeTakerParent && (placeTaker->_info.first > placeTakerParent->_info.first))
+				placeTakerParent->right = NULL;
+			if (placeTakerParent && (placeTaker->_info.first < placeTakerParent->_info.first))
+				placeTakerParent->left = NULL;
+			parent->height--;
 
-			if (toBeDeleted->_info == _root->_info)
-				this->_root = placeTaker;
+			value_type temp = toBeDeleted->_info;
+			toBeDeleted->_info = placeTaker->_info;
+			placeTaker->_info = temp;
 
-			this->alloc.destroy(toBeDeleted);
-			this->alloc.deallocate(toBeDeleted, 1);
-
-			adjustTreeBalance(placeTaker, placeTaker->_info.first);
+			this->alloc.destroy(placeTaker);
+			this->alloc.deallocate(placeTaker, 1);
+	
+			adjustTreeBalance(toBeDeleted, toBeDeleted->_info.first);
 		}
 
 		void	deleteNodeOneChild(_node *toBeDeleted) {
@@ -195,9 +190,11 @@ namespace ft {
 		_node*	inorderSuccessorFinder(_node *toBeDeleted) {
 			static _node *nextNode = toBeDeleted->right;
 			
+			std::cout << "next node " << nextNode->_info.first << std::endl;
 			if (!nextNode->left)
 				return (nextNode);
 
+			nextNode = nextNode->left;
 			inorderSuccessorFinder(toBeDeleted);
 
 			return (nextNode);
@@ -206,6 +203,7 @@ namespace ft {
 		void	findAndReplace(_node *toBeDeleted) {
 			_node *replacer = inorderSuccessorFinder(toBeDeleted);
 
+			std::cout << "replacer " << replacer->_info.first << std::endl;
 			replaceNodes(toBeDeleted, replacer);
 			adjustTreeBalance(replacer, replacer->_info.first);
 		}
