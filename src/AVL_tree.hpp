@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:48:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/09 09:41:26 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/09 14:56:19 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,33 @@ namespace ft {
 		compare		comp;
 
 		void	rotateRight(_node *n) {
-
 			_node *x = n->left;
 			_node *y = x->right;
 			_node *n_new_parent = x;
 			_node *x_new_parent = n->parent;
 			_node *y_new_parent = n;
+			bool r = false;
+			
+			if (x_new_parent && x_new_parent->right->_info == n->_info)
+				r = true;
 
 			x->right = n;
 			n->left = y;
 
 			n->height = 1 + maxHight(n->right, n->left);
 			x->height = 1 + maxHight(x->right, x->left);
-			
-			n->parent = n_new_parent;
-			if (y)
-				y->parent = y_new_parent;
+
 			x->parent = x_new_parent;
-			
+			if (x_new_parent && r)
+				x_new_parent->right = x;
+			else if (x_new_parent && !r)
+				x_new_parent->left = x;
+
+			n->parent = n_new_parent;
+			if (y) {
+				y->parent = y_new_parent;
+			}
+
 			if (n->_info == _root->_info)
 				this->_root = x;
 		}
@@ -60,14 +69,23 @@ namespace ft {
 			_node *n_new_parent = x;
 			_node *x_new_parent = n->parent;
 			_node *y_new_parent = n;
+			bool r = false;
+			
+			if (x_new_parent && x_new_parent->right->_info == n->_info)
+				r = true;
 
 			x->left = n;
 			n->right = y;
 
+			x->parent = x_new_parent;
+			if (x_new_parent && r)
+				x_new_parent->right = x;
+			else if (x_new_parent && !r)
+				x_new_parent->left = x;
+
 			n->parent = n_new_parent;
 			if (y)
 				y->parent = y_new_parent;
-			x->parent = x_new_parent;
 
 			n->height = 1 + maxHight(n->right, n->left);
 			x->height = 1 + maxHight(x->right, x->left);
