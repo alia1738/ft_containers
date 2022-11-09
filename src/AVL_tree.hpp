@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:48:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/08 15:17:15 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/09 09:41:26 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,24 +133,27 @@ namespace ft {
 
 		void replaceNodes(_node *toBeDeleted, _node *placeTaker) {
 			_node *parent = toBeDeleted->parent;
-			
-			placeTaker->right = toBeDeleted->right;
-			placeTaker->left = toBeDeleted->left;
+			placeTaker->right = (placeTaker != toBeDeleted->right)? toBeDeleted->right: placeTaker->right;
+			placeTaker->left = (placeTaker != toBeDeleted->left)? toBeDeleted->left: placeTaker->left;
 			toBeDeleted->right = NULL;
 			toBeDeleted->left = NULL;
 
-			// need fixing
-			// when introducing the child to parent the hight must go down since we are deleting;
 			if (parent) {
 				parent->introduceChildToParent(placeTaker, (placeTaker->_info.first < parent->_info.first)? true: false);
 				parent->height--;
 			}
 			
 			placeTaker->parent = parent;
+			
+			placeTaker->height = 1 + maxHight(placeTaker->right, placeTaker->left);
+
+			if (toBeDeleted->_info == _root->_info)
+				this->_root = placeTaker;
 
 			this->alloc.destroy(toBeDeleted);
 			this->alloc.deallocate(toBeDeleted, 1);
-			// update the hight of the placeTaker and check balance
+
+			adjustTreeBalance(placeTaker, placeTaker->_info.first);
 		}
 
 		void	deleteNodeOneChild(_node *toBeDeleted) {
@@ -158,17 +161,17 @@ namespace ft {
 			_node *child = (r)? toBeDeleted->right: toBeDeleted->left;
 			_node *parent = toBeDeleted->parent;
 			
-			// need fixing
-			// when introducing the child to parent the hight must go down since we are deleting;
 			if (parent) {
 				parent->introduceChildToParent(child, r);
 				parent->height--;
 			}
 			child->parent = parent;
+			child->height = 1 + maxHight(child->right, child->left);
 
 			this->alloc.destroy(toBeDeleted);
 			this->alloc.deallocate(toBeDeleted, 1);
-			// update the hight and check balance
+
+			adjustTreeBalance(child, child->_info.first);
 		}
 
 		_node*	inorderSuccessorFinder(_node *toBeDeleted) {
@@ -185,39 +188,34 @@ namespace ft {
 		void	findAndReplace(_node *toBeDeleted) {
 			_node *replacer = inorderSuccessorFinder(toBeDeleted);
 
-			replaceNodes(toBeDeleted, replacer);			
+			replaceNodes(toBeDeleted, replacer);
+			adjustTreeBalance(replacer, replacer->_info.first);
 		}
 		
 		void	deleteNode(const key nodeKey){
-			/* ****** !!!!!!!!!!!!!!!!!!!!!!!!!!!!! ****** */
-			/* ****** account for deleting the ROOT ****** */
-			/* ****** !!!!!!!!!!!!!!!!!!!!!!!!!!!!! ****** */
 			_node *temp = findNode(nodeKey);
 			_node *temp_parent = temp->parent;
-			/* ****** !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ****** */
-			/* ****** Balance function doesn't work properly here ****** */
-			/* ******   -> if the tree is unbalanced it seg fault ****** */
-			/* ****** !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ****** */
 
 			if (!temp->right && !temp->left) {
 				bool r = (nodeKey > temp_parent->_info.first)? true: false;
+				
+				if (temp_parent){
+					temp_parent->introduceChildToParent(NULL, r);
+					temp_parent->height--;
+					adjustTreeBalance(temp_parent, nodeKey);}
+				
+				if (nodeKey == this->_root->_info.first) {
+					this->_root = temp_parent;}
+
 				this->alloc.destroy(temp);
 				this->alloc.deallocate(temp, 1);
-				temp_parent->introduceChildToParent(NULL, r);
-				temp_parent->height--;
-				adjustTreeBalance(temp_parent, nodeKey);
-				// update hight and check balance
 			}
 			
 			else if (!temp->right || !temp->left){
-				deleteNodeOneChild(temp);
-				adjustTreeBalance(temp_parent, nodeKey);
-			}
+				deleteNodeOneChild(temp);}
 
 			else {
-				findAndReplace(temp);
-				adjustTreeBalance(temp_parent, nodeKey);
-			}
+				findAndReplace(temp);}
 		}
 
 		void	placeNewNode(const value_type& newNode) {
@@ -250,30 +248,31 @@ namespace ft {
 
 		void	adjustTreeBalance(_node *n, const key nodeKey) {
 			n->height = 1 + maxHight(n->right, n->left);
-
 			int balance = getBalanceFactor(n);
+
 			
 			if (balance > 1) {
-				if (nodeKey < n->left->_info.first) 
+				if (!n->right || nodeKey < n->left->_info.first)  {
 					return (rotateRight(n));
+				}
 				else {
 					rotateLeft(n->left);
 					return (rotateRight(n));}
 			}
 			else if (balance < -1) {
-				if (nodeKey > n->right->_info.first) {
-					return (rotateLeft(n));
-				}
+				if (!n->left || nodeKey > n->right->_info.first) {
+					return (rotateLeft(n));}
 				else {
 					rotateRight(n->right);
 					return (rotateLeft(n));}
 			}
+
 			if (n->parent)
 				adjustTreeBalance(n->parent, nodeKey);
+
 			else
 				return ;
 		}
-
 
 		_node *get_root(){
 			return (this->_root);
@@ -288,7 +287,6 @@ namespace ft {
 						std::cout << "Parent: " << r->parent->_info.first << std::endl << std::endl;
 					else
 						std::cout << "NO PARENT" << std::endl << std::endl;
-						
 				}
 				
 				else if (location == 1) {
@@ -311,7 +309,6 @@ namespace ft {
 				
 				printTree(r->right, 1);
 				printTree(r->left, -1);
-				
 			}
 		}
 

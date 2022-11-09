@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:08:49 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/08 15:16:12 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/09 09:43:38 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int  main(){
 	// std::cout << "--------------------" << std::endl << std::endl;
 
 	std::cout << "--------------------" << std::endl;
-	std::cout << "      DELETE 1      " << std::endl;
+	std::cout << "      DELETE 3      " << std::endl;
 	std::cout << "--------------------" << std::endl;
-	t.deleteNode(1);
+	t.deleteNode(3);
 	t.printTree(t.get_root());
 	std::cout << "--------------------" << std::endl << std::endl;
 }
