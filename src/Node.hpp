@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 09:32:13 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/08 14:51:29 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/10 17:17:45 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,11 @@ namespace ft{
 			this->height = 1;
 		}
 
-		// pointer	operator=(const pointer n){
-		// 	// std::cout << "Hi" << std::endl;
-		// 	_info = n->_info;
-		// 	this->parent = n->parent;
-		// 	this->left = n->left;
-		// 	this->right = n->right;
-		// 	return (this);
-		// 	// this->height = 1;
-		// }
-
 		void introduceChildToParent(const pointer c, bool r){
 			if (r)
 				this->right = c;
 			else
 				this->left = c;
-			// this->height++;
 		}
 
 		~Node() {};

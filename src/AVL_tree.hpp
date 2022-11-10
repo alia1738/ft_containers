@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:48:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/09 15:40:31 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/10 17:13:46 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,68 +30,9 @@ namespace ft {
 		_node *_root;
 		_allocator	alloc;
 		compare		comp;
-
-		void	rotateRight(_node *n) {
-			_node *x = n->left;
-			_node *y = x->right;
-			_node *n_new_parent = x;
-			_node *x_new_parent = n->parent;
-			_node *y_new_parent = n;
-			bool r = false;
-			
-			if (x_new_parent && x_new_parent->right->_info == n->_info)
-				r = true;
-
-			x->right = n;
-			n->left = y;
-
+		
+		void	adjustNodeHight(_node *n) {
 			n->height = 1 + maxHight(n->right, n->left);
-			x->height = 1 + maxHight(x->right, x->left);
-
-			x->parent = x_new_parent;
-			if (x_new_parent && r)
-				x_new_parent->right = x;
-			else if (x_new_parent && !r)
-				x_new_parent->left = x;
-
-			n->parent = n_new_parent;
-			if (y) {
-				y->parent = y_new_parent;
-			}
-
-			if (n->_info == _root->_info)
-				this->_root = x;
-		}
-
-		void	rotateLeft(_node *n) {
-			_node *x = n->right;
-			_node *y = x->left;
-			_node *n_new_parent = x;
-			_node *x_new_parent = n->parent;
-			_node *y_new_parent = n;
-			bool r = false;
-			
-			if (x_new_parent && x_new_parent->right->_info == n->_info)
-				r = true;
-
-			x->left = n;
-			n->right = y;
-
-			x->parent = x_new_parent;
-			if (x_new_parent && r)
-				x_new_parent->right = x;
-			else if (x_new_parent && !r)
-				x_new_parent->left = x;
-
-			n->parent = n_new_parent;
-			if (y)
-				y->parent = y_new_parent;
-
-			n->height = 1 + maxHight(n->right, n->left);
-			x->height = 1 + maxHight(x->right, x->left);
-
-			if (n->_info == _root->_info)
-				this->_root = x;
 		}
 
 		int	maxHight(_node *right, _node *left){
@@ -116,154 +57,55 @@ namespace ft {
 			parent->height++;
 		}
 
-	public:
-
-		AVL_tree(){
-			this->_root = NULL;
-		}
-
-		void	add_new_node(const value_type v){
-			if (!this->_root){
-				this->_root = alloc.allocate(1);
-				_node temp(v);				
-				alloc.construct(_root, temp);
-			}
-			else {
-				placeNewNode(v);
-			}
-		}
-
-		_node* findNode(const key& nodeKey){
-			static _node* temp = this->_root;
-
-			if (temp->_info.first == nodeKey)
-				return (temp);
-			else if (comp(nodeKey, temp->_info.first)){
-				temp = temp->left;
-				findNode(nodeKey);
-			}
-			else if (!comp(nodeKey, temp->_info.first)){
-				temp = temp->right;
-				findNode(nodeKey);
-			}
-			return (temp);
-		}
-
-		void replaceNodes(_node *toBeDeleted, _node *placeTaker) {
-			_node *parent = toBeDeleted->parent;
-			_node *placeTakerParent = placeTaker->parent;
-
-			if (placeTakerParent && (placeTaker->_info.first > placeTakerParent->_info.first))
-				placeTakerParent->right = NULL;
-			if (placeTakerParent && (placeTaker->_info.first < placeTakerParent->_info.first))
-				placeTakerParent->left = NULL;
-			parent->height--;
-
-			value_type temp = toBeDeleted->_info;
-			toBeDeleted->_info = placeTaker->_info;
-			placeTaker->_info = temp;
-
-			this->alloc.destroy(placeTaker);
-			this->alloc.deallocate(placeTaker, 1);
-	
-			adjustTreeBalance(toBeDeleted, toBeDeleted->_info.first);
-		}
-
-		void	deleteNodeOneChild(_node *toBeDeleted) {
-			bool r = (toBeDeleted->right)? true:false;
-			_node *child = (r)? toBeDeleted->right: toBeDeleted->left;
-			_node *parent = toBeDeleted->parent;
+		void	linkParentNodesForRotation(_node *n, _node *x, _node *y){
+			_node *n_new_parent = x;
+			_node *x_new_parent = n->parent;
+			_node *y_new_parent = n;
+			bool r = false;
 			
-			if (parent) {
-				parent->introduceChildToParent(child, r);
-				parent->height--;
+			if (x_new_parent && x_new_parent->right->_info == n->_info)
+				r = true;
+			x->parent = x_new_parent;
+			if (x_new_parent && r)
+				x_new_parent->right = x;
+			else if (x_new_parent && !r)
+				x_new_parent->left = x;
+			n->parent = n_new_parent;
+			if (y) {
+				y->parent = y_new_parent;
 			}
-			child->parent = parent;
-			child->height = 1 + maxHight(child->right, child->left);
-
-			this->alloc.destroy(toBeDeleted);
-			this->alloc.deallocate(toBeDeleted, 1);
-
-			adjustTreeBalance(child, child->_info.first);
 		}
 
-		_node*	inorderSuccessorFinder(_node *toBeDeleted) {
-			static _node *nextNode = toBeDeleted->right;
-			
-			std::cout << "next node " << nextNode->_info.first << std::endl;
-			if (!nextNode->left)
-				return (nextNode);
+		void	rotateRight(_node *n) {
+			_node *x = n->left;
+			_node *y = x->right;
 
-			nextNode = nextNode->left;
-			inorderSuccessorFinder(toBeDeleted);
-
-			return (nextNode);
+			linkParentNodesForRotation(n, x, y);
+			x->right = n;
+			n->left = y;
+			adjustNodeHight(n);
+			adjustNodeHight(x);
+			if (n->_info == _root->_info)
+				this->_root = x;
 		}
 
-		void	findAndReplace(_node *toBeDeleted) {
-			_node *replacer = inorderSuccessorFinder(toBeDeleted);
+		void	rotateLeft(_node *n) {
+			_node *x = n->right;
+			_node *y = x->left;
 
-			std::cout << "replacer " << replacer->_info.first << std::endl;
-			replaceNodes(toBeDeleted, replacer);
-			adjustTreeBalance(replacer, replacer->_info.first);
-		}
-		
-		void	deleteNode(const key nodeKey){
-			_node *temp = findNode(nodeKey);
-			_node *temp_parent = temp->parent;
-
-			if (!temp->right && !temp->left) {
-				bool r = (nodeKey > temp_parent->_info.first)? true: false;
-				
-				if (temp_parent){
-					temp_parent->introduceChildToParent(NULL, r);
-					temp_parent->height--;
-					adjustTreeBalance(temp_parent, nodeKey);}
-				
-				if (nodeKey == this->_root->_info.first) {
-					this->_root = temp_parent;}
-
-				this->alloc.destroy(temp);
-				this->alloc.deallocate(temp, 1);
-			}
-			
-			else if (!temp->right || !temp->left){
-				deleteNodeOneChild(temp);}
-
-			else {
-				findAndReplace(temp);}
-		}
-
-		void	placeNewNode(const value_type& newNode) {
-			static	_node *temp = this->_root;
-
-			if (comp(newNode.first, temp->_info.first)){
-				if (!temp->left) {
-					AllocConstruct(temp, temp->left, newNode, false);
-					adjustTreeBalance(temp, newNode.first);
-					return ;
-				}
-				else {
-					temp = temp->left;
-					placeNewNode(newNode);
-				}
-			}
-
-			else if (!comp(newNode.first, temp->_info.first)) {
-				if (!temp->right) {
-					AllocConstruct(temp, temp->right, newNode, true);
-					adjustTreeBalance(temp, newNode.first);
-					return ;
-				}
-				else {
-					temp = temp->right;
-					placeNewNode(newNode);
-				}
-			}
+			linkParentNodesForRotation(n, x, y);
+			x->left = n;
+			n->right = y;
+			adjustNodeHight(n);
+			adjustNodeHight(x);
+			if (n->_info == _root->_info)
+				this->_root = x;
 		}
 
 		void	adjustTreeBalance(_node *n, const key nodeKey) {
-			n->height = 1 + maxHight(n->right, n->left);
+			if (!n)
+				return ;
+			adjustNodeHight(n);
 			int balance = getBalanceFactor(n);
 
 			
@@ -290,6 +132,153 @@ namespace ft {
 				return ;
 		}
 
+		bool	nodeAdded(const value_type& newNode, _node *temp, _node *temp_l_r, bool t){
+			if (!temp_l_r) {
+				AllocConstruct(temp, temp_l_r, newNode, t);
+				adjustTreeBalance(temp, newNode.first);
+				return (true);}
+			return (false);
+		}
+
+		void	placeNewNode(const value_type& newNode) {
+			static	_node *temp = this->_root;
+
+			if (comp(newNode.first, temp->_info.first)){
+				if (nodeAdded(newNode, temp, temp->left, false)) 
+					return ;
+				else {
+					temp = temp->left;
+					placeNewNode(newNode);}
+			}
+
+			else if (!comp(newNode.first, temp->_info.first)) {
+				std::cout << "temp = " << temp->_info.first << std::endl;
+				if (nodeAdded(newNode, temp, temp->right, true))
+					return ;
+				else {
+					temp = temp->right;
+					placeNewNode(newNode);}
+			}
+		}
+
+		void	LinkParentNodeForDelete(_node *parent, _node *child, bool r) {
+			if (parent) {
+				parent->introduceChildToParent(child, r);
+				parent->height--;
+			}
+		}
+
+		void	updateRoot(const key nodeKey, _node *potentialRoot) {
+			if (nodeKey == this->_root->_info.first)
+				this->_root = potentialRoot;
+		}
+
+		void	destroyDeallocate(_node *n) {
+			this->alloc.destroy(n);
+			this->alloc.deallocate(n, 1);
+		}
+
+		_node* findNode(const key& nodeKey){
+			static _node* temp = this->_root;
+
+			if (temp->_info.first == nodeKey)
+				return (temp);
+			else if (comp(nodeKey, temp->_info.first)){
+				temp = temp->left;
+				findNode(nodeKey);
+			}
+			else if (!comp(nodeKey, temp->_info.first)){
+				temp = temp->right;
+				findNode(nodeKey);
+			}
+			return (temp);
+		}
+
+		_node*	getInOrderSuccessor(_node *toBeDeleted) {
+			static _node *nextNode = toBeDeleted->right;
+			
+			if (!nextNode->left)
+				return (nextNode);
+			nextNode = nextNode->left;
+			getInOrderSuccessor(toBeDeleted);
+
+			return (nextNode);
+		}
+
+		void replaceNodes(_node *infoTaker, _node *toBeDeleted) {
+			_node *toBeDeletedParent = toBeDeleted->parent;
+			bool r = (toBeDeletedParent && (toBeDeleted->_info.first > toBeDeletedParent->_info.first))? true: false;
+
+			LinkParentNodeForDelete(toBeDeletedParent, NULL, r);
+			
+			value_type temp = infoTaker->_info;
+			infoTaker->_info = toBeDeleted->_info;
+			toBeDeleted->_info = temp;
+			
+			updateRoot(infoTaker->_info.first, infoTaker);
+			destroyDeallocate(toBeDeleted);
+			// adjustTreeBalance(infoTaker, infoTaker->_info.first);
+		}
+
+		void	findAndReplace(_node *infoTaker) {
+			_node *toBeDeleted = getInOrderSuccessor(infoTaker);
+
+			replaceNodes(infoTaker, toBeDeleted);
+			adjustTreeBalance(infoTaker, infoTaker->_info.first);
+		}
+
+		void	deleteNodeOneChild(_node *toBeDeleted) {
+			bool r = (toBeDeleted->right)? true:false;
+			_node *child = (r)? toBeDeleted->right: toBeDeleted->left;
+			_node *parent = toBeDeleted->parent;
+			
+			LinkParentNodeForDelete(parent, child, r);
+			child->parent = parent;
+			adjustNodeHight(child);
+			updateRoot(toBeDeleted->_info.first, child);
+			destroyDeallocate(toBeDeleted);
+			adjustTreeBalance(child, child->_info.first);
+		}
+
+	public:
+
+		AVL_tree(){
+			this->_root = NULL;
+		}
+
+		void	add_new_node(const value_type v){
+			if (!this->_root){
+				this->_root = alloc.allocate(1);
+				_node temp(v);				
+				alloc.construct(_root, temp);
+			}
+			else {
+				placeNewNode(v);
+			}
+		}
+		
+		void	deleteNode(const key nodeKey){
+			_node *temp = findNode(nodeKey);
+			_node *temp_parent = temp->parent;
+
+			if (!temp->right && !temp->left) {
+				bool r = (temp_parent && nodeKey > temp_parent->_info.first)? true: false;
+				LinkParentNodeForDelete(temp_parent, NULL, r);
+				updateRoot(nodeKey, temp_parent);
+				destroyDeallocate(temp);
+				adjustTreeBalance(temp_parent, nodeKey);
+			}
+			
+			else if (!temp->right || !temp->left){
+				deleteNodeOneChild(temp);}
+
+			else {
+				findAndReplace(temp);}
+		}
+
+
+		/* *************************************** */
+		/* ************ To be deleted ************ */
 		_node *get_root(){
 			return (this->_root);
 		}

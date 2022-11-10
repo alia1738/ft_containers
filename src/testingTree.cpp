@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:08:49 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/09 15:47:11 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/10 16:55:41 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int  main(){
 		// t.printTree(t.get_root());
 	}
 	// std::cout << "hi" << std::endl;
-	t.deleteNode(3);
+	t.deleteNode(11);
 
 	std::cout << "--------------------" << std::endl;
 	std::cout << "      PRINTING      " << std::endl;
@@ -38,14 +38,14 @@ int  main(){
 	// std::cout << "--------------------" << std::endl;
 	// t.add_new_node(ft::make_pair<int, int>(1,2));
 	// t.printTree(t.get_root());
-	// // std::cout << "--------------------" << std::endl << std::endl;
+	// std::cout << "--------------------" << std::endl << std::endl;
 
 	// std::cout << "--------------------" << std::endl;
 	// std::cout << "       ADD 2        " << std::endl;
 	// std::cout << "--------------------" << std::endl;
 	// t.add_new_node(ft::make_pair<int, int>(2,1));
 	// t.printTree(t.get_root());
-	// // std::cout << "--------------------" << std::endl << std::endl;
+	// std::cout << "--------------------" << std::endl << std::endl;
 
 	// std::cout << "--------------------" << std::endl;
 	// std::cout << "       ADD 3        " << std::endl;
@@ -62,9 +62,9 @@ int  main(){
 	// // std::cout << "--------------------" << std::endl << std::endl;
 
 	// std::cout << "--------------------" << std::endl;
-	// std::cout << "      DELETE 3      " << std::endl;
+	// std::cout << "      DELETE 1      " << std::endl;
 	// std::cout << "--------------------" << std::endl;
-	// t.deleteNode(3);
+	// t.deleteNode(1);
 	// t.printTree(t.get_root());
 	// std::cout << "--------------------" << std::endl << std::endl;
 
