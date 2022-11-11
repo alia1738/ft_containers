@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AVL_tree.hpp                                       :+:      :+:    :+:   */
+/*   avlTree.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:48:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/10 17:13:46 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/11 09:42:13 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AVL_TREE_HPP
-# define AVL_TREE_HPP
+#ifndef AVLTREE_HPP
+# define AVLTREE_HPP
 
 #include "Node.hpp"
 // #include "Compare.hpp"
@@ -19,7 +19,7 @@
 
 namespace ft {
 	template < class key, class val, class compare = std::less<key>, class Alloc = std::allocator< pair<const key, val> > >
-	class AVL_tree {
+	class avlTree {
 
 	public:
 		typedef	Node<key, val>								_node;
@@ -242,7 +242,7 @@ namespace ft {
 
 	public:
 
-		AVL_tree(){
+		avlTree(){
 			this->_root = NULL;
 		}
 

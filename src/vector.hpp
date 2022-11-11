@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/09/26 12:32:34 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/11 15:32:50 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,26 +122,26 @@ namespace ft
 		typedef T type;
 	};
 
-	template < typename T, class _alloc > class vector
+	template < typename T, class Alloc > 
+	class vector
 	{
 
 	public:
-		typedef _alloc									allocator_type;
-		typedef std::allocator<T>						_allocator;
-		typedef typename _allocator::size_type			size_type;
-		typedef typename _allocator::difference_type	difference_type;
-		typedef T										value_type;
-		typedef value_type&								reference;
-		typedef const value_type&						const_reference;
-		typedef typename _allocator::pointer			pointer;
-		typedef typename _allocator::const_pointer		const_pointer;
-		typedef v_iterator<value_type>					iterator;
-		typedef v_iterator<const value_type>			const_iterator;
-		typedef reverse_iterator<iterator>				reverse_iterator;
-		// typedef reverse_iterator<const_iterator>		const_reverse_iterator;
+		typedef T											value_type;
+		typedef Alloc										allocator_type;
+		typedef typename allocator_type::reference			reference;
+		typedef typename allocator_type::const_reference	const_reference;
+		typedef typename allocator_type::pointer			pointer;
+		typedef typename allocator_type::const_pointer		const_pointer;
+		typedef v_iterator<value_type>						iterator;
+		typedef v_iterator<const value_type>				const_iterator;
+		typedef reverse_iterator<iterator>					reverse_iterator;
+		// typedef reverse_iterator<const_iterator>			const_reverse_iterator;
+		typedef typename allocator_type::difference_type	difference_type;
+		typedef typename allocator_type::size_type			size_type;
 
 	private:
-		_allocator	alloc;
+		allocator_type	alloc;
 		pointer		_start;
 		pointer		_end;
 		size_type	cap;
@@ -377,7 +377,7 @@ namespace ft
 			return (*(this->_start));
 		}
 
-		allocator_type get_allocator() const{
+		allocator_type getallocator_type() const{
 			return (this->alloc);
 		}
 
@@ -536,7 +536,7 @@ namespace ft
 		}
 
 		void swap (vector& v){			
-			_allocator	temp_alloc = v.alloc;
+			allocator_type	temp_alloc = v.alloc;
 			pointer 	temp_start = v._start;
 			pointer		temp_end = v._end;
 			size_type	temp_cap = v.cap;

@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 09:32:13 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/10 17:17:45 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/11 09:39:33 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,12 @@ namespace ft{
 		}
 
 		Node(const value_type& v): _info(v) {
-			// _info->first = v.first;
-			// _info->second = v.second;
 			this->parent = NULL;
 			this->left = NULL;
 			this->right = NULL;
 			this->height = 1;
 		}
-		Node(const pointer& p, const value_type& v) {
-			_info = v;
+		Node(const pointer& p, const value_type& v): _info(v) {
 			this->parent = p;
 			this->left = NULL;
 			this->right = NULL;
