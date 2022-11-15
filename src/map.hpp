@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 09:40:16 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/11 15:49:00 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:47:14 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@
 #include "avlTree.hpp"
 
 namespace ft {
-	template < class Key, class T, class Compare = std::less<key>, class Allocate = std::allocator< pair<const key, val> > > 
+	template < class Key, class T, class Compare = std::less<Key>, class Allocate = std::allocator< pair<const Key, T> > > 
 	class map {
 
 	public:
 		typedef Key											key_type;
 		typedef T											mapped_type;
 		typedef pair <const key_type, mapped_type>			value_type;
-		typedef typename Compare							key_compare;
-		typedef typename Allocate							allocator_type;
+		typedef Compare										key_compare;
+		typedef Allocate									allocator_type;
 		typedef typename allocator_type::reference			reference;
 		typedef typename allocator_type::const_reference	const_reference;
 		typedef typename allocator_type::pointer			pointer;
@@ -37,9 +37,57 @@ namespace ft {
 		// const_reverse_iterator
 		
 	private:
+		typedef avlTree<key_type, mapped_type, Compare, allocator_type>	_base;
+		typedef	Node<key_type, mapped_type>								_node;
 		// typedef avlTree <>
 		
+		_base			_tree;
+		allocator_type	_alloc;
+		key_compare		_comp;
+		size_type		size;
+
 	public:
+		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()){
+			this->_comp = comp;
+			this->_alloc = alloc;
+			size = 0;
+		}
+
+		// map(const map& m){
+		// 	if (this != m) {
+		// 		this->_comp = m->_comp;
+		// 		this->_alloc = m->_alloc;
+		// 		for (size_type i = 0; i < size; i++){
+		// 			// insert
+		// 		}
+		// 	}
+		// }
+		
+		pair</*iterator*/_node*, bool> insert(const value_type& val){
+			_node *temp = this->_tree.findNode(val.first, true);
+			if (temp){
+				return (make_pair(temp, false));
+			}
+			this->_tree.add_new_node(val);
+			temp = this->_tree.findNode(val.first);
+			this->size++;
+			// std::cout << "temp found " << temp->_info.first << std::endl;
+			// std::cout << "I AM HERE!" << std::endl;
+			return (make_pair(temp, true));
+		}
+
+		mapped_type& at (const key_type& k) {
+			_node *temp = this->_tree.findNode(k, true);
+
+			if (!temp)
+				throw std::out_of_range("\nft::map: out of range");
+			return (temp->_info.second);
+		}
+
+		mapped_type& operator[](const key_type& k){
+			return (this->at(k));
+		}
+
 	};
 }
 

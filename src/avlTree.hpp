@@ -25,9 +25,9 @@ namespace ft {
 		typedef	Node<key, val>								_node;
 		typedef pair<key, val>								value_type;
 		typedef typename std::allocator<_node>				_allocator;
+		_node *_root;
 
 	private:
-		_node *_root;
 		_allocator	alloc;
 		compare		comp;
 		
@@ -178,22 +178,6 @@ namespace ft {
 			this->alloc.deallocate(n, 1);
 		}
 
-		_node* findNode(const key& nodeKey){
-			static _node* temp = this->_root;
-
-			if (temp->_info.first == nodeKey)
-				return (temp);
-			else if (comp(nodeKey, temp->_info.first)){
-				temp = temp->left;
-				findNode(nodeKey);
-			}
-			else if (!comp(nodeKey, temp->_info.first)){
-				temp = temp->right;
-				findNode(nodeKey);
-			}
-			return (temp);
-		}
-
 		_node*	getInOrderSuccessor(_node *toBeDeleted) {
 			static _node *nextNode = toBeDeleted->right;
 			
@@ -246,7 +230,7 @@ namespace ft {
 			this->_root = NULL;
 		}
 
-		void	add_new_node(const value_type v){
+		void	add_new_node(const value_type &v){
 			if (!this->_root){
 				this->_root = alloc.allocate(1);
 				_node temp(v);				
@@ -256,9 +240,29 @@ namespace ft {
 				placeNewNode(v);
 			}
 		}
+
+		_node* findNode(const key& nodeKey, bool first_time = false){
+			static _node* temp = this->_root;
+
+			temp = (first_time)? this->_root: temp;
+
+			if (!temp)
+				return (NULL);
+			if (temp->_info.first == nodeKey)
+				return (temp);
+			else if (comp(nodeKey, temp->_info.first)){
+				temp = temp->left;
+				findNode(nodeKey);
+			}
+			else if (!comp(nodeKey, temp->_info.first)){
+				temp = temp->right;
+				findNode(nodeKey);
+			}
+			return (temp);
+		}
 		
 		void	deleteNode(const key nodeKey){
-			_node *temp = findNode(nodeKey);
+			_node *temp = findNode(nodeKey, true);
 			_node *temp_parent = temp->parent;
 
 			if (!temp->right && !temp->left) {
@@ -268,7 +272,7 @@ namespace ft {
 				destroyDeallocate(temp);
 				adjustTreeBalance(temp_parent, nodeKey);
 			}
-			
+
 			else if (!temp->right || !temp->left){
 				deleteNodeOneChild(temp);}
 
