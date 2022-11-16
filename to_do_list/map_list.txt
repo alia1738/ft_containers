@@ -1,7 +1,7 @@
 Map
 
 ----------------------- map::map -----------------------
-empty (1)	explicit map (const key_compare& comp = key_compare(),
+✅ empty (1)	explicit map (const key_compare& comp = key_compare(),
               const allocator_type& alloc = allocator_type());
 
 range (2)	template <class InputIterator>
@@ -19,7 +19,7 @@ copy (3)	map (const map& x);
 member functions:
 
 ----------------------- map::at ------------------------
-mapped_type& at (const key_type& k);
+✅ mapped_type& at (const key_type& k);
 
 const mapped_type& at (const key_type& k) const;
 --------------------------------------------------------
@@ -73,7 +73,7 @@ allocator_type get_allocator() const;
 --------------------------------------------------------
 
 ---------------------- map::insert ---------------------
-single element (1)	pair<iterator,bool> insert (const value_type& val);
+✅ single element (1)	pair<iterator,bool> insert (const value_type& val);
 
 with hint (2)		iterator insert (iterator position, const value_type& val);
 
@@ -96,7 +96,7 @@ size_type max_size() const;
 --------------------------------------------------------
 
 -------------------- map::operator[] -------------------
-mapped_type& operator[] (const key_type& k);
+✅ mapped_type& operator[] (const key_type& k);
 --------------------------------------------------------
 
 -------------------- map::operator= --------------------

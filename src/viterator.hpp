@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 16:54:46 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/11 15:31:35 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/16 15:05:08 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,8 @@ namespace ft {
 
 		v_iterator operator++(int){
 			v_iterator temp = *this;
-			this->_content++;
+			// this->_content++;
+			++(*this);
 			return (temp);
 		}
 

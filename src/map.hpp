@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 09:40:16 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/15 16:47:14 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/16 15:19:39 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "avlTree.hpp"
 
 namespace ft {
-	template < class Key, class T, class Compare = std::less<Key>, class Allocate = std::allocator< pair<const Key, T> > > 
+	template < class Key, class T, class Compare, class Allocate > 
 	class map {
 
 	public:
@@ -35,10 +35,12 @@ namespace ft {
 		// const_iterator
 		// reverse_iterator
 		// const_reverse_iterator
-		
+
 	private:
 		typedef avlTree<key_type, mapped_type, Compare, allocator_type>	_base;
 		typedef	Node<key_type, mapped_type>								_node;
+		typedef	Node<key_type, mapped_type>*							_node_pointer;
+		typedef	
 		// typedef avlTree <>
 		
 		_base			_tree;
@@ -62,9 +64,9 @@ namespace ft {
 		// 		}
 		// 	}
 		// }
-		
+
 		pair</*iterator*/_node*, bool> insert(const value_type& val){
-			_node *temp = this->_tree.findNode(val.first, true);
+			_node_pointer	temp = this->_tree.findNode(val.first, true);
 			if (temp){
 				return (make_pair(temp, false));
 			}
@@ -77,7 +79,7 @@ namespace ft {
 		}
 
 		mapped_type& at (const key_type& k) {
-			_node *temp = this->_tree.findNode(k, true);
+			_node_pointer	temp = this->_tree.findNode(k, true);
 
 			if (!temp)
 				throw std::out_of_range("\nft::map: out of range");
