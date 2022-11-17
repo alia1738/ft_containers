@@ -152,7 +152,7 @@ namespace ft {
 			}
 
 			else if (!comp(newNode.first, temp->_info.first)) {
-				std::cout << "temp = " << temp->_info.first << std::endl;
+				// std::cout << "temp = " << temp->_info.first << std::endl;
 				if (nodeAdded(newNode, temp, temp->right, true))
 					return ;
 				else {

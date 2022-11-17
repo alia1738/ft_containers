@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 09:32:13 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/11 09:39:33 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/17 11:30:58 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,22 @@ namespace ft{
 			this->right = NULL;
 			this->height = 1;
 		}
+		
 		Node(const pointer& p, const value_type& v): _info(v) {
 			this->parent = p;
 			this->left = NULL;
 			this->right = NULL;
 			this->height = 1;
+		}
+
+		Node& operator=(const Node& n){
+			if (this != &n) {
+				this->parent = n->parent;
+				this->left = n->left;
+				this->right = n->right;
+				this->height = n->height;
+			}
+			return (*this);
 		}
 
 		void introduceChildToParent(const pointer c, bool r){

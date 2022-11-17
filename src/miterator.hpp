@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:07:48 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/16 15:55:32 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/17 16:56:49 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ namespace ft {
 	template < class Key, class T, class Compare = std::less<Key>, class Allocate = std::allocator< pair<const Key, T> > > class map;
 	
 	/* ---------------------- -- - Iterator - -- --------------------- */
-	template < class Key, class T, class N > class miterator {
+	template < class Key, class T, class N, class Compare = std::less<Key> > class miterator {
 	
 	public:
 		typedef N											_node;
 		typedef N*											pointer;
 		typedef N&											reference;
-		typedef typename map< key, T >::difference_type		difference_type;
-		typedef typename map< key, T >::key_compare			key_compare;
+		typedef typename map< Key, T >::difference_type		difference_type;
+		typedef Compare										key_compare;
 		typedef Key											key_type;
 		typedef T											mapped_type;
 
@@ -57,13 +57,18 @@ namespace ft {
 			return (this->_it->_info.second);}
 
 		miterator& operator++(){
-			if (_it && !_it->right && (!_it->parent || comp(_it->parent->_info.first, _it->_info.first)))
-				throw std::out_of_range("\nError: ft::map::iterator: out of range");
+			// if (_it && !_it->right) {
+			// 	while (!_it->parent || comp(_it->parent->_info.first, _it->_info.first))
+			// 		_it = _it->parent;
+			// 	std::cout << "_it->_info.first: " << _it->_info.first << std::endl;
+			// 	std::cout << "_it->right: " << _it->right << std::endl;
+			// 	std::cout << "_it->parent: " << _it->parent << std::endl;
+			// 	throw std::out_of_range("\nError: ft::map::iterator: out of range");
+			// }
 			if (_it->right)
-				getSuccessor(_it);
+				getSuccessor();
 			else
-				findChosenParentPlus(_it);
-			
+				findChosenParentPlus();
 			return (*this);
 
 			// if there is no right and (parent comp is true || parent is null) then throw error <went out of range> or something
@@ -97,47 +102,51 @@ namespace ft {
 			return (temp);
 		}
 
-		void	findChosenParentPlus(pointer it) {
+		void	findChosenParentPlus() {
 			//if parent is not null 
 			// if parent is smaller than current one then go to parent 
 			// if parent is bigger than current one then go to parent and return 
-			if (it->parent && comp(_it->parent->_info.first, _it->_info.first)) {
-				it = it->parent;
-				findChosenParentPlus(it);
+			if (!this->_it->parent)
+				throw std::out_of_range("\nError: ft::map::iterator: out of range");
+			if (this->_it->parent && comp(this->_it->parent->_info.first, this->_it->_info.first)) {
+				this->_it = this->_it->parent;
+				findChosenParentPlus();
 			}
-			else if (it->parent && !comp(_it->parent->_info.first, _it->_info.first)) {
-				it = it->parent;
+			else if (this->_it->parent && !comp(this->_it->parent->_info.first, this->_it->_info.first)) {
+				this->_it = this->_it->parent;
 				return ;
 			}
 		}
 
-		void	findChosenParentMinus(pointer it) {
-			if (it->parent && !comp(_it->parent->_info.first, _it->_info.first)) {
-				it = it->parent;
-				findChosenParentMinus(it);
+		void	findChosenParentMinus() {
+			if (this->_it->parent && !comp(this->_it->parent->_info.first, this->_it->_info.first)) {
+				this->_it = this->_it->parent;
+				findChosenParentMinus();
 			}
-			else if (it->parent && comp(_it->parent->_info.first, _it->_info.first)) {
-				it = it->parent;
+			else if (this->_it->parent && comp(this->_it->parent->_info.first, this->_it->_info.first)) {
+				this->_it = this->_it->parent;
 				return ;
 			}
 		}
 
-		void getPredecessor(pointer it) {
-			it = it->left;
+		void getPredecessor(bool first_time = true) {
+			if (first_time)
+				this->_it = this->_it->left;
 			
-			if (!it->right)
-				return (it);
-			it = it->right;
-			getSuccessor(it);
+			if (!this->_it->right)
+				return ;
+			this->_it = this->_it->right;
+			getSuccessor(false);
 		}
 
-		void	getSuccessor(pointer it) {
-			it = it->right;
+		void	getSuccessor(bool first_time = true) {
+			if (first_time)
+				this->_it = this->_it->right;
 			
-			if (!it->left)
-				return (it);
-			it = it->left;
-			getSuccessor(it);
+			if (!this->_it->left)
+				return ;
+			this->_it = this->_it->left;
+			getSuccessor(false);
 		}
 		
 	};

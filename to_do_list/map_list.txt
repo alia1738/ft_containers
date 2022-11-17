@@ -25,7 +25,7 @@ const mapped_type& at (const key_type& k) const;
 --------------------------------------------------------
 
 ---------------------- map::begin ----------------------
-iterator begin();
+✅ iterator begin();
 
 const_iterator begin() const;
 --------------------------------------------------------
@@ -43,7 +43,7 @@ bool empty() const;
 --------------------------------------------------------
 
 ----------------------- map::end -----------------------
-iterator end();
+< might be wrong, because i'm not pointing to null... > ✅ iterator end();
 
 const_iterator end() const;
 --------------------------------------------------------
