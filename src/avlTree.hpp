@@ -23,25 +23,26 @@ namespace ft {
 
 	public:
 		typedef	Node<key, val>								_node;
+		typedef	_node*										pointer;
 		typedef pair<key, val>								value_type;
 		typedef typename std::allocator<_node>				_allocator;
-		_node *_root;
+		pointer 	_root;
 
 	private:
 		_allocator	alloc;
 		compare		comp;
 		
-		void	adjustNodeHight(_node *n) {
+		void	adjustNodeHight(pointer n) {
 			n->height = 1 + maxHight(n->right, n->left);
 		}
 
-		int	maxHight(_node *right, _node *left){
+		int	maxHight(pointer right, pointer left){
 			int r = (right)? right->height : 0;
 			int l = (left)? left->height : 0;
 			return ((r > l) ? r : l);
 		}
 
-		int	getBalanceFactor(_node *n){
+		int	getBalanceFactor(pointer n){
 			if (!n)
 				return (0);
 			int r = !(n->right)? 0: n->right->height;
@@ -49,7 +50,7 @@ namespace ft {
 			return (l - r);
 		}
 
-		void	AllocConstruct(_node *parent, _node *child, const value_type& newNodeInfo, bool r) {
+		void	AllocConstruct(pointer parent, pointer child, const value_type& newNodeInfo, bool r) {
 			child = alloc.allocate(1);
 				
 			alloc.construct(child, _node(parent, newNodeInfo));
@@ -57,10 +58,10 @@ namespace ft {
 			parent->height++;
 		}
 
-		void	linkParentNodesForRotation(_node *n, _node *x, _node *y){
-			_node *n_new_parent = x;
-			_node *x_new_parent = n->parent;
-			_node *y_new_parent = n;
+		void	linkParentNodesForRotation(pointer n, pointer x, pointer y){
+			pointer n_new_parent = x;
+			pointer x_new_parent = n->parent;
+			pointer y_new_parent = n;
 			bool r = false;
 			
 			if (x_new_parent && x_new_parent->right->_info == n->_info)
@@ -76,9 +77,9 @@ namespace ft {
 			}
 		}
 
-		void	rotateRight(_node *n) {
-			_node *x = n->left;
-			_node *y = x->right;
+		void	rotateRight(pointer n) {
+			pointer x = n->left;
+			pointer y = x->right;
 
 			linkParentNodesForRotation(n, x, y);
 			x->right = n;
@@ -89,9 +90,9 @@ namespace ft {
 				this->_root = x;
 		}
 
-		void	rotateLeft(_node *n) {
-			_node *x = n->right;
-			_node *y = x->left;
+		void	rotateLeft(pointer n) {
+			pointer x = n->right;
+			pointer y = x->left;
 
 			linkParentNodesForRotation(n, x, y);
 			x->left = n;
@@ -102,7 +103,7 @@ namespace ft {
 				this->_root = x;
 		}
 
-		void	adjustTreeBalance(_node *n, const key nodeKey) {
+		void	adjustTreeBalance(pointer n, const key nodeKey) {
 			if (!n)
 				return ;
 			adjustNodeHight(n);
@@ -132,7 +133,7 @@ namespace ft {
 				return ;
 		}
 
-		bool	nodeAdded(const value_type& newNode, _node *temp, _node *temp_l_r, bool t){
+		bool	nodeAdded(const value_type& newNode, pointer temp, pointer temp_l_r, bool t){
 			if (!temp_l_r) {
 				AllocConstruct(temp, temp_l_r, newNode, t);
 				adjustTreeBalance(temp, newNode.first);
@@ -141,7 +142,7 @@ namespace ft {
 		}
 
 		void	placeNewNode(const value_type& newNode) {
-			static	_node *temp = this->_root;
+			static	pointer temp = this->_root;
 
 			if (comp(newNode.first, temp->_info.first)){
 				if (nodeAdded(newNode, temp, temp->left, false)) 
@@ -152,7 +153,6 @@ namespace ft {
 			}
 
 			else if (!comp(newNode.first, temp->_info.first)) {
-				// std::cout << "temp = " << temp->_info.first << std::endl;
 				if (nodeAdded(newNode, temp, temp->right, true))
 					return ;
 				else {
@@ -161,25 +161,25 @@ namespace ft {
 			}
 		}
 
-		void	LinkParentNodeForDelete(_node *parent, _node *child, bool r) {
+		void	LinkParentNodeForDelete(pointer parent, pointer child, bool r) {
 			if (parent) {
 				parent->introduceChildToParent(child, r);
 				parent->height--;
 			}
 		}
 
-		void	updateRoot(const key nodeKey, _node *potentialRoot) {
+		void	updateRoot(const key nodeKey, pointer potentialRoot) {
 			if (nodeKey == this->_root->_info.first)
 				this->_root = potentialRoot;
 		}
 
-		void	destroyDeallocate(_node *n) {
+		void	destroyDeallocate(pointer n) {
 			this->alloc.destroy(n);
 			this->alloc.deallocate(n, 1);
 		}
 
-		_node*	getInOrderSuccessor(_node *toBeDeleted) {
-			static _node *nextNode = toBeDeleted->right;
+		_node*	getInOrderSuccessor(pointer toBeDeleted) {
+			static pointer nextNode = toBeDeleted->right;
 			
 			if (!nextNode->left)
 				return (nextNode);
@@ -189,8 +189,8 @@ namespace ft {
 			return (nextNode);
 		}
 
-		void replaceNodes(_node *infoTaker, _node *toBeDeleted) {
-			_node *toBeDeletedParent = toBeDeleted->parent;
+		void replaceNodes(pointer infoTaker, pointer toBeDeleted) {
+			pointer toBeDeletedParent = toBeDeleted->parent;
 			bool r = (toBeDeletedParent && (toBeDeleted->_info.first > toBeDeletedParent->_info.first))? true: false;
 
 			LinkParentNodeForDelete(toBeDeletedParent, NULL, r);
@@ -204,17 +204,17 @@ namespace ft {
 			// adjustTreeBalance(infoTaker, infoTaker->_info.first);
 		}
 
-		void	findAndReplace(_node *infoTaker) {
-			_node *toBeDeleted = getInOrderSuccessor(infoTaker);
+		void	findAndReplace(pointer infoTaker) {
+			pointer toBeDeleted = getInOrderSuccessor(infoTaker);
 
 			replaceNodes(infoTaker, toBeDeleted);
 			adjustTreeBalance(infoTaker, infoTaker->_info.first);
 		}
 
-		void	deleteNodeOneChild(_node *toBeDeleted) {
+		void	deleteNodeOneChild(pointer toBeDeleted) {
 			bool r = (toBeDeleted->right)? true:false;
-			_node *child = (r)? toBeDeleted->right: toBeDeleted->left;
-			_node *parent = toBeDeleted->parent;
+			pointer child = (r)? toBeDeleted->right: toBeDeleted->left;
+			pointer parent = toBeDeleted->parent;
 			
 			LinkParentNodeForDelete(parent, child, r);
 			child->parent = parent;
@@ -262,8 +262,8 @@ namespace ft {
 		}
 		
 		void	deleteNode(const key nodeKey){
-			_node *temp = findNode(nodeKey, true);
-			_node *temp_parent = temp->parent;
+			pointer temp = findNode(nodeKey, true);
+			pointer temp_parent = temp->parent;
 
 			if (!temp->right && !temp->left) {
 				bool r = (temp_parent && nodeKey > temp_parent->_info.first)? true: false;
@@ -283,7 +283,7 @@ namespace ft {
 
 		/* *************************************** */
 		/* ************ To be deleted ************ */
-		_node *get_root(){
+		pointer get_root(){
 			return (this->_root);
 		}
 

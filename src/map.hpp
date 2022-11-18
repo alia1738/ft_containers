@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 09:40:16 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/17 11:23:32 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/18 15:38:13 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,15 @@ namespace ft {
 		// }
 
 		iterator	begin() {
-			if (!this->_tree._root)
-				return (NULL);
-			return (iterator(getFurthestLeft()));
+			// if (!this->_tree._root)
+			// 	return (NULL);
+			return (iterator(getFurthestLeft(), getFurthestLeft(), getFurthestRight()));
 		}
 
 		iterator	end() {
-			if (!this->_tree._root)
-				return (NULL);
-			return (iterator(getFurthestRight()));
+			// if (!this->_tree._root)
+			// 	return (NULL);
+			return (iterator(getFurthestLeft(), getFurthestRight()));
 		}
 
 		_node_pointer	getFurthestLeft(){
@@ -123,7 +123,7 @@ namespace ft {
 			return (temp->_info.second);
 		}
 
-		mapped_type& operator[](const key_type& k){
+		mapped_type& operator[](const key_type& k) {
 			return (this->at(k));
 		}
 

@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:08:49 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/17 17:06:51 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/18 17:07:41 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ int main() {
 		ft::map<int, int>::iterator	it = myMap.begin();
 		ft::map<int, int>::iterator	it_end = myMap.end();
 
-		for (int i = 0; i <= 8; i++) {
-			std::cout << "i: " << i << " .. it have " << *it << std::endl;
-			if (i != 8)
-				it++;
+		for (int i = 0; it != it_end; it++) {
+			std::cout << "it have " << *it << std::endl;
 		}
-		
+
+		// it--;
+		// it--;
 		// it++;
 		// std::cout << "it have " << *it << std::endl;
 		// it++;

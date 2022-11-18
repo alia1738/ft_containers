@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 09:32:13 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/17 11:30:58 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:04:17 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "pair.hpp"
 
 namespace ft{
+
 
 	template <class key, class val> 
 	struct Node {
