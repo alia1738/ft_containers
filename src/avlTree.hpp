@@ -141,15 +141,17 @@ namespace ft {
 			return (false);
 		}
 
-		void	placeNewNode(const value_type& newNode) {
+		void	placeNewNode(const value_type& newNode, bool first_time = true) {
 			static	pointer temp = this->_root;
+
+			temp = (first_time)? this->_root: temp;
 
 			if (comp(newNode.first, temp->_info.first)){
 				if (nodeAdded(newNode, temp, temp->left, false)) 
 					return ;
 				else {
 					temp = temp->left;
-					placeNewNode(newNode);}
+					placeNewNode(newNode, false);}
 			}
 
 			else if (!comp(newNode.first, temp->_info.first)) {
@@ -157,7 +159,7 @@ namespace ft {
 					return ;
 				else {
 					temp = temp->right;
-					placeNewNode(newNode);}
+					placeNewNode(newNode, false);}
 			}
 		}
 

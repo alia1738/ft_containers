@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 09:40:16 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/18 15:38:13 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/21 15:33:14 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ namespace ft {
 	private:
 		typedef avlTree<Key, T, Compare>					_base;
 		// typedef avlTree<Key, T, Compare>::allocator_type	tree_alloc;
-		typedef	Node<Key, T>										_node;
-		typedef	Node<Key, T>*										_node_pointer;
+		typedef	Node<Key, T>									_node;
+		typedef	Node<Key, T>*									_node_pointer;
 	
 	public:
 		typedef Key											key_type;
@@ -54,47 +54,66 @@ namespace ft {
 		_base			_tree;
 		allocator_type	_alloc;
 		key_compare		_comp;
-		size_type		size;
+		size_type		_size;
 
 	public:
 	
-		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()){
+		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _tree(){
 			this->_comp = comp;
 			this->_alloc = alloc;
-			size = 0;
+			_size = 0;
 		}
 
-		// map(const map& m){
-		// 	if (this != m) {
-		// 		this->_comp = m->_comp;
-		// 		this->_alloc = m->_alloc;
-		// 		for (size_type i = 0; i < size; i++){
-		// 			// insert
-		// 		}
-		// 	}
-		// }
+		template <class InputIterator>
+		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _size(0), _tree(){
+			map_init(first, last, comp, alloc);
+		}
 
-		iterator	begin() {
-			// if (!this->_tree._root)
-			// 	return (NULL);
+		map(const map& m): _size(0), _tree(){
+			map_init(m.begin(), m.end(), m._comp, m._alloc);
+		}
+		
+		map& operator=(const map& m){
+			if (this != &m) {
+				// delete before
+				map_init(m.begin(), m.end(), m._comp, m._alloc);
+			}
+			return (*this);
+		}
+		
+		template <class InputIterator>
+		void map_init(InputIterator first, InputIterator last, const key_compare& comp, const allocator_type& alloc) {
+			this->_comp = comp;
+			this->_alloc = alloc;
+			size_type	i = 0;
+			for (i = 0; first != last; first++, i++) {
+				// std::cout << "it->first " << first->first << " .. it->second " << first->second << std::endl;
+				this->insert(ft::make_pair(first->first, first->second));
+			}
+			this->_size = i;
+		}
+
+		size_type size() const{
+			return (this->_size);
+		}
+
+		iterator	begin() const{
 			return (iterator(getFurthestLeft(), getFurthestLeft(), getFurthestRight()));
 		}
 
-		iterator	end() {
-			// if (!this->_tree._root)
-			// 	return (NULL);
+		iterator	end() const{
 			return (iterator(getFurthestLeft(), getFurthestRight()));
 		}
 
-		_node_pointer	getFurthestLeft(){
+		_node_pointer	getFurthestLeft() const{
 			_node_pointer n = this->_tree._root;
 			
-			while (n && n->left)
+			while (n && n->left) 
 				n = n->left;
 			return (n);
 		}
 
-		_node_pointer	getFurthestRight(){
+		_node_pointer	getFurthestRight() const{
 			_node_pointer n = this->_tree._root;
 			
 			while (n && n->right)
@@ -102,17 +121,19 @@ namespace ft {
 			return (n);
 		}
 
-		pair</*iterator*/_node*, bool> insert(const value_type& val){
+		iterator find (const key_type& k){
+			return (iterator((this->_tree.findNode(k, true)), this->getFurthestLeft(), this->getFurthestRight()));
+		}
+
+		pair<iterator, bool> insert(const value_type& val){
 			_node_pointer	temp = this->_tree.findNode(val.first, true);
-			if (temp){
-				return (make_pair(temp, false));
-			}
+			if (temp)
+				return (ft::make_pair(iterator(temp, this->getFurthestLeft(), this->getFurthestRight()), false));
 			this->_tree.add_new_node(val);
 			temp = this->_tree.findNode(val.first);
-			this->size++;
-			// std::cout << "temp found " << temp->_info.first << std::endl;
-			// std::cout << "I AM HERE!" << std::endl;
-			return (make_pair(temp, true));
+			this->_size++;
+			// std::cout << "I am in insert " << this->_size << "\n";
+			return (ft::make_pair(iterator(temp, this->getFurthestLeft(), this->getFurthestRight()), true));
 		}
 
 		mapped_type& at (const key_type& k) {

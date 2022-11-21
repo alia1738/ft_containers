@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 09:32:13 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/18 14:04:17 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/21 11:46:33 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ namespace ft{
 
 	template <class key, class val> 
 	struct Node {
-		typedef pair<key, val>		value_type;
-		typedef Node*				pointer;
+		typedef pair<const key, val>	value_type;
+		typedef Node*					pointer;
 
 		value_type	_info;
 

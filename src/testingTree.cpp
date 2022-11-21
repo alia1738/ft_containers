@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:08:49 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/18 17:07:41 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/21 15:31:06 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,29 @@ int main() {
 		ft::map<int, int>::iterator	it = myMap.begin();
 		ft::map<int, int>::iterator	it_end = myMap.end();
 
-		for (int i = 0; it != it_end; it++) {
-			std::cout << "it have " << *it << std::endl;
+		for (; it != it_end; it++) {
+			std::cout << "it->first " << it->first << " .. it->second " << it->second << std::endl;
 		}
+		std::cout << " **** TESTING **** " << std::endl;
+		it--;
+		*it = 999;
+		std::cout << "it " << *it << std::endl;
+		std::cout << "*it-- " << *it-- << std::endl;
+		std::cout << "it " << *it << std::endl;
+		std::cout << "*it++ " << *it++ << std::endl;
+		// std::cout << "*it++ " << *it++ << std::endl;
+		std::cout << "it " << *it << std::endl;
+		std::cout << "it " << *it << std::endl;
+		std::cout << " ***************** " << std::endl;
+
+		// for (ft::map<int, int>::iterator it = myMap.begin(); it != myMap.end(); it++)
+			// std::cout << "The issue here is " << it->first << " and " << it->second <<  std::endl;
+			
+
+		ft::map<int, int>	myMap_copy(myMap.begin(), myMap.end());
+
+		std::cout << " myMap.size() " << myMap.size() << std::endl;
+		std::cout << " myMap_copy.size() " << myMap_copy.size() << std::endl;
 
 		// it--;
 		// it--;

@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:07:48 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/18 17:12:37 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:30:24 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ namespace ft {
 	public:
 		typedef N											_node;
 		typedef N*											pointer;
-		typedef N&											reference;
+		// typedef N&											reference;
 		typedef typename map< Key, T >::difference_type		difference_type;
+		typedef typename map< Key, T >::value_type			value_type;
 		typedef Compare										key_compare;
 		typedef Key											key_type;
 		typedef T											mapped_type;
@@ -37,7 +38,7 @@ namespace ft {
 		pointer		_start;
 		pointer		_end;
 		key_compare	comp;
-		
+
 	public:
 		miterator(pointer s, pointer e){
 			this->_it = NULL;
@@ -62,6 +63,14 @@ namespace ft {
 				this->_it = it._it;
 			return (*this);
 		}
+		
+		value_type* get_pair() const {
+			value_type *v = &this->_it->_info;
+			return (v);
+		}
+
+		value_type*	operator->() const {
+			return (get_pair());}
 
 		bool	operator==(const miterator& it) const {
 			return (this->_it == it._it);}
@@ -98,19 +107,24 @@ namespace ft {
 			return (temp);
 		}
 
+		/* account for cases when you go to null after the smallest iterator */
+		/* you shouldn't go back yo the last one you just sig fault */
 		miterator& operator--(){
-			static bool first_time = true;
+			// std::cout << "this->_it->_info.second" << this->_it->_info.second << std::endl;
+			// static bool first_time = true;
 			if (!this->_it)
 				this->_it = this->_end;
-			first_time = false;
-			if (_it->left)
-				getPredecessor(_it);
+			// first_time = false;
+			else if (_it->left)
+				getPredecessor();
 			else
 				findChosenParentMinus();
 			return (*this);
 		}
 
 		miterator operator--(int){
+			// std::cout << "this->_it->_info.second" << this->_it->_info.second << std::endl;
+
 			miterator temp = *this;
 			--(*this);
 			return (temp);

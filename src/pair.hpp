@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:58:06 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/15 15:56:39 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/21 10:14:21 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,9 @@ namespace ft {
 
 		template < class TT1, class TT2 > pair(const pair<TT1, TT2>& p): 
 		first(p.first), second(p.second){
-			// this->first = p.first;
-			// this->second = p.second;
 		}
 
-		pair(const first_type& f, const second_type& s){
-			this->first = f;
-			this->second = s;
+		pair(const first_type& f, const second_type& s): first(f), second(s){
 		}
 
 		pair&	operator=(const pair& p){
