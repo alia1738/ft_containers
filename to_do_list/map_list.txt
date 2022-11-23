@@ -39,7 +39,7 @@ size_type count (const key_type& k) const;
 --------------------------------------------------------
 
 ---------------------- map::empty ----------------------
-bool empty() const;
+✅ bool empty() const;
 --------------------------------------------------------
 
 ----------------------- map::end -----------------------
@@ -55,11 +55,11 @@ pair<iterator,iterator>             equal_range (const key_type& k);
 --------------------------------------------------------
 
 ---------------------- map::erase ----------------------
-(1)		     void erase (iterator position);
+✅ (1)		     void erase (iterator position);
 
-(2)		size_type erase (const key_type& k);
+✅ (2)		size_type erase (const key_type& k);
 
-(3)		     void erase (iterator first, iterator last);
+✅ (3)		     void erase (iterator first, iterator last);
 --------------------------------------------------------
 
 ---------------------- map::find -----------------------
@@ -75,9 +75,9 @@ allocator_type get_allocator() const;
 ---------------------- map::insert ---------------------
 ✅ single element (1)	pair<iterator,bool> insert (const value_type& val);
 
-with hint (2)		iterator insert (iterator position, const value_type& val);
+✅ with hint (2)		iterator insert (iterator position, const value_type& val);
 
-range (3)			template <class InputIterator>
+✅ range (3)			template <class InputIterator>
 					  void insert (InputIterator first, InputIterator last);
 --------------------------------------------------------
 
@@ -92,7 +92,7 @@ const_iterator lower_bound (const key_type& k) const;
 --------------------------------------------------------
 
 --------------------- map::max_size --------------------
-size_type max_size() const;
+✅ size_type max_size() const;
 --------------------------------------------------------
 
 -------------------- map::operator[] -------------------

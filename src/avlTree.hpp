@@ -24,12 +24,12 @@ namespace ft {
 	public:
 		typedef	Node<key, val>								_node;
 		typedef	_node*										pointer;
-		typedef pair<key, val>								value_type;
+		typedef pair< const key, val>						value_type;
 		typedef typename std::allocator<_node>				_allocator;
-		pointer 	_root;
+		pointer		_root;
+		_allocator	alloc;
 
 	private:
-		_allocator	alloc;
 		compare		comp;
 		
 		void	adjustNodeHight(pointer n) {
@@ -50,12 +50,13 @@ namespace ft {
 			return (l - r);
 		}
 
-		void	AllocConstruct(pointer parent, pointer child, const value_type& newNodeInfo, bool r) {
+		pointer	AllocConstruct(pointer parent, pointer child, const value_type& newNodeInfo, bool r) {
 			child = alloc.allocate(1);
 				
 			alloc.construct(child, _node(parent, newNodeInfo));
 			parent->introduceChildToParent(child, r);
 			parent->height++;
+			return (child);
 		}
 
 		void	linkParentNodesForRotation(pointer n, pointer x, pointer y){
@@ -106,10 +107,10 @@ namespace ft {
 		void	adjustTreeBalance(pointer n, const key nodeKey) {
 			if (!n)
 				return ;
+
 			adjustNodeHight(n);
 			int balance = getBalanceFactor(n);
 
-			
 			if (balance > 1) {
 				if (!n->right || nodeKey < n->left->_info.first)  {
 					return (rotateRight(n));
@@ -133,40 +134,11 @@ namespace ft {
 				return ;
 		}
 
-		bool	nodeAdded(const value_type& newNode, pointer temp, pointer temp_l_r, bool t){
-			if (!temp_l_r) {
-				AllocConstruct(temp, temp_l_r, newNode, t);
-				adjustTreeBalance(temp, newNode.first);
-				return (true);}
-			return (false);
-		}
-
-		void	placeNewNode(const value_type& newNode, bool first_time = true) {
-			static	pointer temp = this->_root;
-
-			temp = (first_time)? this->_root: temp;
-
-			if (comp(newNode.first, temp->_info.first)){
-				if (nodeAdded(newNode, temp, temp->left, false)) 
-					return ;
-				else {
-					temp = temp->left;
-					placeNewNode(newNode, false);}
-			}
-
-			else if (!comp(newNode.first, temp->_info.first)) {
-				if (nodeAdded(newNode, temp, temp->right, true))
-					return ;
-				else {
-					temp = temp->right;
-					placeNewNode(newNode, false);}
-			}
-		}
-
 		void	LinkParentNodeForDelete(pointer parent, pointer child, bool r) {
 			if (parent) {
 				parent->introduceChildToParent(child, r);
-				parent->height--;
+				if (!parent->right && !parent->left)
+					parent->height--;
 			}
 		}
 
@@ -180,49 +152,103 @@ namespace ft {
 			this->alloc.deallocate(n, 1);
 		}
 
-		_node*	getInOrderSuccessor(pointer toBeDeleted) {
-			static pointer nextNode = toBeDeleted->right;
+		void	swap_l_r_pointers(pointer place_tacker, pointer to_be_deleted, pointer to_be_deleted_right, pointer to_be_deleted_left) {
+			if (to_be_deleted_right->_info.first == place_tacker->_info.first)
+				place_tacker->right = NULL;
+			else
+				place_tacker->right = to_be_deleted_right;
+
+			if (to_be_deleted_left->_info.first == place_tacker->_info.first)
+				place_tacker->left = NULL;
+			else
+				place_tacker->left = to_be_deleted_left;
+
+			if (to_be_deleted_right && to_be_deleted_right->_info.first != place_tacker->_info.first)
+				to_be_deleted_right->parent = place_tacker;
+			if (to_be_deleted_left && to_be_deleted_left->_info.first != place_tacker->_info.first)
+				to_be_deleted_left->parent = place_tacker;
+			isolate_to_be_deleted(to_be_deleted);
+		}
+
+		void	isolate_to_be_deleted(pointer to_be_deleted) {
+			to_be_deleted->parent = NULL;
+			to_be_deleted->right = NULL;
+			to_be_deleted->left = NULL;
+		}
+
+		void replaceNodes(pointer to_be_deleted, pointer place_tacker) {
+			pointer place_tacker_parent = place_tacker->parent;
+			pointer to_be_deleted_parent = to_be_deleted->parent;
+			pointer to_be_deleted_right = to_be_deleted->right;
+			pointer to_be_deleted_left = to_be_deleted->left;
+
+			place_tacker->height = to_be_deleted->height;
+			LinkParentNodeForDelete(to_be_deleted_parent, place_tacker, \
+			((to_be_deleted_parent && (!comp(to_be_deleted->_info.first, to_be_deleted_parent->_info.first)))? true: false));
+			LinkParentNodeForDelete(place_tacker_parent, NULL, \
+			((place_tacker_parent && (!comp(place_tacker->_info.first, place_tacker_parent->_info.first)))? true: false));
+
+			place_tacker->parent = to_be_deleted->parent;
+			swap_l_r_pointers(place_tacker, to_be_deleted, to_be_deleted_right, to_be_deleted_left);
+
+			updateRoot(place_tacker->_info.first, place_tacker);
+			destroyDeallocate(to_be_deleted);
+			adjustTreeBalance(place_tacker, place_tacker->_info.first);
+		}
+
+		_node*	getInOrderSuccessor(pointer to_be_deleted, bool first_time = true) {
+			static pointer nextNode = to_be_deleted->right;
+
+			nextNode = (first_time)? to_be_deleted->right: nextNode;
 			
 			if (!nextNode->left)
 				return (nextNode);
 			nextNode = nextNode->left;
-			getInOrderSuccessor(toBeDeleted);
+			getInOrderSuccessor(to_be_deleted, false);
 
 			return (nextNode);
 		}
 
-		void replaceNodes(pointer infoTaker, pointer toBeDeleted) {
-			pointer toBeDeletedParent = toBeDeleted->parent;
-			bool r = (toBeDeletedParent && (toBeDeleted->_info.first > toBeDeletedParent->_info.first))? true: false;
+		void	findAndReplace(pointer to_be_deleted) {
+			pointer place_tacker = getInOrderSuccessor(to_be_deleted);
 
-			LinkParentNodeForDelete(toBeDeletedParent, NULL, r);
-			
-			value_type temp = infoTaker->_info;
-			infoTaker->_info = toBeDeleted->_info;
-			toBeDeleted->_info = temp;
-			
-			updateRoot(infoTaker->_info.first, infoTaker);
-			destroyDeallocate(toBeDeleted);
-			// adjustTreeBalance(infoTaker, infoTaker->_info.first);
+			replaceNodes(to_be_deleted, place_tacker);
+			adjustTreeBalance(to_be_deleted, to_be_deleted->_info.first);
 		}
 
-		void	findAndReplace(pointer infoTaker) {
-			pointer toBeDeleted = getInOrderSuccessor(infoTaker);
+		pointer	placeNewNode(const pointer starting_point, const value_type& newNode, bool first_time = true) {
+			static	pointer temp = starting_point;
 
-			replaceNodes(infoTaker, toBeDeleted);
-			adjustTreeBalance(infoTaker, infoTaker->_info.first);
+			temp = (first_time)? starting_point: temp;
+
+			if (comp(newNode.first, temp->_info.first)){
+				if (nodeAdded(newNode, temp, temp->left, false)) 
+					return (temp->left);
+				else {
+					temp = temp->left;
+					placeNewNode(this->_root, newNode, false);}
+			}
+
+			else if (!comp(newNode.first, temp->_info.first)) {
+				if (nodeAdded(newNode, temp, temp->right, true))
+					return (temp->right);
+				else {
+					temp = temp->right;
+					placeNewNode(this->_root, newNode, false);}
+			}
+			return (temp);
 		}
 
-		void	deleteNodeOneChild(pointer toBeDeleted) {
-			bool r = (toBeDeleted->right)? true:false;
-			pointer child = (r)? toBeDeleted->right: toBeDeleted->left;
-			pointer parent = toBeDeleted->parent;
+		void	deleteNodeOneChild(pointer to_be_deleted) {
+			bool r = (to_be_deleted->right)? true:false;
+			pointer child = (r)? to_be_deleted->right: to_be_deleted->left;
+			pointer parent = to_be_deleted->parent;
 			
 			LinkParentNodeForDelete(parent, child, r);
 			child->parent = parent;
 			adjustNodeHight(child);
-			updateRoot(toBeDeleted->_info.first, child);
-			destroyDeallocate(toBeDeleted);
+			updateRoot(to_be_deleted->_info.first, child);
+			destroyDeallocate(to_be_deleted);
 			adjustTreeBalance(child, child->_info.first);
 		}
 
@@ -232,19 +258,23 @@ namespace ft {
 			this->_root = NULL;
 		}
 
-		void	add_new_node(const value_type &v){
+		pointer	insert(const value_type &v){
 			if (!this->_root){
 				this->_root = alloc.allocate(1);
-				_node temp(v);				
+				_node temp(v);		
 				alloc.construct(_root, temp);
+				return (this->_root);
 			}
-			else {
-				placeNewNode(v);
-			}
+			return (placeNewNode(this->_root, v));
 		}
 
-		_node* findNode(const key& nodeKey, bool first_time = false){
-			static _node* temp = this->_root;
+		pointer	insert(value_type *position, const value_type& v){
+			(void)position;
+			return(insert(v));
+		}
+
+		pointer findNode(const key& nodeKey, bool first_time = false){
+			static pointer temp = this->_root;
 
 			temp = (first_time)? this->_root: temp;
 
@@ -262,11 +292,21 @@ namespace ft {
 			}
 			return (temp);
 		}
-		
-		void	deleteNode(const key nodeKey){
-			pointer temp = findNode(nodeKey, true);
-			pointer temp_parent = temp->parent;
 
+		bool	nodeAdded(const value_type& newNode, pointer temp, pointer temp_l_r, bool t){
+			if (!temp_l_r) {
+				AllocConstruct(temp, temp_l_r, newNode, t);
+				adjustTreeBalance(temp, newNode.first);
+				return (true);}
+			return (false);
+		}
+		
+		bool	deleteNode(const key nodeKey){
+			pointer temp = findNode(nodeKey, true);
+			pointer temp_parent = (!temp)? NULL: temp->parent;
+
+			if (!temp)
+				return (false);
 			if (!temp->right && !temp->left) {
 				bool r = (temp_parent && nodeKey > temp_parent->_info.first)? true: false;
 				LinkParentNodeForDelete(temp_parent, NULL, r);
@@ -274,12 +314,12 @@ namespace ft {
 				destroyDeallocate(temp);
 				adjustTreeBalance(temp_parent, nodeKey);
 			}
-
 			else if (!temp->right || !temp->left){
 				deleteNodeOneChild(temp);}
 
 			else {
 				findAndReplace(temp);}
+			return (true);
 		}
 
 

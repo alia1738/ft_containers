@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 09:40:16 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/21 15:33:14 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/23 11:18:53 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ namespace ft {
 	class map {
 
 	private:
-		typedef avlTree<Key, T, Compare>					_base;
+		typedef avlTree<Key, T, Compare, Allocate>				_base;
 		// typedef avlTree<Key, T, Compare>::allocator_type	tree_alloc;
 		typedef	Node<Key, T>									_node;
 		typedef	Node<Key, T>*									_node_pointer;
@@ -86,15 +86,21 @@ namespace ft {
 			this->_comp = comp;
 			this->_alloc = alloc;
 			size_type	i = 0;
-			for (i = 0; first != last; first++, i++) {
-				// std::cout << "it->first " << first->first << " .. it->second " << first->second << std::endl;
+			for (i = 0; first != last; first++, i++)
 				this->insert(ft::make_pair(first->first, first->second));
-			}
 			this->_size = i;
 		}
 
 		size_type size() const{
 			return (this->_size);
+		}
+
+		size_type max_size() const {
+			return (this->_tree->alloc.max_size());
+		}
+
+		bool empty() const{
+			return ((this->_size)? false: true);
 		}
 
 		iterator	begin() const{
@@ -126,26 +132,56 @@ namespace ft {
 		}
 
 		pair<iterator, bool> insert(const value_type& val){
-			_node_pointer	temp = this->_tree.findNode(val.first, true);
-			if (temp)
-				return (ft::make_pair(iterator(temp, this->getFurthestLeft(), this->getFurthestRight()), false));
-			this->_tree.add_new_node(val);
-			temp = this->_tree.findNode(val.first);
+			_node_pointer	n = this->_tree.findNode(val.first, true);
+			if (n)
+				return (ft::make_pair(iterator(n, this->getFurthestLeft(), this->getFurthestRight()), false));
+			n = this->_tree.insert(val);
 			this->_size++;
-			// std::cout << "I am in insert " << this->_size << "\n";
-			return (ft::make_pair(iterator(temp, this->getFurthestLeft(), this->getFurthestRight()), true));
+			return (ft::make_pair(iterator(n, this->getFurthestLeft(), this->getFurthestRight()), true));
+		}
+
+		iterator insert (iterator position, const value_type& val) {
+			_node_pointer	n = this->_tree.findNode(val.first, true);
+			if (n)
+				return (iterator(n, this->getFurthestLeft(), this->getFurthestRight()));
+			n = this->_tree.insert(*position, val);
+			this->_size++;
+			return (iterator(n, this->getFurthestLeft(), this->getFurthestRight()));
+		}
+
+		template <class InputIterator>
+		void insert (InputIterator first, InputIterator last){
+			for (; first != last; first++)
+				insert(ft::make_pair(first->first, first->second));
+		}
+
+		void erase (iterator position) {
+			if (this->_tree.deleteNode(position->first))
+				this->_size--;
+		}
+
+		size_type erase (const key_type& k) {
+			if (this->_tree.deleteNode(k) && this->_size--)
+				return (1);
+			return (0);
+		}
+
+		void erase (iterator first, iterator last){
+			for (bool r = true; r && first != last; first++, this->_size--)
+				r = this->_tree.deleteNode(first->first);
 		}
 
 		mapped_type& at (const key_type& k) {
 			_node_pointer	temp = this->_tree.findNode(k, true);
 
 			if (!temp)
-				throw std::out_of_range("\nft::map: out of range");
+				throw std::out_of_range("\nft::map::at: key not found");
 			return (temp->_info.second);
 		}
 
 		mapped_type& operator[](const key_type& k) {
-			return (this->at(k));
+			ft::pair<iterator, bool> ret = insert(ft::make_pair(k, NULL));
+			return (ret.first->second);
 		}
 
 	};

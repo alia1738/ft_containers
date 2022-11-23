@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:07:48 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/21 13:30:24 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/22 13:45:14 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ namespace ft {
 		// typedef N&											reference;
 		typedef typename map< Key, T >::difference_type		difference_type;
 		typedef typename map< Key, T >::value_type			value_type;
+		// typedef typename value_type*						value_type_pointer;
 		typedef Compare										key_compare;
 		typedef Key											key_type;
 		typedef T											mapped_type;
@@ -69,6 +70,9 @@ namespace ft {
 			return (v);
 		}
 
+		value_type* operator*() const{
+			return (get_pair());}
+
 		value_type*	operator->() const {
 			return (get_pair());}
 
@@ -89,9 +93,6 @@ namespace ft {
 
 		bool	operator<=(const miterator& it) const {
 			return (this->_it <= it._it);}
-
-		mapped_type& operator*() const{
-			return (this->_it->_info.second);}
 
 		miterator& operator++(){
 			if (_it->right)
