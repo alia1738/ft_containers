@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 09:40:16 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/23 11:18:53 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/23 17:12:05 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@
 #include "miterator.hpp"
 
 namespace ft {
+	
+	template <class T1, class T2, class Result>
+	struct _LIBCPP_TEMPLATE_VIS binary_function
+	{
+		typedef T1   first;
+		typedef T2   second;
+		typedef Result result_type;
+	};
+	
 	template < class Key, class T, class Compare, class Allocate > 
 	class map {
 
@@ -57,6 +66,23 @@ namespace ft {
 		size_type		_size;
 
 	public:
+
+		class value_compare : public ft::binary_function<value_type, value_type, bool>{
+			friend class map;
+		
+		protected:
+			Compare comp;
+			value_compare (Compare c) : comp(c) {}
+		
+		public:
+			typedef bool		result_type;
+			typedef value_type	first;
+			typedef value_type	second;
+
+			bool operator() (const value_type& val, const value_type& val2) const{
+				return comp(val.first, val1.first);
+			}
+		};
 	
 		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _tree(){
 			this->_comp = comp;
@@ -75,7 +101,6 @@ namespace ft {
 		
 		map& operator=(const map& m){
 			if (this != &m) {
-				// delete before
 				map_init(m.begin(), m.end(), m._comp, m._alloc);
 			}
 			return (*this);
@@ -83,11 +108,13 @@ namespace ft {
 		
 		template <class InputIterator>
 		void map_init(InputIterator first, InputIterator last, const key_compare& comp, const allocator_type& alloc) {
+			this->_tree.clear_tree();
 			this->_comp = comp;
 			this->_alloc = alloc;
 			size_type	i = 0;
-			for (i = 0; first != last; first++, i++)
+			for (i = 0; first != last; first++, i++) 
 				this->insert(ft::make_pair(first->first, first->second));
+			this->_alloc = this->_tree.alloc;
 			this->_size = i;
 		}
 
@@ -169,6 +196,46 @@ namespace ft {
 		void erase (iterator first, iterator last){
 			for (bool r = true; r && first != last; first++, this->_size--)
 				r = this->_tree.deleteNode(first->first);
+		}
+
+		void swap (map& m) {
+			map<key_type, mapped_type, key_compare, allocator_type> temp = *this;
+			*this = m;
+			m = temp;
+		}
+
+		void clear(){
+			this->_tree.clear_tree();
+		}
+
+		value_compare value_comp() const {
+			return (value_compare());
+		}
+
+		key_compare key_comp() const {
+			return (this->_comp);
+		}
+		
+		allocator_type get_allocator() const {
+			return (this->_alloc)
+		}
+
+		size_type count (const key_type& k) const {
+			return ((this->_tree.findNode(val.first, true))? 1: 0);
+		}
+
+		iterator lower_bound (const key_type& k) {
+			iterator it = this->begin();
+			for (iterator end = this->end(); it != end && _comp(it->first, k); it++)
+				;
+			return (it);
+		}
+
+		iterator upper_bound (const key_type& k) {
+			iterator it = this->begin();
+			for (iterator end = this->end(); it != end && !_comp(it->first, k); it++)
+				;
+			return (it);
 		}
 
 		mapped_type& at (const key_type& k) {

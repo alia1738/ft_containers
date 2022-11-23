@@ -191,7 +191,7 @@ namespace ft {
 			place_tacker->parent = to_be_deleted->parent;
 			swap_l_r_pointers(place_tacker, to_be_deleted, to_be_deleted_right, to_be_deleted_left);
 
-			updateRoot(place_tacker->_info.first, place_tacker);
+			updateRoot(to_be_deleted->_info.first, place_tacker);
 			destroyDeallocate(to_be_deleted);
 			adjustTreeBalance(place_tacker, place_tacker->_info.first);
 		}
@@ -322,6 +322,11 @@ namespace ft {
 			return (true);
 		}
 
+		void	clear_tree(){
+			while (	this->_root)
+				deleteNode(this->_root->_info.first);
+		}
+
 
 		/* *************************************** */
 		/* ************ To be deleted ************ */
@@ -361,6 +366,10 @@ namespace ft {
 				printTree(r->right, 1);
 				printTree(r->left, -1);
 			}
+		}
+
+		~avlTree(){
+			this->clear_tree();
 		}
 
 	};

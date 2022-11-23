@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:08:49 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/23 11:18:39 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:14:01 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int main() {
 			m.insert(std::pair<int, int>(9, 90));
 
 			std::map<int, int>::iterator	b = m.begin();
-			// for (int i = 0; i < 8; i++)
-			// 	b++;
+			// // for (int i = 0; i < 8; i++)
+			// // 	b++;
 			std::cout << "b->first " << b->first << " .. b->second " << b->second << std::endl;
 			m.insert(b, std::pair<int, int>(10, 100));
 			
@@ -55,12 +55,10 @@ int main() {
 			std::map<int, int>::size_type	i = m.erase(7);
 			std::cout << "return from m.erase(7) => " << i << std::endl;
 			std::cout << " m.size() " << m.size() << std::endl;
-
-			std::map<int, int>::iterator	it = m.begin();
-			std::map<int, int>::iterator	it_end = m.end();
-
 			
 			std::cout << " --------- TESTING --------- " << std::endl;
+			std::map<int, int>::iterator	it = m.begin();
+			std::map<int, int>::iterator	it_end = m.end();
 			for (; it != it_end; it++) {
 				std::cout << "it->first " << it->first << " .. it->second " << it->second << std::endl;
 			}
@@ -75,26 +73,45 @@ int main() {
 			
 			std::map<int, int>	otherMap;
 			std::map<int, int>::iterator	otherIt = m.begin();
-			
+
 			otherIt++;
 			otherIt++;
 			otherIt++;
-			
+
 			otherMap.insert(m.begin(), otherIt);
 			otherIt = otherMap.begin();
 			otherMap.at(1) = 999;
 			for (; otherIt != otherMap.end(); otherIt++) {
 				std::cout << "otherIt->first " << otherIt->first << " .. otherIt->second " << otherIt->second << std::endl;
 			}
-			std::cout << " otherMap.size() " << otherMap.size() << std::endl;
 
 			std::cout << " ---------- ERASE ---------- " << std::endl;
+			std::cout << " otherMap.size() " << otherMap.size() << std::endl;
 			// ft::map<int, int>::size_type	ii = 
 			otherMap.erase(otherMap.begin(), otherMap.end());
 			// std::cout << "return from myMap.erase(7) => " << ii << std::endl;
-			
 			std::cout << " otherMap.size() " << otherMap.size() << std::endl;
-			
+
+			std::cout << " ----------- SWAP ----------- " << std::endl;
+			std::cout << "Before m.size() " << m.size() << std::endl;
+			std::cout << "Before otherMap.size() " << otherMap.size() << std::endl;
+			m.swap(otherMap);
+			std::cout << "After m.size() " << m.size() << std::endl;
+			std::cout << "After otherMap.size() " << otherMap.size() << std::endl;
+
+			std::cout << " ---------- CLEAR ----------- " << std::endl;
+			std::cout << " OtherMap Before " << otherMap.size() << std::endl;
+			otherIt = otherMap.begin();
+			// std::map<int, int>::iterator	otherIt_end = otherMap.end();
+			for (std::map<int, int>::iterator	otherIt_end = otherMap.end(); otherIt != otherIt_end; otherIt++)
+				std::cout << otherIt->first << " => " << otherIt->second << std::endl;
+			otherMap.clear();
+			std::cout << " OtherMap After " << otherMap.size() << std::endl;
+			otherIt = otherMap.begin();
+			// otherIt_end = otherMap.end();
+			for (std::map<int, int>::iterator	otherIt_end = otherMap.end(); otherIt != otherIt_end; otherIt++)
+				std::cout << otherIt->first << " => " << otherIt->second << std::endl;
+				
 			std::cout << " --------------------------- " << std::endl;
 			std::cout << " --------------------------- " << std::endl << std::endl;
 		}
@@ -128,10 +145,10 @@ int main() {
 			std::cout << "return from myMap.erase(7) => " << i << std::endl;
 			std::cout << " myMap.size() " << myMap.size() << std::endl;
 			
-			ft::map<int, int>::iterator	it = myMap.begin();
-			ft::map<int, int>::iterator	it_end = myMap.end();
 
 			std::cout << " --------- TESTING --------- " << std::endl;
+			ft::map<int, int>::iterator	it = myMap.begin();
+			ft::map<int, int>::iterator	it_end = myMap.end();
 			for (; it != it_end; it++) {
 				std::cout << "it->first " << it->first << " .. it->second " << it->second << std::endl;
 			}
@@ -157,14 +174,34 @@ int main() {
 			for (; otherIt != otherMap.end(); otherIt++) {
 				std::cout << "otherIt->first " << otherIt->first << " .. otherIt->second " << otherIt->second << std::endl;
 			}
-			std::cout << " otherMap.size() " << otherMap.size() << std::endl;
 
 			std::cout << " ---------- ERASE ---------- " << std::endl;
-			// ft::map<int, int>::size_type	ii = 
-			otherMap.erase(otherMap.begin(), otherMap.end());
-			// std::cout << "return from myMap.erase(7) => " << ii << std::endl;
-
 			std::cout << " otherMap.size() " << otherMap.size() << std::endl;
+			otherMap.erase(otherMap.begin(), otherMap.end());
+			std::cout << " otherMap.size() " << otherMap.size() << std::endl;
+			// ft::map<int, int>::size_type	ii = 
+			// std::cout << "return from myMap.erase(7) => " << ii << std::endl;
+			
+			std::cout << " ----------- SWAP ----------- " << std::endl;
+			std::cout << "Before myMap.size() " << myMap.size() << std::endl;
+			std::cout << "Before otherMap.size() " << otherMap.size() << std::endl;
+			myMap.swap(otherMap);
+			std::cout << "After myMap.size() " << myMap.size() << std::endl;
+			std::cout << "After otherMap.size() " << otherMap.size() << std::endl;
+
+			std::cout << " ---------- CLEAR ----------- " << std::endl;
+			std::cout << " OtherMap Before " << otherMap.size() << std::endl;
+			otherIt = otherMap.begin();
+			// ft::map<int, int>::iterator	otherIt_end = otherMap.end();
+			for (ft::map<int, int>::iterator	otherIt_end = otherMap.end(); otherIt != otherIt_end; otherIt++)
+				std::cout << otherIt->first << " => " << otherIt->second << std::endl;
+			otherMap.clear();
+			std::cout << " OtherMap After " << otherMap.size() << std::endl;
+			otherIt = otherMap.begin();
+			// otherIt_end = otherMap.end();
+			for (ft::map<int, int>::iterator	otherIt_end = otherMap.end(); otherIt != otherIt_end; otherIt++)
+				std::cout << otherIt->first << " => " << otherIt->second << std::endl;
+
 			// otherMap.insert(myMap.begin(), otherIt);
 			
 			std::cout << " --------------------------- " << std::endl;
