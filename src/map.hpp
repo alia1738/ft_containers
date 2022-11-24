@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 09:40:16 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/23 17:12:05 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/24 14:00:58 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ namespace ft {
 			typedef value_type	second;
 
 			bool operator() (const value_type& val, const value_type& val2) const{
-				return comp(val.first, val1.first);
+				return comp(val.first, val2.first);
 			}
 		};
 	
@@ -217,17 +217,19 @@ namespace ft {
 		}
 		
 		allocator_type get_allocator() const {
-			return (this->_alloc)
+			return (this->_alloc);
 		}
 
 		size_type count (const key_type& k) const {
-			return ((this->_tree.findNode(val.first, true))? 1: 0);
+			return ((this->_tree.findNode(k, true))? 1: 0);
 		}
 
 		iterator lower_bound (const key_type& k) {
 			iterator it = this->begin();
 			for (iterator end = this->end(); it != end && _comp(it->first, k); it++)
 				;
+			if (it == this->end())
+				it--;
 			return (it);
 		}
 
@@ -235,7 +237,13 @@ namespace ft {
 			iterator it = this->begin();
 			for (iterator end = this->end(); it != end && !_comp(it->first, k); it++)
 				;
+			if (it == this->end())
+				it--;
 			return (it);
+		}
+
+		pair<iterator,iterator>	equal_range (const key_type& k){
+			return (pair<iterator,iterator>(this->lower_bound(k), this->upper_bound(k)));
 		}
 
 		mapped_type& at (const key_type& k) {

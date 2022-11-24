@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 09:08:49 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/23 14:14:01 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:32:25 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 // // #include "fstream"
 // #ifndef FT
 #include <map>
+#include <stack>
 // 	namespace ft = std;
 // 	std::string	type = "std_";
 
@@ -28,6 +29,7 @@
 int main() {
 	try {
 		{
+			std::stack<int> s;
 			std::cout << "/---------------------------\\ " << std::endl;
 			std::cout << "|         STD Map           | " << std::endl;
 			std::cout << "\\---------------------------/ " << std::endl;
@@ -98,6 +100,21 @@ int main() {
 			m.swap(otherMap);
 			std::cout << "After m.size() " << m.size() << std::endl;
 			std::cout << "After otherMap.size() " << otherMap.size() << std::endl;
+
+			std::cout << " ----- LOWER_UPPER_BOUND ---- " << std::endl;
+			std::map<int, int>::iterator lower = otherMap.lower_bound(7);
+			std::cout << "otherMap.lower_bound(7): " << lower->first << " => " << lower->second << std::endl;
+			lower = otherMap.lower_bound(8);
+			std::cout << "otherMap.lower_bound(8): " << lower->first << " => " << lower->second << std::endl;
+			lower = otherMap.lower_bound(20);
+			std::cout << "otherMap.lower_bound(20): " << lower->first << " => " << lower->second << std::endl;
+			
+			std::map<int, int>::iterator upper = otherMap.upper_bound(7);
+			std::cout << "otherMap.upper_bound(7): " << lower->first << " => " << lower->second << std::endl;
+			upper = otherMap.upper_bound(8);
+			std::cout << "otherMap.upper_bound(8): " << lower->first << " => " << lower->second << std::endl;
+			upper = otherMap.upper_bound(20);
+			std::cout << "otherMap.upper_bound(20): " << lower->first << " => " << lower->second << std::endl;
 
 			std::cout << " ---------- CLEAR ----------- " << std::endl;
 			std::cout << " OtherMap Before " << otherMap.size() << std::endl;
@@ -188,6 +205,21 @@ int main() {
 			myMap.swap(otherMap);
 			std::cout << "After myMap.size() " << myMap.size() << std::endl;
 			std::cout << "After otherMap.size() " << otherMap.size() << std::endl;
+
+			std::cout << " ----- LOWER_UPPER_BOUND ---- " << std::endl;
+			ft::map<int, int>::iterator lower = otherMap.lower_bound(7);
+			std::cout << "otherMap.lower_bound(7): " << lower->first << " => " << lower->second << std::endl;
+			lower = otherMap.lower_bound(8);
+			std::cout << "otherMap.lower_bound(8): " << lower->first << " => " << lower->second << std::endl;
+			lower = otherMap.lower_bound(20);
+			std::cout << "otherMap.lower_bound(20): " << lower->first << " => " << lower->second << std::endl;
+			
+			ft::map<int, int>::iterator upper = otherMap.upper_bound(7);
+			std::cout << "otherMap.upper_bound(7): " << lower->first << " => " << lower->second << std::endl;
+			upper = otherMap.upper_bound(8);
+			std::cout << "otherMap.upper_bound(8): " << lower->first << " => " << lower->second << std::endl;
+			upper = otherMap.upper_bound(20);
+			std::cout << "otherMap.upper_bound(20): " << lower->first << " => " << lower->second << std::endl;
 
 			std::cout << " ---------- CLEAR ----------- " << std::endl;
 			std::cout << " OtherMap Before " << otherMap.size() << std::endl;

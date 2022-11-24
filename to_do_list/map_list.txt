@@ -51,7 +51,7 @@ const_iterator end() const;
 ------------------- map::equal_range -------------------
 pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
 
-pair<iterator,iterator>             equal_range (const key_type& k);
+< not tested > ✅ pair<iterator,iterator>             equal_range (const key_type& k);
 --------------------------------------------------------
 
 ---------------------- map::erase ----------------------
@@ -86,7 +86,7 @@ const_iterator find (const key_type& k) const;
 --------------------------------------------------------
 
 ------------------- map::lower_bound -------------------
-< need testing > ✅ iterator lower_bound (const key_type& k);
+✅ iterator lower_bound (const key_type& k);
 
 const_iterator lower_bound (const key_type& k) const;
 --------------------------------------------------------
@@ -124,7 +124,7 @@ const_reverse_iterator rend() const;
 --------------------------------------------------------
 
 ------------------- map::upper_bound -------------------
-< need testing > ✅ iterator upper_bound (const key_type& k);
+✅ iterator upper_bound (const key_type& k);
 
 const_iterator upper_bound (const key_type& k) const;
 --------------------------------------------------------
