@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 09:40:16 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/24 14:00:58 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/01 14:40:43 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,6 @@
 
 namespace ft {
 	
-	template <class T1, class T2, class Result>
-	struct _LIBCPP_TEMPLATE_VIS binary_function
-	{
-		typedef T1   first;
-		typedef T2   second;
-		typedef Result result_type;
-	};
 	
 	template < class Key, class T, class Compare, class Allocate > 
 	class map {
@@ -67,17 +60,15 @@ namespace ft {
 
 	public:
 
-		class value_compare : public ft::binary_function<value_type, value_type, bool>{
+		class value_compare : public std::binary_function<value_type, value_type, bool>{
 			friend class map;
 		
 		protected:
-			Compare comp;
-			value_compare (Compare c) : comp(c) {}
+			key_compare comp;
+			value_compare (key_compare c) : comp(c) {}
 		
 		public:
 			typedef bool		result_type;
-			typedef value_type	first;
-			typedef value_type	second;
 
 			bool operator() (const value_type& val, const value_type& val2) const{
 				return comp(val.first, val2.first);
@@ -113,7 +104,7 @@ namespace ft {
 			this->_alloc = alloc;
 			size_type	i = 0;
 			for (i = 0; first != last; first++, i++) 
-				this->insert(ft::make_pair(first->first, first->second));
+				this->insert(ft::pair<key_type, mapped_type>(first->first, first->second));
 			this->_alloc = this->_tree.alloc;
 			this->_size = i;
 		}
@@ -123,7 +114,7 @@ namespace ft {
 		}
 
 		size_type max_size() const {
-			return (this->_tree->alloc.max_size());
+			return (this->_tree.alloc.max_size());
 		}
 
 		bool empty() const{
@@ -131,6 +122,7 @@ namespace ft {
 		}
 
 		iterator	begin() const{
+			_node_pointer  b = getFurthestLeft();
 			return (iterator(getFurthestLeft(), getFurthestLeft(), getFurthestRight()));
 		}
 
@@ -140,17 +132,17 @@ namespace ft {
 
 		_node_pointer	getFurthestLeft() const{
 			_node_pointer n = this->_tree._root;
-			
-			while (n && n->left) 
-				n = n->left;
+
+			while (n && n->left) {
+				n = n->left;}
 			return (n);
 		}
 
 		_node_pointer	getFurthestRight() const{
 			_node_pointer n = this->_tree._root;
 			
-			while (n && n->right)
-				n = n->right;
+			while (n && n->right) {
+				n = n->right;}
 			return (n);
 		}
 
@@ -161,10 +153,11 @@ namespace ft {
 		pair<iterator, bool> insert(const value_type& val){
 			_node_pointer	n = this->_tree.findNode(val.first, true);
 			if (n)
-				return (ft::make_pair(iterator(n, this->getFurthestLeft(), this->getFurthestRight()), false));
+				return (ft::pair<iterator, bool>(iterator(n, this->getFurthestLeft(), this->getFurthestRight()), false));
 			n = this->_tree.insert(val);
 			this->_size++;
-			return (ft::make_pair(iterator(n, this->getFurthestLeft(), this->getFurthestRight()), true));
+			iterator it(n, this->getFurthestLeft(), this->getFurthestRight());
+			return (ft::pair<iterator, bool>(it, true));
 		}
 
 		iterator insert (iterator position, const value_type& val) {
@@ -194,8 +187,16 @@ namespace ft {
 		}
 
 		void erase (iterator first, iterator last){
-			for (bool r = true; r && first != last; first++, this->_size--)
-				r = this->_tree.deleteNode(first->first);
+			// create an iterator
+			// remove one from it
+			//update it
+			iterator temp;
+
+			while (first != last) {
+				temp = first++;
+				if (this->_tree.deleteNode(temp->first) && this->_size--)
+					;
+			}
 		}
 
 		void swap (map& m) {
@@ -206,10 +207,11 @@ namespace ft {
 
 		void clear(){
 			this->_tree.clear_tree();
+			this->_size = 0;
 		}
 
-		value_compare value_comp() const {
-			return (value_compare());
+		value_compare value_comp() const{
+			return (value_compare(this->_comp));
 		}
 
 		key_compare key_comp() const {
@@ -255,8 +257,12 @@ namespace ft {
 		}
 
 		mapped_type& operator[](const key_type& k) {
-			ft::pair<iterator, bool> ret = insert(ft::make_pair(k, NULL));
-			return (ret.first->second);
+			_node_pointer	temp = this->_tree.findNode(k, true);
+			if (!temp) {
+				ft::pair<iterator, bool> ret = insert(ft::pair<key_type, mapped_type>(k, 0));
+				return (ret.first->second);
+			}
+			return (temp->_info.second);
 		}
 
 	};

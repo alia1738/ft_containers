@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:07:48 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/22 13:45:14 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/01 14:42:18 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@ namespace ft {
 		key_compare	comp;
 
 	public:
+	
+		miterator(){
+			this->_it = NULL;
+			this->_start = NULL;
+			this->_end = NULL;
+		}
+		
 		miterator(pointer s, pointer e){
 			this->_it = NULL;
 			this->_start = s;
@@ -60,8 +67,12 @@ namespace ft {
 		}
 
 		miterator& operator=(const miterator& it){
-			if (this != &it)
+			if (this != &it) {
 				this->_it = it._it;
+				this->_start = it._start;
+				this->_end = it._end;
+				this->comp = it.comp;
+			}
 			return (*this);
 		}
 		
@@ -70,8 +81,8 @@ namespace ft {
 			return (v);
 		}
 
-		value_type* operator*() const{
-			return (get_pair());}
+		value_type& operator*() const{
+			return (this->_it->_info);}
 
 		value_type*	operator->() const {
 			return (get_pair());}
@@ -95,10 +106,10 @@ namespace ft {
 			return (this->_it <= it._it);}
 
 		miterator& operator++(){
-			if (_it->right)
-				getSuccessor();
-			else
-				findChosenParentPlus();
+			if (_it->right) {
+				getSuccessor();}
+			else {
+				findChosenParentPlus();}
 			return (*this);
 		}
 
@@ -111,11 +122,8 @@ namespace ft {
 		/* account for cases when you go to null after the smallest iterator */
 		/* you shouldn't go back yo the last one you just sig fault */
 		miterator& operator--(){
-			// std::cout << "this->_it->_info.second" << this->_it->_info.second << std::endl;
-			// static bool first_time = true;
 			if (!this->_it)
 				this->_it = this->_end;
-			// first_time = false;
 			else if (_it->left)
 				getPredecessor();
 			else
@@ -124,7 +132,6 @@ namespace ft {
 		}
 
 		miterator operator--(int){
-			// std::cout << "this->_it->_info.second" << this->_it->_info.second << std::endl;
 
 			miterator temp = *this;
 			--(*this);

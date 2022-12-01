@@ -232,11 +232,43 @@ VectorTest() {
 	cd ..
 }
 
-# MapTest() {
-# 	# make a file inside the test file and name it "mapTest"
-# 	# run the .cpp test for vector then compare files in the directory
-# 	# put the result of diff in a file and output ✅ or ❌ depending on the result
-# }
+MapTest() {
+	if [ ! -d MapTest ]; then
+		mkdir MapTest
+	fi
+	cd MapTest
+
+	c++ ../../testMap.cpp -o std_MAP
+	if [ -x ./std_MAP ]; then 
+		./std_MAP
+	fi
+	c++ ../../testMap.cpp -o ft_MAP -D FT=1
+	if [ -x ./ft_MAP ]; then 
+		./ft_MAP
+	fi
+
+	CheckDiff "constructors" "				"
+	sleep 0.5
+	CheckDiff "element_access" "			"
+	sleep 0.5
+	CheckDiff "iterator" "				"
+	sleep 0.5
+	CheckDiff "capacity" "				"
+	sleep 0.5
+	CheckDiff "modifiers" "				"
+	sleep 0.5
+	CheckDiff "observers" "				"
+	sleep 0.5
+	# CheckDiff "non_member_functions" "			"
+	# sleep 0.5
+
+	rm -rf ft_MAP std_MAP
+
+	cd ..
+	# make a file inside the test file and name it "mapTest"
+	# run the .cpp test for vector then compare files in the directory
+	# put the result of diff in a file and output ✅ or ❌ depending on the result
+}
 
 # StackTest() {
 # 	# make a file inside the test file and name it "stackTest"
@@ -293,7 +325,7 @@ elif [ $test_type == 2 ]; then
 	echo "${blueToPink6}| ||_${blueToPink5}|| |${blueToPink4}|   ${blueToPink3}_   |${blueToPink2}|   ${blueToPink1}|    "
 	echo "${blueToPink6}|_|  ${blueToPink5} |_|${blueToPink4}|__|${blueToPink3} |__|${blueToPink2}|___${blueToPink1}|    ${reset}"
 	echo ""
-	# MapTest
+	MapTest
 	mapAfterTestingArt
 
 elif [ $test_type == 3 ]; then

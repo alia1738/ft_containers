@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/15 13:01:08 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/11/28 13:26:40 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,9 +142,9 @@ namespace ft
 
 	private:
 		allocator_type	alloc;
-		pointer		_start;
-		pointer		_end;
-		size_type	cap;
+		pointer			_start;
+		pointer			_end;
+		size_type		cap;
 
 	public:
 		explicit vector(const allocator_type& alloc = allocator_type()): _start(0), _end(0), cap(0){
