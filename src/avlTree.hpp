@@ -278,7 +278,7 @@ namespace ft {
 			return(insert(v));
 		}
 
-		pointer findNode(const key& nodeKey, bool first_time = false){
+		pointer findNode(const key& nodeKey, bool first_time = false) const{
 			static pointer temp = this->_root;
 
 			temp = (first_time)? this->_root: temp;

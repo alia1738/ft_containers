@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:07:48 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/01 14:42:18 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/01 16:57:10 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,10 @@ namespace ft {
 			return (this->_it->_info);}
 
 		value_type*	operator->() const {
+			if (!_it){
+				value_type* p;
+				return (p);
+			}
 			return (get_pair());}
 
 		bool	operator==(const miterator& it) const {

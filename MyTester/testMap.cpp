@@ -352,9 +352,6 @@ void	observers_test() {
 		m.insert(ft::pair<int, std::string>(1, "HI!"));
 		m.insert(ft::pair<int, std::string>(2, "I am testing"));
 		m.insert(ft::pair<int, std::string>(3, "123"));
-		// m[1] = "HI!";
-		// m[2] = "I am testing";
-		// m[3] = "123";
 
 		ft::map<int, std::string>::iterator it = m.begin();
 		ft::pair<int, std::string> p(3, "123");
@@ -369,39 +366,64 @@ void	observers_test() {
 }
 
 /* ----------------------- Operations ---------------------- */
-// void	observers_test() {
-// 	std::string		fileName = type + "operations.txt";
+void	operations_test() {
+	std::string		fileName = type + "operations.txt";
 
-// 	std::ofstream	file(fileName);
-// 	file << "/* ----------------------- Operations ---------------------- */\n";
+	std::ofstream	file(fileName);
+	file << "/* ----------------------- Operations ---------------------- */\n";
 	
-// 	{ // count
-// 		file << "Count:\n";
-// 		//
-// 		file << "\n-------------------------\n";
-// 	}
-// 	{ // find
-// 		file << "Find:\n";
-// 		//
-// 		file << "\n-------------------------\n";
-// 	}
-// 	{ // equal_range
-// 		file << "Equal_range:\n";
-// 		//
-// 		file << "\n-------------------------\n";
-// 	}
-// 	{ // lower_bound
-// 		file << "Lower_bound:\n";
-// 		//
-// 		file << "\n-------------------------\n";
-// 	}
-// 	{ // upper_bound
-// 		file << "Upper_bound:\n";
-// 		//
-// 		file << "\n-------------------------\n";
-// 	}
-// 	file.close();
-// }
+	{ // count
+		file << "Count:\n";
+		ft::map<char, std::string>	m;
+
+		m.insert(ft::pair<char, std::string>('A', "YAAAY! I AM HERE!"));
+		m.insert(ft::pair<char, std::string>('C', "WOOOOOO! I AM ALSO HERE!!!"));
+		m.insert(ft::pair<char, std::string>('E', "I guess I'm not special because I'm also here..."));
+
+		for (char i = 'A'; i < 'F'; i++){
+			if (m.count(i) > 0)
+				file << "m[" << i << "] is here and it saying: " << m[i] << std::endl;
+			else
+				file << "m[" << i << "] is not here." << std::endl;
+		}
+		
+		file << "\n-------------------------\n";
+	}
+	{ // find
+		file << "Find:\n";
+		ft::map<char, int>	m;
+
+		m.insert(ft::pair<char, int>('A', 200));
+		m.insert(ft::pair<char, int>('C', 400));
+		m.insert(ft::pair<char, int>('E', 600));
+
+		file << "A has " << m.find('A')->second << std::endl;
+		file << "C has " << m.find('C')->second << std::endl;
+		file << "E has " << m.find('E')->second << std::endl;
+
+		ft::map<char, int>::iterator it = m.begin();
+		for (; it != m.end(); it++)
+			file << "it->first " << it->first << " .. it->second " << it->second << std::endl;
+
+		file << "\n-------------------------\n";
+	}
+	// { // equal_range
+	// 	file << "Equal_range:\n";
+	// 	//
+	// 	file << "\n-------------------------\n";
+	// }
+	// { // lower_bound
+	// 	file << "Lower_bound:\n";
+	// 	//
+	// 	file << "\n-------------------------\n";
+	// }
+	// { // upper_bound
+	// 	file << "Upper_bound:\n";
+	// 	//
+	// 	file << "\n-------------------------\n";
+	// }
+	file.close();
+}
 
 /* ----------------- Non-member Functions ----------------- */
 // void	non_member_functions_test() {
@@ -431,4 +453,5 @@ int main() {
 	capacity_test();
 	modifiers_test();
 	observers_test();
+	operations_test();
 }
