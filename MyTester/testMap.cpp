@@ -407,21 +407,46 @@ void	operations_test() {
 
 		file << "\n-------------------------\n";
 	}
-	// { // equal_range
-	// 	file << "Equal_range:\n";
-	// 	//
-	// 	file << "\n-------------------------\n";
-	// }
-	// { // lower_bound
-	// 	file << "Lower_bound:\n";
-	// 	//
-	// 	file << "\n-------------------------\n";
-	// }
-	// { // upper_bound
-	// 	file << "Upper_bound:\n";
-	// 	//
-	// 	file << "\n-------------------------\n";
-	// }
+	{ // equal_range
+		file << "Equal_range:\n";
+		ft::map<int, char>	m;
+
+		m.insert(ft::pair<int, char>(10, 'a'));
+		m.insert(ft::pair<int, char>(20, 'b'));
+		m.insert(ft::pair<int, char>(30, 'c'));
+
+		ft::pair<ft::map<int, char>::iterator, ft::map<int, char>::iterator> ret;
+		ret = m.equal_range(20);
+		file << "ret.first->first: " << ret.first->first << " .. ret.first->second: " << ret.first->second << std::endl;
+		file << "ret.second->first: " << ret.second->first << " .. ret.second->second: " << ret.second->second << std::endl;
+
+		file << "\n-------------------------\n";
+	}
+	{ // lower_bound
+		file << "Lower_bound:\n";
+		ft::map<int, int>	m;
+
+		for (int i = 0; i < 20; i +=2)
+			m.insert(ft::pair<int, int>(i, i+1));
+		ft::map<int, int>::iterator lower = m.lower_bound(1);
+		file << "lower_bound(1) => " << lower->first << " .. " << lower->second << std::endl;
+		lower = m.lower_bound(4);
+		file << "lower_bound(4) => " << lower->first << " .. " << lower->second << std::endl;
+
+		file << "\n-------------------------\n";
+	}
+	{ // upper_bound
+		file << "Upper_bound:\n";
+		ft::map<int, int>	m;
+
+		for (int i = 0; i < 20; i +=2)
+			m.insert(ft::pair<int, int>(i, i+1));
+		ft::map<int, int>::iterator upper = m.upper_bound(1);
+		file << "upper_bound(1) => " << upper->first << " .. " << upper->second << std::endl;
+		upper = m.upper_bound(4);
+		file << "upper_bound(4) => " << upper->first << " .. " << upper->second << std::endl;
+		file << "\n-------------------------\n";
+	}
 	file.close();
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Alia <Alia@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 09:40:16 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/01 14:40:43 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/02 10:54:12 by Alia             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,19 +228,21 @@ namespace ft {
 
 		iterator lower_bound (const key_type& k) {
 			iterator it = this->begin();
-			for (iterator end = this->end(); it != end && _comp(it->first, k); it++)
-				;
-			if (it == this->end())
-				it--;
-			return (it);
+			for (iterator end = this->end(); it != end; it++) {
+				if (!_comp(it->first, k))
+					return (it);
+			}
+			it--;
+			return (ret);
 		}
 
 		iterator upper_bound (const key_type& k) {
 			iterator it = this->begin();
-			for (iterator end = this->end(); it != end && !_comp(it->first, k); it++)
-				;
-			if (it == this->end())
-				it--;
+			for (iterator end = this->end(); it != end; it++) {
+				if (it->first != k && !_comp(it->first, k))
+					return (it);
+			}
+			it--;
 			return (it);
 		}
 
