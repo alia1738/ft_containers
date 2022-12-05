@@ -451,25 +451,70 @@ void	operations_test() {
 }
 
 /* ----------------- Non-member Functions ----------------- */
-// void	non_member_functions_test() {
-// 	std::string		fileName = type + "non_member_functions.txt";
+void	non_member_functions_test() {
+	std::string		fileName = type + "non_member_functions.txt";
 
-// 	std::ofstream	file(fileName);
-// 	file << "/* ----------------- Non-member Functions ----------------- */\n";
+	std::ofstream	file(fileName);
+	file << "/* ----------------- Non-member Functions ----------------- */\n";
 	
-// 	{ // swap
-// 		file << "Swap(non-member):\n";
-// 		//
-// 		file << "\n-------------------------\n";
-// 	}
-// 	{ // relational operators
-// 		file << "Relational Operators:\n";
-// 		//
-// 		file << "\n-------------------------\n";
-// 	}
+	{ // swap
+		file << "Swap(non-member):\n";
+		ft::map<char, int>	m;
+		ft::map<char, int>	m2;
+		char s = 'a';
+		char s2 = 'f';
+		for (int i = 0; s <= 'e' && s2 <= 'j'; s++, s2++, i++) {
+			m.insert(ft::pair<char, int>(s, i));
+			m2.insert(ft::pair<char, int>(s2, (i + 10)));
+		}
+
+		file << " Before swapping:" << std::endl;
+		file << " --- m ---" << std::endl;
+		for (char i = 'a'; i <= 'e'; i++)
+			file << "m[" << i << "] => " << m[i] << std::endl;
+		file << " --- m2 ---" << std::endl;
+		for (char i = 'f'; i <= 'j'; i++)
+			file << "m2[" << i << "] => " << m2[i] << std::endl;
+
+		ft::swap(m, m2);
+		file << " After swapping:" << std::endl;
+		file << " --- m ---" << std::endl;
+		for (char i = 'f'; i <= 'j'; i++)
+			file << "m[" << i << "] => " << m[i] << std::endl;
+		file << " --- m2 ---" << std::endl;
+		for (char i = 'a'; i <= 'e'; i++)
+			file << "m2[" << i << "] => " << m2[i] << std::endl;
+
+
+		file << "\n-------------------------\n";
+	}
+	{ // relational operators
+		file << "Relational Operators:\n";
+		ft::map<int, int>	m1;
+		ft::map<int, int>	m2;
+		ft::map<int, int>	m3;
+		ft::map<int, int>	m4;
+
+		for (int i = 0; i < 5; i++)
+			m2.insert(ft::pair<char, int>(i, i*10));
+		for (int i = 5; i < 10; i++)
+			m3.insert(ft::pair<char, int>(i, i));
+		m4 = m2;
+
+		file << (m1 == m4) << " ";
+		file << (m2 == m4) << " ";
+		file << (m2 == m3) << " ";
+		file << (m2 != m3) << " ";
+		file << (m1 > m3) << " ";
+		file << (m3 >= m2) << " ";
+		file << (m2 < m4) << " ";
+		file << (m4 <= m3);
+		
+		file << "\n-------------------------\n";
+	}
 	
-// 	file.close();
-// }
+	file.close();
+}
 
 int main() {
 	constructors_test();
@@ -479,4 +524,5 @@ int main() {
 	modifiers_test();
 	observers_test();
 	operations_test();
+	non_member_functions_test();
 }

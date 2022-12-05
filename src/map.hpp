@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alia <Alia@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 09:40:16 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/02 10:54:12 by Alia             ###   ########.fr       */
+/*   Updated: 2022/12/05 09:18:00 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MAP_HPP
 
 #include "avlTree.hpp"
+#include "vector.hpp"
 #include "miterator.hpp"
 
 namespace ft {
@@ -233,7 +234,7 @@ namespace ft {
 					return (it);
 			}
 			it--;
-			return (ret);
+			return (it);
 		}
 
 		iterator upper_bound (const key_type& k) {
@@ -268,6 +269,41 @@ namespace ft {
 		}
 
 	};
+
+	template < class Key, class T, class Compare, class Allocate >
+	void swap(ft::map<Key, T, Compare, Allocate>& l, ft::map<Key, T, Compare, Allocate>& r){
+		l.swap(r);
+	}
+
+	template < class Key, class T, class Compare, class Allocate >
+	bool operator==(ft::map<Key, T, Compare, Allocate>& l, ft::map<Key, T, Compare, Allocate>& r) {
+		return (l.size() == r.size() && ft::equal(l.begin(), l.end(), r.begin()));
+	}
+
+	template < class Key, class T, class Compare, class Allocate >
+	bool operator!=(ft::map<Key, T, Compare, Allocate>& l, ft::map<Key, T, Compare, Allocate>& r) {
+		return (!(l == r));
+	}
+
+	template < class Key, class T, class Compare, class Allocate >
+	bool operator<(ft::map<Key, T, Compare, Allocate>& l, ft::map<Key, T, Compare, Allocate>& r) {
+		return (ft::lexicographical_compare(l.begin(), l.end(), r.begin(), r.end()));
+	}
+
+	template < class Key, class T, class Compare, class Allocate >
+	bool operator>(ft::map<Key, T, Compare, Allocate>& l, ft::map<Key, T, Compare, Allocate>& r) {
+		return (r < l);
+	}
+
+	template < class Key, class T, class Compare, class Allocate >
+	bool operator<=(ft::map<Key, T, Compare, Allocate>& l, ft::map<Key, T, Compare, Allocate>& r) {
+		return (!(r < l));
+	}
+
+	template < class Key, class T, class Compare, class Allocate >
+	bool operator>=(ft::map<Key, T, Compare, Allocate>& l, ft::map<Key, T, Compare, Allocate>& r) {
+		return (!(l < r));
+	}
 }
 
 #endif

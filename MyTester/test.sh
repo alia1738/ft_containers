@@ -261,8 +261,8 @@ MapTest() {
 	sleep 0.5
 	CheckDiff "operations" "				"
 	sleep 0.5
-	# CheckDiff "non_member_functions" "			"
-	# sleep 0.5
+	CheckDiff "non_member_functions" "			"
+	sleep 0.5
 
 	rm -rf ft_MAP std_MAP
 

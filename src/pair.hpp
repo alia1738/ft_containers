@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:58:06 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/21 10:14:21 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/05 09:29:14 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,22 @@ namespace ft {
 
 		bool operator==(const pair& p){
 			return ((this->first == p.first) && (this->second == p.second));
+		}
+
+		bool operator>(const pair& p){
+			return ((this->first > p.first));
+		}
+
+		bool operator<(const pair& p){
+			return ((this->first < p.first));
+		}
+
+		bool operator>=(const pair& p){
+			return ((this->first >= p.first));
+		}
+
+		bool operator<=(const pair& p){
+			return ((this->first <= p.first));
 		}
 
 		~pair(){}
