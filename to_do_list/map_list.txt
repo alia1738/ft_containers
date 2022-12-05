@@ -51,7 +51,7 @@ const_iterator end() const;
 ------------------- map::equal_range -------------------
 pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
 
-< not tested > ✅ pair<iterator,iterator>             equal_range (const key_type& k);
+✅ pair<iterator,iterator>             equal_range (const key_type& k);
 --------------------------------------------------------
 
 ---------------------- map::erase ----------------------
@@ -69,7 +69,7 @@ const_iterator find (const key_type& k) const;
 --------------------------------------------------------
 
 ------------------ map::get_allocator ------------------
-< not tested > ✅ allocator_type get_allocator() const;
+✅ allocator_type get_allocator() const;
 --------------------------------------------------------
 
 ---------------------- map::insert ---------------------
@@ -134,32 +134,32 @@ const_iterator upper_bound (const key_type& k) const;
 --------------------------------------------------------
 
 -------------- relational operators (map) --------------
-(1)	template <class Key, class T, class Compare, class Alloc>
+✅ (1)	template <class Key, class T, class Compare, class Alloc>
 	  bool operator== ( const map<Key,T,Compare,Alloc>& lhs,
                     const map<Key,T,Compare,Alloc>& rhs );
 
-(2)	template <class Key, class T, class Compare, class Alloc>
+✅ (2)	template <class Key, class T, class Compare, class Alloc>
 	  bool operator!= ( const map<Key,T,Compare,Alloc>& lhs,
                     const map<Key,T,Compare,Alloc>& rhs );
 
-(3)	template <class Key, class T, class Compare, class Alloc>
+✅ (3)	template <class Key, class T, class Compare, class Alloc>
 	  bool operator<  ( const map<Key,T,Compare,Alloc>& lhs,
                     const map<Key,T,Compare,Alloc>& rhs );
 
-(4)	template <class Key, class T, class Compare, class Alloc>
+✅ (4)	template <class Key, class T, class Compare, class Alloc>
 	  bool operator<= ( const map<Key,T,Compare,Alloc>& lhs,
                     const map<Key,T,Compare,Alloc>& rhs );
 
-(5)	template <class Key, class T, class Compare, class Alloc>
+✅ (5)	template <class Key, class T, class Compare, class Alloc>
 	  bool operator>  ( const map<Key,T,Compare,Alloc>& lhs,
                     const map<Key,T,Compare,Alloc>& rhs );
 
-(6)	template <class Key, class T, class Compare, class Alloc>
+✅ (6)	template <class Key, class T, class Compare, class Alloc>
 	  bool operator>= ( const map<Key,T,Compare,Alloc>& lhs,
                     const map<Key,T,Compare,Alloc>& rhs );
 --------------------------------------------------------
 
 ---------------------- swap (map) ----------------------
-template <class Key, class T, class Compare, class Alloc>
+✅ template <class Key, class T, class Compare, class Alloc>
   void swap (map<Key,T,Compare,Alloc>& x, map<Key,T,Compare,Alloc>& y);
 --------------------------------------------------------

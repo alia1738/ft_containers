@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/28 13:26:40 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/05 15:03:59 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,10 +133,10 @@ namespace ft
 		typedef typename allocator_type::const_reference	const_reference;
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
-		typedef v_iterator<value_type>						iterator;
+		typedef  v_iterator<value_type>						iterator;
 		typedef v_iterator<const value_type>				const_iterator;
-		typedef reverse_iterator<iterator>					reverse_iterator;
-		// typedef reverse_iterator<const_iterator>			const_reverse_iterator;
+		typedef ft::reverse_iterator<iterator>					reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 		typedef typename allocator_type::difference_type	difference_type;
 		typedef typename allocator_type::size_type			size_type;
 
@@ -224,10 +224,10 @@ namespace ft
 			return (it);
 		}
 
-		// const_reverse_iterator rbegin() const{
-		// 	const_reverse_iterator	cit(static_cast<const_pointer>(this->_end));
-		// 	return (cit);
-		// }
+		const_reverse_iterator rbegin() const{
+			const_reverse_iterator	cit(static_cast<const_pointer>(this->_end));
+			return (cit);
+		}
 
 		iterator end(){
 			iterator	it(this->_end);
@@ -244,10 +244,10 @@ namespace ft
 			return (it);
 		}
 
-		// const_reverse_iterator rend() const{
-		// 	const_reverse_iterator	cit(static_cast<const_pointer>(this->_start));
-		// 	return (cit);
-		// }
+		const_reverse_iterator rend() const{
+			const_reverse_iterator	cit(static_cast<const_pointer>(this->_start));
+			return (cit);
+		}
 
 		reference at (size_type n){
 			if (n >= this->size())
@@ -566,27 +566,27 @@ namespace ft
 		l.swap(r);
 	}
 
-	template < typename T, class _alloc > bool operator==(ft::vector<T, _alloc>& l, ft::vector<T, _alloc>& r){
+	template < typename T, class _alloc > bool operator==(const ft::vector<T, _alloc>& l, const ft::vector<T, _alloc>& r){
 		return (l.size() == r.size() && ft::equal(l.begin(), l.end(), r.begin()));
 	}
 
-	template < typename T, class _alloc > bool operator!=(ft::vector<T, _alloc>& l, ft::vector<T, _alloc>& r){
+	template < typename T, class _alloc > bool operator!=(const ft::vector<T, _alloc>& l, const ft::vector<T, _alloc>& r){
 		return (!(l == r));
 	}
 
-	template < typename T, class _alloc > bool operator<(ft::vector<T, _alloc>& l, ft::vector<T, _alloc>& r){
+	template < typename T, class _alloc > bool operator<(const ft::vector<T, _alloc>& l, const ft::vector<T, _alloc>& r){
 		return (ft::lexicographical_compare(l.begin(), l.end(), r.begin(), r.end()));
 	}
 
-	template < typename T, class _alloc > bool operator>(ft::vector<T, _alloc>& l, ft::vector<T, _alloc>& r){
+	template < typename T, class _alloc > bool operator>(const ft::vector<T, _alloc>& l, const ft::vector<T, _alloc>& r){
 		return (r < l);
 	}
 
-	template < typename T, class _alloc > bool operator>=(ft::vector<T, _alloc>& l, ft::vector<T, _alloc>& r){
+	template < typename T, class _alloc > bool operator>=(const ft::vector<T, _alloc>& l, const ft::vector<T, _alloc>& r){
 		return (!(l < r));
 	}
 
-	template < typename T, class _alloc > bool operator<=(ft::vector<T, _alloc>& l, ft::vector<T, _alloc>& r){
+	template < typename T, class _alloc > bool operator<=(const ft::vector<T, _alloc>& l, const ft::vector<T, _alloc>& r){
 		return (!(r < l));
 	}
 

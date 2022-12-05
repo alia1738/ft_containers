@@ -185,6 +185,49 @@ vectorAfterTestingArt() {
 
 }
 
+
+vectorArt(){
+	echo "${blueToPink6} __   __ ${blueToPink5} _______ ${blueToPink4} _______ ${blueToPink3} _______ ${blueToPink2} _______ ${blueToPink1} ______  " 
+	echo "${blueToPink6}|  | |  |${blueToPink5}|       |${blueToPink4}|       |${blueToPink3}|       |${blueToPink2}|       |${blueToPink1}|    _ |  "
+	echo "${blueToPink6}|  |_|  |${blueToPink5}|    ___|${blueToPink4}|       |${blueToPink3}|_     _|${blueToPink2}|   _   |${blueToPink1}|   | ||  "
+	echo "${blueToPink6}|       |${blueToPink5}|   |___ ${blueToPink4}|       |${blueToPink3}  |   |  ${blueToPink2}|  | |  |${blueToPink1}|   |_||_ "
+	echo "${blueToPink6}|       |${blueToPink5}|    ___|${blueToPink4}|      _|${blueToPink3}  |   |  ${blueToPink2}|  |_|  |${blueToPink1}|    __  |"
+	echo "${blueToPink6} |     | ${blueToPink5}|   |___ ${blueToPink4}|     |_ ${blueToPink3}  |   |  ${blueToPink2}|       |${blueToPink1}|   |  | |"
+	echo "${blueToPink6}  |___|  ${blueToPink5}|_______|${blueToPink4}|_______|${blueToPink3}  |___|  ${blueToPink2}|_______|${blueToPink1}|___|  |_| ${reset}"
+	echo ""
+}
+
+mapArt() {
+	echo "${blueToPink6} __  ${blueToPink5} __ ${blueToPink4} ___${blueToPink3}____ ${blueToPink2} ___${blueToPink1}____ "
+	echo "${blueToPink6}|  |_${blueToPink5}|  |${blueToPink4}|   ${blueToPink3}_   |${blueToPink2}|   ${blueToPink1}    |"
+	echo "${blueToPink6}|    ${blueToPink5}   |${blueToPink4}|  |${blueToPink3}_|  |${blueToPink2}|   ${blueToPink1} _  |"
+	echo "${blueToPink6}|    ${blueToPink5}   |${blueToPink4}|   ${blueToPink3}    |${blueToPink2}|   ${blueToPink1}|_| |"
+	echo "${blueToPink6}|    ${blueToPink5}   |${blueToPink4}|   ${blueToPink3}    |${blueToPink2}|   ${blueToPink1} ___|"
+	echo "${blueToPink6}| ||_${blueToPink5}|| |${blueToPink4}|   ${blueToPink3}_   |${blueToPink2}|   ${blueToPink1}|    "
+	echo "${blueToPink6}|_|  ${blueToPink5} |_|${blueToPink4}|__|${blueToPink3} |__|${blueToPink2}|___${blueToPink1}|    ${reset}"
+	echo ""
+}
+
+stackArt() {
+	echo "${blueToPink6} _______${blueToPink5}  ______${blueToPink4}_  _____${blueToPink3}__  ___${blueToPink2}____  ${blueToPink1}___   _ ${reset}"
+	echo "${blueToPink6}|       ${blueToPink5}||      ${blueToPink4} ||   _ ${blueToPink3}  ||   ${blueToPink2}    ||${blueToPink1}   | | |${reset}"
+	echo "${blueToPink6}|  _____${blueToPink5}||_     ${blueToPink4}_||  |_|${blueToPink3}  ||   ${blueToPink2}    ||${blueToPink1}   |_| |${reset}"
+	echo "${blueToPink6}| |_____${blueToPink5}   |   |${blueToPink4}  |     ${blueToPink3}  ||   ${blueToPink2}    ||${blueToPink1}      _|${reset}"
+	echo "${blueToPink6}|_____  ${blueToPink5}|  |   |${blueToPink4}  |     ${blueToPink3}  ||   ${blueToPink2}   _||${blueToPink1}     |_ ${reset}"
+	echo "${blueToPink6} _____| ${blueToPink5}|  |   |${blueToPink4}  |   _ ${blueToPink3}  ||   ${blueToPink2}  |_ |${blueToPink1}    _  |${reset}"
+	echo "${blueToPink6}|_______${blueToPink5}|  |___|${blueToPink4}  |__| |${blueToPink3}__||___${blueToPink2}____||${blueToPink1}___| |_|${reset}"
+}
+
+allArt() {
+	echo "${blueToPink6} _______ ${blueToPink5} ___     ${blueToPink4} ___     ${blueToPink3} __  ${blueToPink2} __  ${blueToPink1} __  ${reset}"
+	echo "${blueToPink6}|   _   |${blueToPink5}|   |    ${blueToPink4}|   |    ${blueToPink3}|  | ${blueToPink2}|  | ${blueToPink1}|  | ${reset}"
+	echo "${blueToPink6}|  |_|  |${blueToPink5}|   |    ${blueToPink4}|   |    ${blueToPink3}|  | ${blueToPink2}|  | ${blueToPink1}|  | ${reset}"
+	echo "${blueToPink6}|       |${blueToPink5}|   |    ${blueToPink4}|   |    ${blueToPink3}|  | ${blueToPink2}|  | ${blueToPink1}|  | ${reset}"
+	echo "${blueToPink6}|       |${blueToPink5}|   |___ ${blueToPink4}|   |___ ${blueToPink3}|__| ${blueToPink2}|__| ${blueToPink1}|__| ${reset}"
+	echo "${blueToPink6}|   _   |${blueToPink5}|       |${blueToPink4}|       |${blueToPink3} __  ${blueToPink2} __  ${blueToPink1} __  ${reset}"
+	echo "${blueToPink6}|__| |__|${blueToPink5}|_______|${blueToPink4}|_______|${blueToPink3}|__| ${blueToPink2}|__| ${blueToPink1}|__| ${reset}"
+}
+
 CheckDiff() {
 
 	diff "ft_$1.txt" "std_$1.txt" > diff.txt
@@ -267,22 +310,50 @@ MapTest() {
 	rm -rf ft_MAP std_MAP
 
 	cd ..
-	# make a file inside the test file and name it "mapTest"
-	# run the .cpp test for vector then compare files in the directory
-	# put the result of diff in a file and output ✅ or ❌ depending on the result
 }
 
-# StackTest() {
-# 	# make a file inside the test file and name it "stackTest"
-# 	# run the .cpp test for vector then compare files in the directory
-# 	# put the result of diff in a file and output ✅ or ❌ depending on the result
-# }
+StackTest() {
+	if [ ! -d StackTest ]; then
+		mkdir StackTest
+	fi
+	cd StackTest
 
-# AllTset() {
-# 	VectorTest()
-# 	MapTest()
-# 	StackTest()
-# }
+	c++ ../../testStack.cpp -o std_STACK
+	if [ -x ./std_STACK ]; then 
+		./std_STACK
+	fi
+	c++ ../../testStack.cpp -o ft_STACK -D FT=1
+	if [ -x ./ft_STACK ]; then 
+		./ft_STACK
+	fi
+
+	CheckDiff "constructors" "				"
+	sleep 0.5
+	CheckDiff "element_access" "			"
+	sleep 0.5
+	CheckDiff "capacity" "				"
+	sleep 0.5
+	CheckDiff "modifiers" "				"
+	sleep 0.5
+	CheckDiff "non_member_functions" "			"
+	sleep 0.5
+
+	rm -rf ft_STACK std_STACK
+
+	cd ..
+}
+
+AllTset() {
+	vectorArt
+	VectorTest
+
+	mapArt
+	MapTest
+
+	stackArt
+	StackTest
+}
+
 
 clear
 echo "${blueToPurple6} _____ _   ${blueToPurple5}            ${blueToPurple4}               ${blueToPurple3}_        ${blueToPurple2}    _       "
@@ -305,51 +376,25 @@ fi
 cd test_results
 
 if [ $test_type == 1 ]; then 
-	echo "${blueToPink6} __   __ ${blueToPink5} _______ ${blueToPink4} _______ ${blueToPink3} _______ ${blueToPink2} _______ ${blueToPink1} ______  " 
-	echo "${blueToPink6}|  | |  |${blueToPink5}|       |${blueToPink4}|       |${blueToPink3}|       |${blueToPink2}|       |${blueToPink1}|    _ |  "
-	echo "${blueToPink6}|  |_|  |${blueToPink5}|    ___|${blueToPink4}|       |${blueToPink3}|_     _|${blueToPink2}|   _   |${blueToPink1}|   | ||  "
-	echo "${blueToPink6}|       |${blueToPink5}|   |___ ${blueToPink4}|       |${blueToPink3}  |   |  ${blueToPink2}|  | |  |${blueToPink1}|   |_||_ "
-	echo "${blueToPink6}|       |${blueToPink5}|    ___|${blueToPink4}|      _|${blueToPink3}  |   |  ${blueToPink2}|  |_|  |${blueToPink1}|    __  |"
-	echo "${blueToPink6} |     | ${blueToPink5}|   |___ ${blueToPink4}|     |_ ${blueToPink3}  |   |  ${blueToPink2}|       |${blueToPink1}|   |  | |"
-	echo "${blueToPink6}  |___|  ${blueToPink5}|_______|${blueToPink4}|_______|${blueToPink3}  |___|  ${blueToPink2}|_______|${blueToPink1}|___|  |_| ${reset}"
-	echo ""
+	vectorArt
 	# testingArt
 	VectorTest
 	vectorAfterTestingArt
 
 
 elif [ $test_type == 2 ]; then
-	echo "${blueToPink6} __  ${blueToPink5} __ ${blueToPink4} ___${blueToPink3}____ ${blueToPink2} ___${blueToPink1}____ "
-	echo "${blueToPink6}|  |_${blueToPink5}|  |${blueToPink4}|   ${blueToPink3}_   |${blueToPink2}|   ${blueToPink1}    |"
-	echo "${blueToPink6}|    ${blueToPink5}   |${blueToPink4}|  |${blueToPink3}_|  |${blueToPink2}|   ${blueToPink1} _  |"
-	echo "${blueToPink6}|    ${blueToPink5}   |${blueToPink4}|   ${blueToPink3}    |${blueToPink2}|   ${blueToPink1}|_| |"
-	echo "${blueToPink6}|    ${blueToPink5}   |${blueToPink4}|   ${blueToPink3}    |${blueToPink2}|   ${blueToPink1} ___|"
-	echo "${blueToPink6}| ||_${blueToPink5}|| |${blueToPink4}|   ${blueToPink3}_   |${blueToPink2}|   ${blueToPink1}|    "
-	echo "${blueToPink6}|_|  ${blueToPink5} |_|${blueToPink4}|__|${blueToPink3} |__|${blueToPink2}|___${blueToPink1}|    ${reset}"
-	echo ""
+	mapArt
 	MapTest
 	mapAfterTestingArt
 
 elif [ $test_type == 3 ]; then
-	echo "${blueToPink6} _______${blueToPink5}  ______${blueToPink4}_  _____${blueToPink3}__  ___${blueToPink2}____  ${blueToPink1}___   _ ${reset}"
-	echo "${blueToPink6}|       ${blueToPink5}||      ${blueToPink4} ||   _ ${blueToPink3}  ||   ${blueToPink2}    ||${blueToPink1}   | | |${reset}"
-	echo "${blueToPink6}|  _____${blueToPink5}||_     ${blueToPink4}_||  |_|${blueToPink3}  ||   ${blueToPink2}    ||${blueToPink1}   |_| |${reset}"
-	echo "${blueToPink6}| |_____${blueToPink5}   |   |${blueToPink4}  |     ${blueToPink3}  ||   ${blueToPink2}    ||${blueToPink1}      _|${reset}"
-	echo "${blueToPink6}|_____  ${blueToPink5}|  |   |${blueToPink4}  |     ${blueToPink3}  ||   ${blueToPink2}   _||${blueToPink1}     |_ ${reset}"
-	echo "${blueToPink6} _____| ${blueToPink5}|  |   |${blueToPink4}  |   _ ${blueToPink3}  ||   ${blueToPink2}  |_ |${blueToPink1}    _  |${reset}"
-	echo "${blueToPink6}|_______${blueToPink5}|  |___|${blueToPink4}  |__| |${blueToPink3}__||___${blueToPink2}____||${blueToPink1}___| |_|${reset}"
-	# StackTest
+	stackArt
+	StackTest
 	stackAfterTestingArt
 
 elif [ $test_type == 4 ]; then
-	echo "${blueToPink6} _______ ${blueToPink5} ___     ${blueToPink4} ___     ${blueToPink3} __  ${blueToPink2} __  ${blueToPink1} __  ${reset}"
-	echo "${blueToPink6}|   _   |${blueToPink5}|   |    ${blueToPink4}|   |    ${blueToPink3}|  | ${blueToPink2}|  | ${blueToPink1}|  | ${reset}"
-	echo "${blueToPink6}|  |_|  |${blueToPink5}|   |    ${blueToPink4}|   |    ${blueToPink3}|  | ${blueToPink2}|  | ${blueToPink1}|  | ${reset}"
-	echo "${blueToPink6}|       |${blueToPink5}|   |    ${blueToPink4}|   |    ${blueToPink3}|  | ${blueToPink2}|  | ${blueToPink1}|  | ${reset}"
-	echo "${blueToPink6}|       |${blueToPink5}|   |___ ${blueToPink4}|   |___ ${blueToPink3}|__| ${blueToPink2}|__| ${blueToPink1}|__| ${reset}"
-	echo "${blueToPink6}|   _   |${blueToPink5}|       |${blueToPink4}|       |${blueToPink3} __  ${blueToPink2} __  ${blueToPink1} __  ${reset}"
-	echo "${blueToPink6}|__| |__|${blueToPink5}|_______|${blueToPink4}|_______|${blueToPink3}|__| ${blueToPink2}|__| ${blueToPink1}|__| ${reset}"
-	# AllTset
+	allArt
+	AllTset
 	AllAfterTestingArt
 
 else
