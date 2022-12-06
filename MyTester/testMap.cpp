@@ -53,7 +53,7 @@ void	constructors_test() {
 		file << "m size: " << m.size() << std::endl;
 		m.insert(ft::pair<std::string, int>("hiiii", 44));
 		file << "m size: " << m.size() << std::endl;
-	
+
 		ft::map<std::string, int> c(m);
 		file << "m size: " << m.size() << " .. c size: " << c.size() << std::endl;
 		file << "m[hi]" << m["hi"] << " .. " << "c[hi]" << c["hi"] << std::endl;
@@ -120,11 +120,23 @@ void	iterator_test() {
 		file << "\n-------------------------\n";
 	}
 
-	// { // reverse
-	// 	file << "Reverse:\n";
-	// 	//
-	// 	file << "\n-------------------------\n";
-	// }
+	{ // reverse
+		file << "Reverse:\n";
+		ft::map<int, std::string>	m;
+		m.insert(ft::pair<int, std::string>(1, "10"));
+		m.insert(ft::pair<int, std::string>(2, "20"));
+		m.insert(ft::pair<int, std::string>(3, "30"));
+		m.insert(ft::pair<int, std::string>(4, "40"));
+		m.insert(ft::pair<int, std::string>(5, "50"));
+		m.insert(ft::pair<int, std::string>(6, "60"));
+		m.insert(ft::pair<int, std::string>(7, "70"));
+		m.insert(ft::pair<int, std::string>(8, "80"));
+		m.insert(ft::pair<int, std::string>(9, "90"));
+		ft::map<int, std::string>::reverse_iterator	it = m.rbegin();
+		for (; it != m.rend(); it++) {
+			file << "it->first " << it->first << " .. it->second " << it->second << std::endl;}
+		file << "\n-------------------------\n";
+	}
 	file.close();
 }
 

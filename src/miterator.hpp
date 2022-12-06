@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:07:48 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/01 16:57:10 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/06 09:52:55 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,21 @@ namespace ft {
 	template < class Key, class T, class Compare = std::less<Key>, class Allocate = std::allocator< pair<const Key, T> > > class map;
 	
 	/* ---------------------- -- - Iterator - -- --------------------- */
-	template < class Key, class T, class N, class Compare = std::less<Key> > class miterator {
+	template < class myPair, class Compare, class Node > class miterator {
 	
 	public:
-		typedef N											_node;
-		typedef N*											pointer;
-		// typedef N&											reference;
-		typedef typename map< Key, T >::difference_type		difference_type;
-		typedef typename map< Key, T >::value_type			value_type;
-		// typedef typename value_type*						value_type_pointer;
-		typedef Compare										key_compare;
-		typedef Key											key_type;
-		typedef T											mapped_type;
-
-
+		typedef Node*								node_pointer;
+		typedef std::ptrdiff_t						difference_type;
+		typedef myPair								value_type;
+		typedef value_type*							pointer;
+		typedef value_type&							reference;
+		typedef Compare								key_compare;
 
 	private:
-		pointer		_it;
-		pointer		_start;
-		pointer		_end;
-		key_compare	comp;
+		node_pointer		_it;
+		node_pointer		_start;
+		node_pointer		_end;
+		key_compare			comp;
 
 	public:
 	
@@ -48,7 +43,7 @@ namespace ft {
 			this->_end = NULL;
 		}
 		
-		miterator(pointer s, pointer e){
+		miterator(const node_pointer s, const node_pointer e){
 			this->_it = NULL;
 			this->_start = s;
 			this->_end = e;
@@ -60,7 +55,7 @@ namespace ft {
 			this->_end = it._end;
 		}
 
-		miterator(pointer n, pointer s, pointer e){
+		miterator(const node_pointer n, const node_pointer s, const node_pointer e){
 			this->_it = n;
 			this->_start = s;
 			this->_end = e;
@@ -75,18 +70,22 @@ namespace ft {
 			}
 			return (*this);
 		}
+
+		operator miterator<const myPair, Compare, Node>() const {
+			return(miterator<const myPair, Compare, Node>(_it, _start, _end));
+		}
 		
-		value_type* get_pair() const {
-			value_type *v = &this->_it->_info;
+		pointer get_pair() const {
+			pointer v = &this->_it->_info;
 			return (v);
 		}
 
-		value_type& operator*() const{
+		reference operator*() const{
 			return (this->_it->_info);}
 
-		value_type*	operator->() const {
+		pointer	operator->() const {
 			if (!_it){
-				value_type* p;
+				pointer p;
 				return (p);
 			}
 			return (get_pair());}
@@ -123,8 +122,6 @@ namespace ft {
 			return (temp);
 		}
 
-		/* account for cases when you go to null after the smallest iterator */
-		/* you shouldn't go back yo the last one you just sig fault */
 		miterator& operator--(){
 			if (!this->_it)
 				this->_it = this->_end;
@@ -142,8 +139,9 @@ namespace ft {
 			return (temp);
 		}
 
+	private:
 		void	findChosenParentPlus() {
-			for (pointer temp = this->_it; temp->parent; temp = temp->parent) {
+			for (node_pointer temp = this->_it; temp->parent; temp = temp->parent) {
 				if (!comp(temp->parent->_info.first, temp->_info.first)) {
 					this->_it = temp->parent;
 					return ;
@@ -155,7 +153,7 @@ namespace ft {
 		}
 
 		void	findChosenParentMinus() {
-			for (pointer temp = this->_it; temp->parent; temp = temp->parent) {
+			for (node_pointer temp = this->_it; temp->parent; temp = temp->parent) {
 				if (comp(temp->parent->_info.first, temp->_info.first)) {
 					this->_it = temp->parent;
 					return ;

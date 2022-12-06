@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 09:40:16 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/05 09:18:00 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/06 10:02:57 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,9 @@ namespace ft {
 	class map {
 
 	private:
-		typedef avlTree<Key, T, Compare, Allocate>				_base;
-		// typedef avlTree<Key, T, Compare>::allocator_type	tree_alloc;
-		typedef	Node<Key, T>									_node;
-		typedef	Node<Key, T>*									_node_pointer;
+		typedef avlTree<Key, T, Compare, Allocate>			_base;
+		typedef	Node<Key, T>								_node;
+		typedef	Node<Key, T>*								_node_pointer;
 	
 	public:
 		typedef Key											key_type;
@@ -41,18 +40,13 @@ namespace ft {
 		typedef typename allocator_type::const_pointer		const_pointer;
 		typedef typename allocator_type::difference_type	difference_type;
 		typedef typename allocator_type::size_type			size_type;
-		typedef miterator< Key, T, _node,  Compare >		iterator;
-		// iterator
-		// const_iterator
-		// reverse_iterator
-		// const_reverse_iterator
+
+		typedef miterator< value_type, Compare, _node >			iterator;
+		typedef miterator< const value_type,  Compare, _node >	const_iterator;
+		typedef ft::reverse_iterator<iterator>					reverse_iterator;
+		typedef ft::reverse_iterator<iterator>					const_reverse_iterator;
 
 	private:
-		// typedef avlTree<Key, T, Compare, Allocate>			_base;
-		// typedef	Node<Key, T>								_node;
-		// typedef	Node<Key, T>*								_node_pointer;
-		// typedef	
-		// typedef avlTree <>
 		
 		_base			_tree;
 		allocator_type	_alloc;
@@ -84,22 +78,6 @@ namespace ft {
 
 		template <class InputIterator>
 		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _size(0), _tree(){
-			map_init(first, last, comp, alloc);
-		}
-
-		map(const map& m): _size(0), _tree(){
-			map_init(m.begin(), m.end(), m._comp, m._alloc);
-		}
-		
-		map& operator=(const map& m){
-			if (this != &m) {
-				map_init(m.begin(), m.end(), m._comp, m._alloc);
-			}
-			return (*this);
-		}
-		
-		template <class InputIterator>
-		void map_init(InputIterator first, InputIterator last, const key_compare& comp, const allocator_type& alloc) {
 			this->_tree.clear_tree();
 			this->_comp = comp;
 			this->_alloc = alloc;
@@ -108,6 +86,31 @@ namespace ft {
 				this->insert(ft::pair<key_type, mapped_type>(first->first, first->second));
 			this->_alloc = this->_tree.alloc;
 			this->_size = i;
+		}
+
+		map(const map& m): _size(0), _tree(){
+			this->_tree.clear_tree();
+			this->_comp = m._comp;
+			this->_alloc = m._alloc;
+			size_type	i = 0;
+			for (const_iterator f = m.begin(); f != m.end(); f++, i++) 
+				this->insert(ft::pair<const key_type, const mapped_type>(f->first, f->second));
+			this->_alloc = this->_tree.alloc;
+			this->_size = i;
+		}
+		
+		map& operator=(const map& m){
+			if (this != &m) {
+				this->_tree.clear_tree();
+				this->_comp = m._comp;
+				this->_alloc = m._alloc;
+				size_type	i = 0;
+				for (const_iterator f = m.begin(); f != m.end(); f++, i++) 
+					this->insert(ft::pair<key_type, mapped_type>(f->first, f->second));
+				this->_alloc = this->_tree.alloc;
+				this->_size = i;
+			}
+			return (*this);
 		}
 
 		size_type size() const{
@@ -122,33 +125,44 @@ namespace ft {
 			return ((this->_size)? false: true);
 		}
 
-		iterator	begin() const{
-			_node_pointer  b = getFurthestLeft();
+		iterator	begin(){
 			return (iterator(getFurthestLeft(), getFurthestLeft(), getFurthestRight()));
 		}
 
-		iterator	end() const{
+		iterator	end(){
 			return (iterator(getFurthestLeft(), getFurthestRight()));
 		}
 
-		_node_pointer	getFurthestLeft() const{
-			_node_pointer n = this->_tree._root;
-
-			while (n && n->left) {
-				n = n->left;}
-			return (n);
+		const_iterator begin() const{
+			return (const_iterator(getFurthestLeft(), getFurthestLeft(), getFurthestRight()));
 		}
 
-		_node_pointer	getFurthestRight() const{
-			_node_pointer n = this->_tree._root;
-			
-			while (n && n->right) {
-				n = n->right;}
-			return (n);
+		const_iterator end() const{
+			return (const_iterator(getFurthestLeft(), getFurthestRight()));
+		}
+
+		reverse_iterator rbegin(){
+			return (reverse_iterator(this->end()));
+		}
+
+		const_reverse_iterator rbegin() const{
+			return (const_reverse_iterator(this->end()));
+		}
+
+		reverse_iterator rend(){
+			return (reverse_iterator(this->begin()));
+		}
+
+		const_reverse_iterator rend() const{
+			return (const_reverse_iterator(this->begin()));
 		}
 
 		iterator find (const key_type& k){
 			return (iterator((this->_tree.findNode(k, true)), this->getFurthestLeft(), this->getFurthestRight()));
+		}
+
+		const_iterator find (const key_type& k) const{
+			return (const_iterator((this->_tree.findNode(k, true)), this->getFurthestLeft(), this->getFurthestRight()));
 		}
 
 		pair<iterator, bool> insert(const value_type& val){
@@ -188,9 +202,6 @@ namespace ft {
 		}
 
 		void erase (iterator first, iterator last){
-			// create an iterator
-			// remove one from it
-			//update it
 			iterator temp;
 
 			while (first != last) {
@@ -237,6 +248,16 @@ namespace ft {
 			return (it);
 		}
 
+		const_iterator lower_bound (const key_type& k) const{
+			const_iterator it = this->begin();
+			for (const_iterator end = this->end(); it != end; it++) {
+				if (!_comp(it->first, k))
+					return (it);
+			}
+			it--;
+			return (it);
+		}
+
 		iterator upper_bound (const key_type& k) {
 			iterator it = this->begin();
 			for (iterator end = this->end(); it != end; it++) {
@@ -247,8 +268,22 @@ namespace ft {
 			return (it);
 		}
 
+		const_iterator upper_bound (const key_type& k) const{
+			const_iterator it = this->begin();
+			for (const_iterator end = this->end(); it != end; it++) {
+				if (it->first != k && !_comp(it->first, k))
+					return (it);
+			}
+			it--;
+			return (it);
+		}
+
 		pair<iterator,iterator>	equal_range (const key_type& k){
 			return (pair<iterator,iterator>(this->lower_bound(k), this->upper_bound(k)));
+		}
+
+		pair<const_iterator,const_iterator> equal_range (const key_type& k) const {
+			return (pair<const_iterator,const_iterator>(this->lower_bound(k), this->upper_bound(k)));
 		}
 
 		mapped_type& at (const key_type& k) {
@@ -266,6 +301,23 @@ namespace ft {
 				return (ret.first->second);
 			}
 			return (temp->_info.second);
+		}
+	
+	private:
+		_node_pointer	getFurthestLeft() const{
+			_node_pointer n = this->_tree._root;
+
+			while (n && n->left) {
+				n = n->left;}
+			return (n);
+		}
+
+		_node_pointer	getFurthestRight() const{
+			_node_pointer n = this->_tree._root;
+			
+			while (n && n->right) {
+				n = n->right;}
+			return (n);
 		}
 
 	};

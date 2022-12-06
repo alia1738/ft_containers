@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 16:54:46 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/11/16 15:05:08 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:26:19 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@ namespace ft {
 			It temp = this->_content;
 			temp--;
 			return (*temp);
+		}
+
+		pointer operator->() const{
+			It temp = this->_content;
+			temp--;
+			return (temp.operator->());
 		}
 
 		reverse_iterator& operator++(){
@@ -175,6 +181,10 @@ namespace ft {
 
 		value_type& operator*() const{
 			return (*this->_content);}
+
+		pointer operator->() {
+			return (this->_content);
+		}
 
 		value_type& operator[](int n) const{
 			return (this->_content[n]);}
