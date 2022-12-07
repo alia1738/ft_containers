@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/05 15:33:13 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:43:57 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ namespace ft
 	template<> struct is_integral<wchar_t>: true_type{};
 
 	template <bool, typename T = void> struct enable_if {};
-	template <typename T> struct enable_if<false, T> {
+	template <typename T> struct enable_if<true, T> {
 		typedef T type;
 	};
 
@@ -162,14 +162,16 @@ namespace ft
 			}
 		}
 
-		template < class InputIterator > vector(InputIterator first, InputIterator end, const allocator_type& alloc = allocator_type(), typename enable_if<is_integral<InputIterator>::value, InputIterator>::type=0){
+		template < class InputIterator > 
+		vector(InputIterator first, InputIterator end, 
+			typename enable_if< !ft::is_integral<InputIterator>::value, InputIterator>::type* = 0, const allocator_type& alloc = allocator_type()){
 			this->alloc = alloc;
 			int count = 0;
-			for (; (first + count) != end; count++)
+			for (InputIterator f = first; f != end; f++, count++)
 				;
 			this->_start = this->alloc.allocate(count);
-			for (int i = 0; i < count; i++) {
-				this->alloc.construct((this->_start + i), first[i]);
+			for (int i = 0; i < count; first++, i++) {
+				this->alloc.construct((this->_start + i), *first);
 			}
 			this->_end = this->_start + count;
 			this->cap = this->size();
@@ -261,16 +263,17 @@ namespace ft
 			return(*(this->_start + n));
 		}
 
-		template < class InputIterator > void assign(InputIterator first, InputIterator last, typename enable_if<is_integral<InputIterator>::value, InputIterator>::type=0){
-			size_type	new_size = static_cast<size_type>(last - first);
+		template < class InputIterator > void assign(InputIterator first, InputIterator last, typename enable_if< !ft::is_integral<InputIterator>::value, InputIterator>::type* =0){
+			size_type	new_size = 0;
+			for (InputIterator f = first; f != last; f++, new_size++)
+				;
 
 			if (new_size >= this->cap){
 				pointer	temp = alloc.allocate(new_size);
 				
 				size_type i = 0, max = this->size();
-				for (; i < new_size; i++){
-					this->alloc.construct((temp + i), *first++);
-					
+				for (; i < new_size; i++, first++){
+					this->alloc.construct((temp + i), *first);
 					if (i < max)
 						this->alloc.destroy(this->_start + i);
 				}
@@ -281,9 +284,9 @@ namespace ft
 				this->cap = new_size;
 			}
 			else {
-				for (size_type i = 0; i < new_size; i++){
+				for (size_type i = 0; i < new_size; i++, first++){
 					alloc.destroy(this->_start + i);
-					alloc.construct(this->_start + i, *first++);
+					alloc.construct(this->_start + i, *first);
 				}
 				this->_end = this->_start + new_size;
 			}
@@ -292,7 +295,7 @@ namespace ft
 		void	assign (size_type n, const value_type& val){
 			if (n >= this->cap){
 				pointer	temp = alloc.allocate(n);
-				
+
 				size_type i = 0, max = this->size();
 				for (; i < n; i++){
 					this->alloc.construct((temp + i), val);
@@ -306,10 +309,12 @@ namespace ft
 				this->cap = n;
 			}
 			else {
-				for (size_type i; i < n; i++){
+				size_type i = 0;
+				for (; i < n; i++){
 					alloc.destroy(this->_start + i);
 					alloc.construct(this->_start + i, val);
 				}
+				this->_end = this->_start + i;
 			}
 		}
 
@@ -382,31 +387,35 @@ namespace ft
 		}
 
 		iterator	insert(iterator position, const value_type& val) {
-			size_type	new_size = this->size() + 1, start_i = 0, temp_i = 0;
+			size_type	new_size = this->size() + 1, start_i = 0, temp_i = 0, save_i = 0;
+			this->cap = (!this->cap)? 1: this->cap;
 			if (new_size > this->cap)
 				this->cap *= 2;
 			pointer	temp = alloc.allocate(new_size);
-			for (bool added = false; temp_i < new_size; temp_i++){
+			for (bool added = false; temp_i < new_size;){
 				if (!added && &(*position) == &this->_start[start_i]) {
 					added = true;
-					this->alloc.construct((temp + temp_i), val);
+					save_i = temp_i;
+					this->alloc.construct((temp + temp_i++), val);
 				}
 				else {
-					this->alloc.construct((temp + temp_i), *(this->_start + start_i));
+					this->alloc.construct((temp + temp_i++), *(this->_start + start_i));
 					this->alloc.destroy(this->_start + start_i++);
 				}
 			}
 			this->alloc.deallocate(this->_start, start_i);
 			this->_start = temp;
 			this->_end = temp + temp_i;
-			return (this->begin());
+			return (this->begin() + save_i);
 		}
 	
 		void	insert(iterator position, size_type n, const value_type& val) {
 			size_type	new_size = this->size() + n, start_i = 0, temp_i = 0;
+			this->cap = (!this->cap)? 1: this->cap;
 			while (new_size > this->cap)
 				this->cap *= 2;
 			pointer	temp = alloc.allocate(new_size);
+
 			for (bool added = false; temp_i < new_size;){
 				if (!added && &(*position) == &this->_start[start_i]) {
 					added = true;
@@ -423,9 +432,13 @@ namespace ft
 			this->_end = temp + temp_i;
 		}
 
-		template <class InputIterator> void	insert(iterator position, InputIterator first, InputIterator last, typename enable_if<is_integral<InputIterator>::value, InputIterator>::type=0) {
-			size_type	to_add = static_cast<size_type>(last - first);
+		template <class InputIterator> 
+		void	insert(iterator position, InputIterator first, InputIterator last, typename enable_if< !ft::is_integral<InputIterator>::value, InputIterator>::type* =0) {
+			size_type	to_add = 0;
+			for (InputIterator f = first; f != last; to_add++, f++)
+				;
 			size_type	new_size = this->size() + to_add, start_i = 0, temp_i = 0;
+			this->cap = (!this->cap)? 1: this->cap;
 			while (new_size > this->cap)
 				this->cap *= 2;
 			pointer	temp = alloc.allocate(new_size);
@@ -439,6 +452,7 @@ namespace ft
 					this->alloc.construct((temp + temp_i++), *(this->_start + start_i));
 					this->alloc.destroy(this->_start + start_i++);
 				}
+
 			}
 			this->alloc.deallocate(this->_start, start_i);
 			this->_start = temp;
