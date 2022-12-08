@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:07:48 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/06 09:52:55 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:01:40 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,14 @@ namespace ft {
 
 		pointer	operator->() const {
 			if (!_it){
-				pointer p;
-				return (p);
+				return (NULL);
 			}
-			return (get_pair());}
+			return (get_pair());
+		}
+
+		bool	current(){
+			return ((this->_it)? true:false);
+		}
 
 		bool	operator==(const miterator& it) const {
 			return (this->_it == it._it);}
@@ -123,12 +127,12 @@ namespace ft {
 		}
 
 		miterator& operator--(){
-			if (!this->_it)
-				this->_it = this->_end;
-			else if (_it->left)
-				getPredecessor();
-			else
-				findChosenParentMinus();
+			if (!this->_it) {
+				this->_it = this->_end;}
+			else if (_it->left){
+				getPredecessor();}
+			else {
+				findChosenParentMinus();}
 			return (*this);
 		}
 

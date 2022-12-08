@@ -79,7 +79,6 @@ namespace ft {
 		}
 
 		void	rotateRight(pointer n) {
-			// std::cout << "ROTATING RIGHT!!" << std::endl;
 			pointer x = n->left;
 			pointer y = x->right;
 
@@ -129,6 +128,33 @@ namespace ft {
 			}
 
 			adjustTreeBalance(n->parent);
+			return ;
+		}
+
+		void	adjustTreeBalance_delete(pointer n) {
+			if (!n)
+				return ;
+
+			adjustNodeHight(n);
+			int balance = getBalanceFactor(n);
+
+			if (balance > 1) {
+				if (getBalanceFactor(n->left) >= 0)  {
+					return (rotateRight(n));
+				}
+				else {
+					rotateLeft(n->left);
+					return (rotateRight(n));}
+			}
+			else if (balance < -1) {
+				if (getBalanceFactor(n->right) <= 0) {
+					return (rotateLeft(n));}
+				else {
+					rotateRight(n->right);
+					return (rotateLeft(n));}
+			}
+
+			adjustTreeBalance_delete(n->parent);
 			return ;
 		}
 
@@ -195,9 +221,9 @@ namespace ft {
 			updateRoot(to_be_deleted, place_tacker);
 			destroyDeallocate(to_be_deleted);
 			if (direct_child)
-				adjustTreeBalance(place_tacker);
+				adjustTreeBalance_delete(place_tacker);
 			else
-				adjustTreeBalance(place_tacker_parent);
+				adjustTreeBalance_delete(place_tacker_parent);
 		}
 
 		_node*	getInOrderSuccessor(pointer to_be_deleted, bool first_time = true) {
@@ -245,16 +271,16 @@ namespace ft {
 		}
 
 		void	deleteNodeOneChild(pointer to_be_deleted) {
-			bool r = (to_be_deleted->right)? true:false;
-			pointer child = (r)? to_be_deleted->right: to_be_deleted->left;
-			pointer parent = to_be_deleted->parent;
+			pointer child = (to_be_deleted->right)? to_be_deleted->right: to_be_deleted->left;
+			pointer parent = (to_be_deleted->parent)? to_be_deleted->parent:NULL;
+			bool r = (parent && this->comp(to_be_deleted->_info.first, parent->_info.first))? false:true;
 
 			LinkParentNodeForDelete(parent, child, r);
 			child->parent = parent;
 			adjustNodeHight(child);
 			updateRoot(to_be_deleted, child);
 			destroyDeallocate(to_be_deleted);
-			adjustTreeBalance(child);
+			adjustTreeBalance_delete(child);
 		}
 
 	public:
@@ -263,10 +289,10 @@ namespace ft {
 			this->_root = NULL;
 		}
 
-		pointer	insert(const value_type &v, pointer starting_point = NULL){
+		pointer	insert(const value_type &v){
 			if (!this->_root){
 				this->_root = alloc.allocate(1);
-				_node temp(v);		
+				_node temp(v);
 				alloc.construct(_root, temp);
 				return (this->_root);
 			}
@@ -295,6 +321,7 @@ namespace ft {
 				temp = temp->right;
 				findNode(nodeKey);
 			}
+
 			return (temp);
 		}
 
@@ -308,16 +335,17 @@ namespace ft {
 		
 		bool	deleteNode(const key nodeKey){
 			pointer temp = findNode(nodeKey, true);
-			pointer temp_parent = (!temp)? NULL: temp->parent;
 
 			if (!temp)
 				return (false);
-			else if (!temp->right && !temp->left) {
+			pointer temp_parent = (!temp->parent)? NULL: temp->parent;
+			if (!temp->right && !temp->left) {
 				bool r = (temp_parent && nodeKey > temp_parent->_info.first)? true: false;
 				LinkParentNodeForDelete(temp_parent, NULL, r);
 				updateRoot(temp, temp_parent);
 				destroyDeallocate(temp);
-				adjustTreeBalance(temp_parent);
+				adjustTreeBalance_delete(temp_parent);
+				return (true);
 			}
 			else if (!temp->right || !temp->left){
 				deleteNodeOneChild(temp);
@@ -326,7 +354,7 @@ namespace ft {
 			else {
 				findAndReplace(temp);
 				return (true);}
-			return (true);
+			return (false);
 		}
 
 		void	clear_tree(){
