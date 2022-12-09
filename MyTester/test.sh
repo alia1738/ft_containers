@@ -245,10 +245,10 @@ CheckDiff() {
 GetTime() {
 	echo " ----------------------------------------${blueToPurple6}"
 	cat ft_time.txt;
-	echo "${reset}" "${blueToPink1}"
+	# echo "${reset}" "${blueToPink1}"
+	echo "${reset}" "${blueToPurple1}"
 	cat std_time.txt;
-	echo "${reset}"
-	echo " ----------------------------------------"
+	echo "${reset} ----------------------------------------"
 }
 
 VectorTest() {
