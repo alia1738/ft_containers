@@ -6,10 +6,11 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:37:57 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/09 14:26:37 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/09 17:08:12 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <iomanip>
 #include <string>
 #include "fstream"
 
@@ -459,7 +460,7 @@ void	non_member_functions_test() {
 		for (int i = 0; i < 6; i++) {
 			file << vec2[i] << " ";
 		}
-		swap(vec, vec2);
+		ft::swap(vec, vec2);
 		for (int i = 0; i < 6; i++) {
 			file << vec[i] << " ";
 		}

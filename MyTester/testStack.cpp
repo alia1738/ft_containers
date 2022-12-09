@@ -6,10 +6,11 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:41:39 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/09 14:41:40 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/09 16:48:12 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <iomanip>
 #include <string>
 #include "fstream"
 

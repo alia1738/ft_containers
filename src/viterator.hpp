@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 16:54:46 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/08 18:05:06 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/09 16:52:19 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 namespace ft {
 
-	template < typename T, class _alloc = std::allocator<T> > class vector;
+	template < typename T, class Alloc = std::allocator<T> > class vector;
 
 	/* ---------------------- -- - Iterator - -- --------------------- */
 	template < typename T> class v_iterator {

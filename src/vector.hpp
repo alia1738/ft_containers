@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/09 12:50:39 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/09 17:05:10 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,33 +22,10 @@
 /* ----------------------- > >> Colors << < ----------------------- */
 
 # define RED			"\033[0;31m"
-# define BLUE			"\033[0;34m"
-# define GREEN			"\033[0;32m"
-# define YELLOW			"\033[0;33m"
-# define PURPLE			"\033[0;35m"
-# define LIGHT_BLUE		"\033[0;36m"
-# define RESET			"\x1B[0m"
-
 # define RED1			"\033[1;31m"
-# define BLUE1			"\033[1;34m"
-# define GREEN1			"\033[1;32m"
-# define YELLOW1		"\033[1;33m"
-# define PURPLE1		"\033[1;35m"
-# define LIGHT_BLUE1	"\033[1;36m"
-
 # define RED2			"\033[2;31m"
-# define BLUE2			"\033[2;34m"
-# define GREEN2			"\033[2;32m"
-# define YELLOW2		"\033[2;33m"
-# define PURPLE2		"\033[2;35m"
-# define LIGHT_BLUE2	"\033[2;36m"
-
 # define RED3			"\033[3;31m"
-# define BLUE3			"\033[3;34m"
-# define GREEN3			"\033[3;32m"
-# define YELLOW3		"\033[3;33m"
-# define PURPLE3		"\033[3;35m"
-# define LIGHT_BLUE3	"\033[3;36m"
+# define RESET			"\x1B[0m"
 
 namespace ft
 {
