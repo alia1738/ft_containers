@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:58:06 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/08 18:18:56 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/09 14:47:29 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,6 @@ namespace ft {
 			return (*this);
 		}
 
-		// bool operator==(const pair& p){
-		// 	return ((this->first == p.first) && (this->second == p.second));
-		// }
-
-		// bool operator<(const pair& p){
-		// 	return ((this->first < p.first) && (this->second < p.second));
-		// }
-
-		// bool operator<(const pair& p){
-		// 	return ((this->first < p.first));
-		// }
-
-		// bool operator>=(const pair& p){
-		// 	return ((this->first >= p.first));
-		// }
-
-		// bool operator<=(const pair& p){
-		// 	return ((this->first <= p.first));
-		// }
-
 		~pair(){}
 	};
 
@@ -70,22 +50,22 @@ namespace ft {
 	}
 
 	template < class T1, class T2 > bool	operator==(const pair<T1, T2> l, const pair<T1, T2> r){
-		return (l.first == r.first);
+		return ((l.first == r.first));
 	}
 	template < class T1, class T2 > bool	operator!=(const pair<T1, T2> l, const pair<T1, T2> r){
 		return (!(l == r));
 	}
 	template < class T1, class T2 > bool	operator<(const pair<T1, T2> l, const pair<T1, T2> r){
-		return ((l.first < r.first) && (l.second < r.second));
+		return ((l.first < r.first) || (l.second < r.second));
 	}
 	template < class T1, class T2 > bool	operator<=(const pair<T1, T2> l, const pair<T1, T2> r){
-		return (!(r < l));
+		return ((l.first <= r.first) || (l.second <= r.second));
 	}
 	template < class T1, class T2 > bool	operator>(const pair<T1, T2> l, const pair<T1, T2> r){
-		return (r < l);
+		return ((l.first > r.first) || (l.second > r.second));
 	}
 	template < class T1, class T2 > bool	operator>=(const pair<T1, T2> l, const pair<T1, T2> r){
-		return ((l.first >= r.first) && (l.second >= r.second));
+		return ((l.first >= r.first) || (l.second >= r.second));
 	}
 
 }

@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/08 16:15:54 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/09 12:50:39 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -523,6 +523,10 @@ namespace ft
 		return (ft::lexicographical_compare(l.begin(), l.end(), r.begin(), r.end()));
 	}
 
+	template < typename T, class _alloc > bool operator<=(const ft::vector<T, _alloc>& l, const ft::vector<T, _alloc>& r){
+		return (!(r < l));
+	}
+
 	template < typename T, class _alloc > bool operator>(const ft::vector<T, _alloc>& l, const ft::vector<T, _alloc>& r){
 		return (r < l);
 	}
@@ -531,9 +535,6 @@ namespace ft
 		return (!(l < r));
 	}
 
-	template < typename T, class _alloc > bool operator<=(const ft::vector<T, _alloc>& l, const ft::vector<T, _alloc>& r){
-		return (!(r < l));
-	}
 
 }
 

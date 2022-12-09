@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 09:40:16 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/08 18:00:44 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/09 14:44:11 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ namespace ft {
 			for (i = 0; first != last; first++, i++) 
 				this->insert(ft::pair<key_type, mapped_type>(first->first, first->second));
 			this->_alloc = this->_tree.alloc;
-			this->_size = i;
 		}
 
 		map(const map& m): _tree(), _size(0){
@@ -97,7 +96,6 @@ namespace ft {
 			for (const_iterator f = m.begin(); f != m.end(); f++, i++) 
 				this->insert(ft::pair<const key_type, const mapped_type>(f->first, f->second));
 			this->_alloc = this->_tree.alloc;
-			this->_size = i;
 		}
 		
 		map& operator=(const map& m){
@@ -109,7 +107,7 @@ namespace ft {
 				for (const_iterator f = m.begin(); f != m.end(); f++, i++) 
 					this->insert(ft::pair<key_type, mapped_type>(f->first, f->second));
 				this->_alloc = this->_tree.alloc;
-				this->_size = i;
+				this->_size = m._size;
 			}
 			return (*this);
 		}
@@ -180,7 +178,10 @@ namespace ft {
 			_node_pointer	n = this->_tree.findNode(val.first, true);
 			if (n)
 				return (iterator(n, this->getFurthestLeft(), this->getFurthestRight()));
-			n = this->_tree.insert(*position, val);
+			if (position.is_null())
+				n = this->_tree.insert(val);
+			else 
+				n = this->_tree.insert(*position, val);
 			this->_size++;
 			return (iterator(n, this->getFurthestLeft(), this->getFurthestRight()));
 		}
@@ -207,20 +208,31 @@ namespace ft {
 				return ;
 			for (iterator temp; first.current() && first != last; ) {
 				temp = first++;
-				if (!first.current())
+				if (!first.current() && last == this->end()) {
+					first--;
+					if (this->_tree.deleteNode(first->first))
+						this->_size--;
 					return ;
+				}
 				if (this->_tree.deleteNode(temp->first))
 					this->_size--;
-
 			}
-			if (this->_tree.deleteNode(first->first))
-				this->_size--;
 		}
 
 		void swap (map& m) {
-			map<key_type, mapped_type, key_compare, allocator_type> temp = *this;
-			*this = m;
-			m = temp;
+			this->_tree.swap(m._tree);
+			
+			allocator_type a = this->_alloc;
+			this->_alloc = m._alloc;
+			m._alloc = a;
+			
+			key_compare c = this->_comp;
+			this->_comp = m._comp;
+			m._comp = c;
+			
+			size_type s = this->_size;
+			this->_size = m._size;
+			m._size = s;
 		}
 
 		void clear(){

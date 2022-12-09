@@ -65,7 +65,7 @@ namespace ft {
 			pointer y_new_parent = n;
 			bool r = false;
 			
-			if (x_new_parent && x_new_parent->right->_info == n->_info)
+			if (x_new_parent && x_new_parent->right && x_new_parent->right->_info == n->_info)
 				r = true;
 			x->parent = x_new_parent;
 			if (x_new_parent && r)
@@ -287,6 +287,21 @@ namespace ft {
 
 		avlTree(){
 			this->_root = NULL;
+		}
+
+		void swap (avlTree& t) {
+			pointer		r = this->_root;
+			_allocator	a = this->alloc;
+			compare		c = this->comp;
+
+			this->_root = t._root;
+			t._root = r;
+
+			this->alloc = t.alloc;
+			t.alloc = a;
+
+			this->comp = t.comp;
+			t.comp = c;
 		}
 
 		pointer	insert(const value_type &v){

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   testStack.cpp                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/09 14:41:39 by aalsuwai          #+#    #+#             */
+/*   Updated: 2022/12/09 14:41:40 by aalsuwai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <string>
 #include "fstream"
 
@@ -5,10 +17,13 @@
 	#include <stack>
 	namespace ft = std;
 	std::string	type = "std_";
+	std::string	for_time = "STD";
+
 
 #else
 	#include "../src/stack.hpp"
 	std::string	type = "ft_";
+	std::string	for_time = "FT";
 
 #endif
 
@@ -162,10 +177,24 @@ void	non_member_functions_test() {
 	file.close();
 }
 
+#include <sys/time.h>
+
 int main() {
+	timeval exec_time;
+	gettimeofday(&exec_time, NULL);
+	double start = 1.0e6 * exec_time.tv_sec + exec_time.tv_usec;
+
 	constructors_test();
 	element_access_test();
 	capacity_test();
 	modifiers_test();
 	non_member_functions_test();
+
+	std::string fileName = type + "time.txt";
+	std::ofstream	file(fileName);
+
+	gettimeofday(&exec_time, NULL);
+	double end = 1.0e6 * exec_time.tv_sec + exec_time.tv_usec;
+	file << for_time << ": ";
+	file << std::fixed << std::setprecision(3) << (end - start) / 1000 << " ms" << std::endl;
 }

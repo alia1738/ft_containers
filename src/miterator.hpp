@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:07:48 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/08 18:01:40 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/09 13:37:42 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,17 @@ namespace ft {
 		bool	operator!=(const miterator& it) const {
 			return (this->_it != it._it);}
 
-		bool	operator>(const miterator& it) const {
-			return (this->_it > it._it);}
-
 		bool	operator<(const miterator& it) const {
-			return (this->_it < it._it);}
-
-		bool	operator>=(const miterator& it) const {
-			return (this->_it >= it._it);}
+			return (this->_it->_info < it._it->_info);}
 
 		bool	operator<=(const miterator& it) const {
-			return (this->_it <= it._it);}
+			return (this->_it->_info <= it._it->_info);}
+
+		bool	operator>(const miterator& it) const {
+			return (this->_it->_info > it._it->_info);}
+
+		bool	operator>=(const miterator& it) const {
+			return (this->_it->_info >= it._it->_info);}
 
 		miterator& operator++(){
 			if (_it->right) {
@@ -141,6 +141,10 @@ namespace ft {
 			miterator temp = *this;
 			--(*this);
 			return (temp);
+		}
+
+		bool	is_null() const {
+			return (!(_it)? true:false);
 		}
 
 	private:

@@ -242,6 +242,15 @@ CheckDiff() {
 	fi
 }
 
+GetTime() {
+	echo " ----------------------------------------${blueToPurple6}"
+	cat ft_time.txt;
+	echo "${reset}" "${blueToPink1}"
+	cat std_time.txt;
+	echo "${reset}"
+	echo " ----------------------------------------"
+}
+
 VectorTest() {
 	if [ ! -d VectorTest ]; then
 		mkdir VectorTest
@@ -269,6 +278,8 @@ VectorTest() {
 	sleep 0.5
 	CheckDiff "non_member_functions" "			"
 	sleep 0.5
+
+	GetTime
 
 	rm -rf ft_VEC std_VEC
 
@@ -307,6 +318,8 @@ MapTest() {
 	CheckDiff "non_member_functions" "			"
 	sleep 0.5
 
+	GetTime
+
 	rm -rf ft_MAP std_MAP
 
 	cd ..
@@ -337,6 +350,8 @@ StackTest() {
 	sleep 0.5
 	CheckDiff "non_member_functions" "			"
 	sleep 0.5
+
+	GetTime
 
 	rm -rf ft_STACK std_STACK
 
