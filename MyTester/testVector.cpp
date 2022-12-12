@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:37:57 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/09 17:08:12 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:00:49 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	constructors_test() {
 		for (ft::vector<int>::size_type i = 0; i < vec.size(); i++)
 			file << vec[i] << " ";
 		file << "\n-------------------------\n";
-
 	}
 	{ // range
 		file << "Range:\n";
@@ -108,8 +107,6 @@ void	constructors_test() {
 	}
 	file.close();
 }
-
-
 
 /* -------------------- Element Access -------------------- */
 void	element_access_test() {

@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:41:39 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/09 16:48:12 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/12 11:21:17 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	element_access_test() {
 			file << s.top() << std::endl;
 		s.push("hmmm.. seems like it's working so far");
 			file << s.top() << std::endl;
-		s.push("");
-			file << s.top() << std::endl;
+		// s.push("");
+		// 	file << s.top() << std::endl;
 
 		file << "\n-------------------------\n";
 	}
@@ -80,7 +80,7 @@ void	capacity_test() {
 		s.push("Hello!");
 		s.push("I am testing stack");
 		s.push("hmmm.. seems like it's working so far");
-		s.push("");
+		// s.push("");
 		while (!s.empty()) {
 			file << s.top() << std::endl;
 			s.pop();

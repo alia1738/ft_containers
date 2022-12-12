@@ -262,10 +262,10 @@ VectorTest() {
 		./std_VEC
 		# valgrind ./std_VEC
 	fi
-	c++ ../../testVector.cpp -o ft_VEC -D FT=1
+	c++ ../../testVector.cpp -g3 -o ft_VEC -D FT=1
 	if [ -x ./ft_VEC ]; then 
-		./ft_VEC
-		# valgrind ./ft_VEC
+		# ./ft_VEC
+		valgrind --leak-check=full ./ft_VEC
 	fi
 
 	CheckDiff "constructors" "				"
@@ -299,10 +299,10 @@ MapTest() {
 		./std_MAP
 		# valgrind ./std_MAP
 	fi
-	c++ ../../testMap.cpp -o ft_MAP -D FT=1
+	c++ ../../testMap.cpp -g3 -o ft_MAP -D FT=1
 	if [ -x ./ft_MAP ]; then 
-		./ft_MAP
-		# valgrind ./ft_MAP
+		# ./ft_MAP
+		valgrind --leak-check=full ./ft_MAP
 	fi
 
 	CheckDiff "constructors" "				"
@@ -340,10 +340,10 @@ StackTest() {
 		./std_STACK
 		# valgrind ./std_STACK
 	fi
-	c++ ../../testStack.cpp -o ft_STACK -D FT=1
+	c++ ../../testStack.cpp -g3 -o ft_STACK -D FT=1
 	if [ -x ./ft_STACK ]; then 
-		./ft_STACK
-		# valgrind ./ft_STACK
+		# ./ft_STACK
+		valgrind --leak-check=full --show-leak-kinds=all ./ft_STACK
 	fi
 
 	CheckDiff "constructors" "				"
