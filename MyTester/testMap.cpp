@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:41:37 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/09 16:48:18 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:28:02 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 	#include <map>
 	namespace ft = std;
 	std::string	type = "std_";
-	std::string	for_time = "STD";
+	std::string	for_time = "		STD: ";
 
 #else
 	#include "../src/map.hpp"
 	std::string	type = "ft_";
-	std::string	for_time = "FT";
+	std::string	for_time = "		FT: ";
 
 #endif
 
@@ -100,11 +100,18 @@ void	element_access_test() {
 		file << "Operator[]:\n";
 		ft::map<int, int> m;
 		for (ft::map<int, int>::size_type i = 0; i < 10; i++) {
-			m.insert(ft::pair<int, int>(i, (i * 11)));
+			// m.insert(ft::pair<int, int>(i, (i * 11)));
+			m[i] = (i * 11);
 			file << "m[" << i << "]= " << m[i] << std::endl;
 		}
 		m[20] = 2002;
+		m[2] = 2002;
+		m[9] = 2002;
+		m[100] = 2002;
 		file << "m[20]= " << m[20] << std::endl;
+		file << "m[2]= " << m[2] << std::endl;
+		file << "m[9]= " << m[9] << std::endl;
+		file << "m[100]= " << m[100] << std::endl;
 		file << "\n-------------------------\n";
 	}
 	file.close();
@@ -543,12 +550,13 @@ void	non_member_functions_test() {
 	file.close();
 }
 
-#include <sys/time.h>
+#include <ctime>
 
 int main() {
-	timeval exec_time;
-	gettimeofday(&exec_time, NULL);
-	double start = 1.0e6 * exec_time.tv_sec + exec_time.tv_usec;
+	std::string fileName = type + "time.txt";
+	std::ofstream	file(fileName);
+	clock_t	s, e;
+	s = clock();
 
 	constructors_test();
 	element_access_test();
@@ -559,11 +567,7 @@ int main() {
 	operations_test();
 	non_member_functions_test();
 
-	std::string fileName = type + "time.txt";
-	std::ofstream	file(fileName);
-
-	gettimeofday(&exec_time, NULL);
-	double end = 1.0e6 * exec_time.tv_sec + exec_time.tv_usec;
-	file << for_time << ": ";
-	file << std::fixed << std::setprecision(3) << (end - start) / 1000 << " ms" << std::endl;
+	e = clock();
+	file << for_time;
+	file << std::fixed << std::setprecision(3) << (static_cast<double>(e) - static_cast<double>(s)) / 1000 << " ms" << std::endl;
 }

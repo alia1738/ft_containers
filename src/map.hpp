@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 09:40:16 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/09 14:44:11 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:29:58 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,12 +305,8 @@ namespace ft {
 		}
 
 		mapped_type& operator[](const key_type& k) {
-			_node_pointer	temp = this->_tree.findNode(k, true);
-			if (!temp) {
-				_node_pointer ret = this->_tree.insert(ft::pair<key_type, mapped_type>(k, mapped_type()));
-				this->_size++;
-				return (ret->_info.second);
-			}
+			this->insert(value_type(k, mapped_type()));
+			_node_pointer temp = this->_tree.findNode(k, true);
 			return (temp->_info.second);
 		}
 

@@ -2,3 +2,13 @@
 .DS_Store
 *.o
 a.out
+src/ann
+src/tester.sh
+src/diffs
+src/ft_logs
+src/std_logs
+src/test.dSYM
+src/performance.dSYM
+TEST
+HELL
+MyTester/test_results

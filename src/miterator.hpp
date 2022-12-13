@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:07:48 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/09 13:37:42 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:14:01 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,10 @@ namespace ft {
 		operator miterator<const myPair, Compare, Node>() const {
 			return(miterator<const myPair, Compare, Node>(_it, _start, _end));
 		}
+
+		node_pointer base() const {
+			return (this->_it);
+		}
 		
 		pointer get_pair() const {
 			pointer v = &this->_it->_info;
@@ -94,23 +98,23 @@ namespace ft {
 			return ((this->_it)? true:false);
 		}
 
-		bool	operator==(const miterator& it) const {
-			return (this->_it == it._it);}
+		bool	operator==(const miterator<const myPair, Compare, Node>& it) const {
+			return (this->base() == it.base());}
 
-		bool	operator!=(const miterator& it) const {
-			return (this->_it != it._it);}
+		bool	operator!=(const miterator<const myPair, Compare, Node>& it) const {
+			return (this->base() != it.base());}
 
-		bool	operator<(const miterator& it) const {
-			return (this->_it->_info < it._it->_info);}
+		bool	operator<(const miterator<const myPair, Compare, Node>& it) const {
+			return (this->get_pair() < it.get_pair());}
 
-		bool	operator<=(const miterator& it) const {
-			return (this->_it->_info <= it._it->_info);}
+		bool	operator<=(const miterator<const myPair, Compare, Node>& it) const {
+			return (this->get_pair() <= it.get_pair());}
 
-		bool	operator>(const miterator& it) const {
-			return (this->_it->_info > it._it->_info);}
+		bool	operator>(const miterator<const myPair, Compare, Node>& it) const {
+			return (this->get_pair() > it.get_pair());}
 
-		bool	operator>=(const miterator& it) const {
-			return (this->_it->_info >= it._it->_info);}
+		bool	operator>=(const miterator<const myPair, Compare, Node>& it) const {
+			return (this->get_pair() >= it.get_pair());}
 
 		miterator& operator++(){
 			if (_it->right) {
@@ -178,9 +182,7 @@ namespace ft {
 			if (!this->_it->right)
 				return ;
 			this->_it = this->_it->right;
-			if (!this->_it)
-				return ;
-			getSuccessor(false);
+			getPredecessor(false);
 		}
 
 		void	getSuccessor(bool first_time = true) {
@@ -189,8 +191,6 @@ namespace ft {
 			if (!this->_it->left)
 				return ;
 			this->_it = this->_it->left;
-			if (!this->_it)
-				return ;
 			getSuccessor(false);
 		}
 		

@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/12 11:45:38 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:32:27 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,16 +178,13 @@ namespace ft
 			for (InputIterator f = first; f != last; f++, new_size++)
 				;
 
-			if (new_size >= this->cap){
+			if ((&(*first) == &(*this->begin()) && &(*last) == &(*this->end())) || new_size >= this->cap){
 				pointer	temp = alloc.allocate(new_size);
 				
 				size_type i = 0, max = this->size();
-				for (; i < new_size; i++, first++){
+				for (; i < new_size; i++, first++)
 					this->alloc.construct((temp + i), *first);
-					if (i < max)
-						this->alloc.destroy(this->_start + i);
-				}
-
+				this->clear();
 				this->alloc.deallocate(this->_start, max);
 				this->_start = temp;
 				this->_end = this->_start + i;
@@ -248,7 +245,7 @@ namespace ft
 			}
 
 			--this->_end;
-			alloc.destroy(this->_end + 1);
+			alloc.destroy(this->_end);
 			return (this->begin() + location);
 		}
 
@@ -266,7 +263,7 @@ namespace ft
 
 			for (size_type i = 0; i < off_set; i++) {
 				--this->_end;
-				alloc.destroy(this->_end + 1);
+				alloc.destroy(this->_end);
 			}
 
 			return (this->begin() + location);
@@ -292,7 +289,7 @@ namespace ft
 			return (*(this->_start));
 		}
 
-		allocator_type getallocator_type() const{
+		allocator_type get_allocator() const{
 			return (this->alloc);
 		}
 
@@ -348,22 +345,25 @@ namespace ft
 			for (InputIterator f = first; f != last; to_add++, f++)
 				;
 			size_type	new_size = this->size() + to_add, start_i = 0, temp_i = 0;
+			
 			this->cap = (!this->cap)? 1: this->cap;
 			while (new_size > this->cap)
 				this->cap *= 2;
-			pointer	temp = alloc.allocate(new_size);
-			for (bool added = false; temp_i < new_size;){
+			
+			pointer	temp = alloc.allocate(this->cap);
+			
+			for (bool added = false; temp_i < new_size;)
+			{
 				if (!added && &(*position) == &this->_start[start_i]) {
 					added = true;
 					for (; first != last; first++)
 						this->alloc.construct((temp + temp_i++), *first);
 				}
-				else {
-					this->alloc.construct((temp + temp_i++), *(this->_start + start_i));
-					this->alloc.destroy(this->_start + start_i++);
-				}
+				else 
+					this->alloc.construct((temp + temp_i++), *(this->_start + start_i++));
 
 			}
+			this->clear();
 			this->alloc.deallocate(this->_start, start_i);
 			this->_start = temp;
 			this->_end = temp + temp_i;
@@ -375,7 +375,7 @@ namespace ft
 
 		void pop_back(){
 			this->_end -= 1;
-			this->alloc.destroy(this->_end/* + 1*/);
+			this->alloc.destroy(this->_end);
 		}
 
 		void	push_back(const value_type& val){
@@ -400,7 +400,7 @@ namespace ft
 
 			else if (this->cap > this->size())
 			{
-				this->_start[this->size()] = val;
+				this->alloc.construct((this->_start + this->size()), val);
 				this->_end++;
 			}
 		}
@@ -429,6 +429,7 @@ namespace ft
 			}
 			else if (n > this->capacity()){
 				size_type max = this->size();
+
 				pointer temp = this->alloc.allocate(n);
 
 				for (size_type i = 0; i < n; i++){
