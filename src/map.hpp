@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 09:40:16 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/13 14:29:58 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:04:26 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,9 +179,8 @@ namespace ft {
 			if (n)
 				return (iterator(n, this->getFurthestLeft(), this->getFurthestRight()));
 			if (position.is_null())
-				n = this->_tree.insert(val);
-			else 
-				n = this->_tree.insert(*position, val);
+				position--;
+			n = this->_tree.insert(*position, val);
 			this->_size++;
 			return (iterator(n, this->getFurthestLeft(), this->getFurthestRight()));
 		}
