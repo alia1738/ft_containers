@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:10:33 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/14 08:43:27 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/14 09:04:24 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,14 @@ namespace ft {
 		typedef typename it::value_type        value_type;
 		typedef typename it::pointer           pointer;
 		typedef typename it::reference         reference;
-		// typedef typename it::iterator_category iterator_category;
+		typedef typename it::iterator_category iterator_category;
 	};
+
+	struct	input_iterator_tag{};
+	struct	output_iterator_tag{};
+	struct	forward_iterator_tag: public input_iterator_tag{};
+	struct	bidirectional_iterator_tag: public forward_iterator_tag{};
+	struct	random_access_iterator_tag: public bidirectional_iterator_tag{};
 
 	/* ------------------ -- - Reverse Iterator - -- ------------------ */
 
@@ -32,6 +38,7 @@ namespace ft {
 		typedef typename iterator_traits<It>::difference_type	difference_type;
 		typedef typename iterator_traits<It>::reference			reference;
 		typedef typename iterator_traits<It>::pointer			pointer;
+		typedef typename iterator_traits<It>::iterator_category	iterator_category;
 
 	private:
 		It _content;

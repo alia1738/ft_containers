@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 09:07:48 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/13 13:14:01 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/14 09:06:59 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MITERATOR_HPP
 
 #include "map.hpp"
+#include "rev_iterator.hpp"
 
 namespace ft {
 	template < class Key, class T, class Compare = std::less<Key>, class Allocate = std::allocator< pair<const Key, T> > > class map;
@@ -22,12 +23,14 @@ namespace ft {
 	template < class myPair, class Compare, class Node > class miterator {
 	
 	public:
-		typedef Node*								node_pointer;
-		typedef std::ptrdiff_t						difference_type;
-		typedef myPair								value_type;
-		typedef value_type*							pointer;
-		typedef value_type&							reference;
-		typedef Compare								key_compare;
+		typedef Node*									node_pointer;
+		typedef std::ptrdiff_t							difference_type;
+		typedef myPair									value_type;
+		typedef value_type*								pointer;
+		typedef value_type&								reference;
+		typedef Compare									key_compare;
+		typedef typename ft::bidirectional_iterator_tag	iterator_category;
+
 
 	private:
 		node_pointer		_it;

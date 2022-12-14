@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 16:54:46 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/14 08:43:40 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/14 09:06:16 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define VITERATOR_HPP
 
 #include "vector.hpp"
+#include "rev_iterator.hpp"
 
 namespace ft {
 
@@ -26,6 +27,7 @@ namespace ft {
 		typedef typename ft::vector<T>::value_type		value_type;
 		typedef typename ft::vector<T>::reference		reference;
 		typedef typename ft::vector<T>::difference_type	difference_type;
+		typedef typename ft::random_access_iterator_tag	iterator_category;
 
 	private:
 		pointer _content;

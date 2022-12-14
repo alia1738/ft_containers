@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/14 08:43:37 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/14 09:05:41 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include <memory>
 #include <iostream>
 #include "viterator.hpp"
-#include "rev_iterator.hpp"
 #include "extra.hpp"
 
 namespace ft
