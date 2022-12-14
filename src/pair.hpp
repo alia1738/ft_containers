@@ -6,14 +6,12 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:58:06 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/13 11:13:52 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/14 08:43:24 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PAIR_HPP
 # define PAIR_HPP
-
-#include <iostream>
 
 namespace ft {
 

@@ -6,14 +6,12 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:10:33 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/08 18:04:57 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/14 08:43:27 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REV_ITERATOR_HPP
 # define REV_ITERATOR_HPP
-
-#include <iostream>
 
 namespace ft {
 

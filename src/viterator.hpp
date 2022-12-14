@@ -6,14 +6,13 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 16:54:46 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/09 16:52:19 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/14 08:43:40 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VITERATOR_HPP
 # define VITERATOR_HPP
 
-#include <iostream>
 #include "vector.hpp"
 
 namespace ft {

@@ -14,8 +14,8 @@
 # define AVLTREE_HPP
 
 #include "Node.hpp"
-// #include "Compare.hpp"
 #include <functional>
+#include <iostream>
 
 namespace ft {
 	template < class key, class val, class compare = std::less<key>, class Alloc = std::allocator< pair<const key, val> > >

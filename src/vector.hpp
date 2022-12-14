@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 13:35:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/12/13 14:32:27 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/12/14 08:43:37 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,6 @@
 #include "viterator.hpp"
 #include "rev_iterator.hpp"
 #include "extra.hpp"
-
-/* ----------------------- > >> Colors << < ----------------------- */
-
-# define RED			"\033[0;31m"
-# define RED1			"\033[1;31m"
-# define RED2			"\033[2;31m"
-# define RED3			"\033[3;31m"
-# define RESET			"\x1B[0m"
 
 namespace ft
 {
